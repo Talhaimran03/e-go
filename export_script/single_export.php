@@ -19,7 +19,7 @@ $sql_create_table_stops = "CREATE TABLE IF NOT EXISTS bus_stops (
                                 name VARCHAR(255) NOT NULL,
                                 latitude DECIMAL(10, 8) NOT NULL,
                                 longitude DECIMAL(11, 8) NOT NULL,
-                                qr_code_number VARCHAR(256),
+                                qr_code_number INT,
                                 UNIQUE KEY (latitude, longitude)
                             )";
 
@@ -33,7 +33,7 @@ if (mysqli_query($conn, $sql_create_table_stops)) {
 $sql_create_table_numbers = "CREATE TABLE IF NOT EXISTS bus_numbers (
                                 id INT AUTO_INCREMENT PRIMARY KEY,
                                 number VARCHAR(10) NOT NULL UNIQUE,
-                                qr_code_number VARCHAR(256)
+                                qr_code_number INT
                             )";
 
 if (mysqli_query($conn, $sql_create_table_numbers)) {
@@ -92,9 +92,10 @@ foreach ($data['features'] as $feature) {
         if ($geometry['type'] === 'Point') {
             $name = $properties['name'];
             $coordinates = $geometry['coordinates'];
+            $qr_code_number = $properties['ref'];
 
             // Query per inserire i dati nella tabella delle fermate degli autobus
-            $sql_insert_stop = "INSERT IGNORE INTO bus_stops (name, latitude, longitude) VALUES ('$name', '$coordinates[1]', '$coordinates[0]')";
+            $sql_insert_stop = "INSERT IGNORE INTO bus_stops (name, latitude, longitude, qr_code_number) VALUES ('$name', '$coordinates[1]', '$coordinates[0], $qr_code_number)";
 
             if (mysqli_query($conn, $sql_insert_stop)) {
                 // echo "Dati della fermata degli autobus inseriti correttamente.\n";
