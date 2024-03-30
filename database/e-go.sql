@@ -24,18 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `points`
---
-
-CREATE TABLE `points` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `points` int(11) NOT NULL DEFAULT 0,
-  `userId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `rewards`
 --
 
@@ -86,7 +74,10 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL,
   `birthDate` date NOT NULL,
-  `registrationDate` datetime NOT NULL
+  `registrationDate` datetime NOT NULL,
+  `activationCode` int,
+  `active` boolean NOT NULL DEFAULT 0,
+  `points` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -104,13 +95,6 @@ CREATE TABLE `users_rewards` (
 --
 -- Indici per le tabelle scaricate
 --
-
---
--- Indici per le tabelle `points`
---
-ALTER TABLE `points`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_points_users` (`userId`);
 
 --
 -- Indici per le tabelle `rewards`
@@ -150,12 +134,6 @@ ALTER TABLE `users_rewards`
 --
 
 --
--- AUTO_INCREMENT per la tabella `points`
---
-ALTER TABLE `points`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT per la tabella `rewards`
 --
 ALTER TABLE `rewards`
@@ -188,12 +166,6 @@ ALTER TABLE `users_rewards`
 --
 -- Limiti per le tabelle scaricate
 --
-
---
--- Limiti per la tabella `points`
---
-ALTER TABLE `points`
-  ADD CONSTRAINT `FK_points_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `route`
