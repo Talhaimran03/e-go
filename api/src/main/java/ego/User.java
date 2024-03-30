@@ -39,7 +39,10 @@ public class User {
 	
 	@Column(name = "active", nullable = false)
 	private boolean active = false;
-
+	
+    @Column(name = "points", nullable = false)
+	private Integer points = 0;
+    
 	public User(String email, String password, String name, String surname, Date birthDate, LocalDateTime registrationDate) {
         this.email = email;
         this.password = password;
@@ -52,7 +55,6 @@ public class User {
     public User() {
         // Default
     }
-    
 
     // Getters and setters
 	
@@ -118,5 +120,13 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 }

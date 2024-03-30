@@ -8,8 +8,11 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
-@RequestMapping(path="/users")
+@RequestMapping(path="/ego")
 public class MainController {
+	
+	// Users operations
+
     @Autowired
     private UserRepository userRepository;
 
@@ -17,7 +20,7 @@ public class MainController {
     private UserService userService;
 
     // Create
-    @PostMapping(path="/add")
+    @PostMapping(path="/users/addUser")
     public @ResponseBody boolean addNewUser(@RequestParam String email,
                                             @RequestParam String password,
                                             @RequestParam String name,
@@ -37,13 +40,13 @@ public class MainController {
 	}
 
     // Read
-    @GetMapping(path="/getAll")
+    @GetMapping(path="/users/getAllUsers")
     public @ResponseBody Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     // Update
-	@PutMapping(path="/update/{id}")
+	@PutMapping(path="/users/updateUser/{id}")
 	public @ResponseBody boolean updateUser(@PathVariable Integer id,
 											@RequestParam(required = false) String email,
 											@RequestParam(required = false) String password,
@@ -51,7 +54,8 @@ public class MainController {
 											@RequestParam(required = false) String surname,
 											@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
 											@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime registrationDate,
-											@RequestParam(required = false) boolean active) {
+											@RequestParam(required = false) Boolean active,
+											@RequestParam(required = false) Integer points) {
 		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
 		// Update only required parameters
@@ -74,13 +78,14 @@ public class MainController {
 			user.setRegistrationDate(registrationDate);
 		}
 		user.setActive(active);
-
+		user.setPoints(points);
+		
 		userRepository.save(user);
 		return true;
 	}
 
     // Delete
-    @DeleteMapping(path="/delete/{id}")
+    @DeleteMapping(path="/users/deleteUser/{id}")
     public @ResponseBody boolean  deleteUser(@PathVariable Integer id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 		userRepository.delete(user);
@@ -88,7 +93,7 @@ public class MainController {
 	}
 
 	// Login
-	@PostMapping(path="/login")
+	@PostMapping(path="/users/login")
 	public @ResponseBody boolean loginUser(@RequestParam String email, @RequestParam String password) {
 		User user = userRepository.findByEmail(email);
 		
