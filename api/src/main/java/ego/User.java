@@ -49,6 +49,11 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
+    public User() {
+        // Default
+    }
+    
+
     // Getters and setters
 	
     public Integer getId() {

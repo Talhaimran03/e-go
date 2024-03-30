@@ -12,6 +12,8 @@ import java.util.Date;
 public class MainController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private UserService userService;
 
     // Create
@@ -23,10 +25,12 @@ public class MainController {
                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
                                        	    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime registrationDate) {
 		
+		// Validate user data
 		password = userService.validateUserData(email, password, name, surname, birthDate, registrationDate);
-		if (password != "") {
+		if (password == "") {
 			return false;
-		}											
+		}
+		
 		User user = new User(email, password, name, surname, birthDate, registrationDate);
 		userRepository.save(user);
 		return true;
@@ -38,7 +42,8 @@ public class MainController {
         return userRepository.findAll();
     }
 
-    @PutMapping(path="/update/{id}")
+    // Update
+	@PutMapping(path="/update/{id}")
 	public @ResponseBody boolean updateUser(@PathVariable Integer id,
 											@RequestParam(required = false) String email,
 											@RequestParam(required = false) String password,
@@ -50,22 +55,22 @@ public class MainController {
 		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
 		// Update only required parameters
-		if (email != null) {
+		if (email != null && userService.isValidEmail(email)) {
 			user.setEmail(email);
 		}
-		if (password != null) {
-			user.setPassword(password);
+		if (password != null && userService.isValidPassword(password)) {
+			user.setPassword(userService.encodePassword(password));
 		}
-		if (name != null) {
+		if (name != null && userService.isValidName(name)) {
 			user.setName(name);
 		}
-		if (surname != null) {
+		if (surname != null && userService.isValidSurname(surname)) {
 			user.setSurname(surname);
 		}
-		if (birthDate != null) {
+		if (birthDate != null && userService.isValidBirthDate(birthDate)) {
 			user.setBirthDate(birthDate);
 		}
-		if (registrationDate != null) {
+		if (registrationDate != null && userService.isValidRegistrationDate(registrationDate)) {
 			user.setRegistrationDate(registrationDate);
 		}
 		user.setActive(active);
@@ -74,7 +79,6 @@ public class MainController {
 		return true;
 	}
 
-
     // Delete
     @DeleteMapping(path="/delete/{id}")
     public @ResponseBody boolean  deleteUser(@PathVariable Integer id) {
@@ -82,4 +86,17 @@ public class MainController {
 		userRepository.delete(user);
 		return true;
 	}
+
+	// Login
+	@PostMapping(path="/login")
+	public @ResponseBody boolean loginUser(@RequestParam String email, @RequestParam String password) {
+		User user = userRepository.findByEmail(email);
+		
+		if (user != null && userService.verifyPassword(password, user.getPassword())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

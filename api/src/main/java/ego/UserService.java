@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
-
+    
     public UserService(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
@@ -24,34 +24,38 @@ public class UserService {
         return "";
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    private boolean isValidPassword(String password) {
+    public boolean isValidPassword(String password) {
         return password != null && password.length() >= 8 && password.matches(".*[A-Z]+.*") && password.matches(".*[0-9]+.*");
     }
 
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         return name != null && !name.isEmpty();
     }
 
-    private boolean isValidSurname(String surname) {
+    public boolean isValidSurname(String surname) {
         return surname != null && !surname.isEmpty();
     }
 
-    private boolean isValidBirthDate(Date birthDate) {
+    public boolean isValidBirthDate(Date birthDate) {
         return birthDate != null && birthDate.before(new Date());
     }
 
-    private boolean isValidRegistrationDate(LocalDateTime registrationDate) {
+    public boolean isValidRegistrationDate(LocalDateTime registrationDate) {
         return registrationDate != null && registrationDate.isBefore(LocalDateTime.now());
     }
 
     public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
+    }
+
+    public boolean verifyPassword(String hashedPassword, String password) {
+        return passwordEncoder.matches(hashedPassword, password);
     }
 }
