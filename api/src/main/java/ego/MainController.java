@@ -34,12 +34,11 @@ public class MainController {
                                             @RequestParam String name,
                                             @RequestParam String surname,
                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-											@RequestParam(required = false) MultipartFile profileImage,
-                                       	    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime registrationDate) throws URISyntaxException {
+											@RequestParam(required = false) MultipartFile profileImage) throws URISyntaxException {
 		
 		// Validate user data
-		Boolean valid = userService.validateUserData(email, password, name, surname, birthDate, registrationDate);
-		if (valid == false) {
+		Boolean valid = userService.validateUserData(email, password, name, surname, birthDate);
+		if (!valid) {
 			return false;
 		}
 		password = userService.encodePassword(password);
@@ -55,9 +54,11 @@ public class MainController {
 			} else {
 				profileImageData = profileImage.getBytes();
 			}
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
+		
+		LocalDateTime registrationDate = LocalDateTime.now();
 		
 		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate);
 		userRepository.save(user);

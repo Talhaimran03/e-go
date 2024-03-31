@@ -18,8 +18,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Boolean validateUserData(String email, String password, String name, String surname, Date birthDate, LocalDateTime registrationDate) {
-        if (isValidEmail(email) && isValidPassword(password) && isValidName(name) && isValidSurname(surname) && isValidBirthDate(birthDate) && isValidRegistrationDate(registrationDate)) {
+    public Boolean validateUserData(String email, String password, String name, String surname, Date birthDate) {
+        if (isValidEmail(email) && isValidPassword(password) && isValidName(name) && isValidSurname(surname) && isValidBirthDate(birthDate)) {
             return true;
         }
         return false;
