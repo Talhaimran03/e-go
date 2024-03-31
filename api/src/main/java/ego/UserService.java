@@ -11,23 +11,29 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
     
-    public UserService(BCryptPasswordEncoder passwordEncoder) {
+    public UserService(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
-    public String validateUserData(String email, String password, String name, String surname, Date birthDate, LocalDateTime registrationDate) {
+    public Boolean validateUserData(String email, String password, String name, String surname, Date birthDate, LocalDateTime registrationDate) {
         if (isValidEmail(email) && isValidPassword(password) && isValidName(name) && isValidSurname(surname) && isValidBirthDate(birthDate) && isValidRegistrationDate(registrationDate)) {
-            return encodePassword(password);
+            return true;
         }
-        return "";
+        return false;
     }
 
     public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return matcher.matches() && !userRepository.existsByEmail(email);
+    }
+
+    public boolean isEmailAlreadyRegistered(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     public boolean isValidPassword(String password) {

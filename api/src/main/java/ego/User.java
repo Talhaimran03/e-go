@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
@@ -21,6 +24,7 @@ public class User {
 	@Column(name="email", length=256, unique=true, nullable=false)
     private String email;
 
+    @JsonIgnore
 	@Column(name="password", length=256, nullable=false)
     private String password;
 
@@ -34,21 +38,28 @@ public class User {
 	@Column(name="birthDate", nullable=false)
     private Date birthDate;
 
+    @Column(name = "profile_image", columnDefinition = "BLOB")
+    private byte[] profileImage;
+
 	@Column(name="registrationDate", nullable=false)
     private LocalDateTime registrationDate;
 	
+	@Column(name = "otp")
+	private Integer otp = null;
+
 	@Column(name = "active", nullable = false)
-	private boolean active = false;
+	private Boolean active = false;
 	
     @Column(name = "points", nullable = false)
 	private Integer points = 0;
     
-	public User(String email, String password, String name, String surname, Date birthDate, LocalDateTime registrationDate) {
+	public User(String email, String password, String name, String surname, Date birthDate, byte[] profileImage, LocalDateTime registrationDate) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
+        this.profileImage = profileImage;
         this.registrationDate = registrationDate;
     }
 
@@ -106,12 +117,28 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Integer getOtp() {
+        return otp;
+    }
+
+    public void setOtp(Integer otp) {
+        this.otp = otp;
     }
 
 	public boolean getActive() {
@@ -129,4 +156,21 @@ public class User {
     public void setPoints(Integer points) {
         this.points = points;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", profileImage=" + profileImage +
+                ", registrationDate=" + registrationDate +
+                ", active=" + active +
+                ", points=" + points +
+                '}';
+    }
+
 }
