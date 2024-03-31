@@ -76,7 +76,7 @@ CREATE TABLE `users` (
   `birthDate` date NOT NULL,
   `profileImage` BLOB,
   `registrationDate` datetime NOT NULL,
-  `activationCode` int,
+  `otp` int,
   `active` boolean NOT NULL DEFAULT 0,
   `points` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
