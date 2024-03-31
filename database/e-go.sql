@@ -74,6 +74,7 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL,
   `birthDate` date NOT NULL,
+  `profileImage` BLOB,
   `registrationDate` datetime NOT NULL,
   `activationCode` int,
   `active` boolean NOT NULL DEFAULT 0,
