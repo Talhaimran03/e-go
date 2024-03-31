@@ -150,4 +150,79 @@ public class MainController {
 		}
 	}
 
+
+	// Routes operations
+
+	// Create
+	@PostMapping("/routes/addRoute")
+	public boolean addRoute(@RequestParam Point startCoordinates,
+							@RequestParam LocalDateTime startTime,
+							@RequestParam Point endCoordinates,
+							@RequestParam LocalDateTime endTime,
+							@RequestParam Integer userId) {
+		User user = userRepository.findById(userId).orElse(null);
+		if (user != null) {
+			Route route = new Route(startCoordinates, startTime, endCoordinates, endTime, user);
+			routeRepository.save(route);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Read
+	@GetMapping("/routes/getAllRoutes")
+	public List<Route> getAllRoutes() {
+		return routeRepository.findAll();
+	}
+
+	// UPDATE
+	@PutMapping("/routes/updateRoute/{id}")
+	public boolean updateRoute(@PathVariable Integer id,
+							@RequestParam(required = false) Point startCoordinates,
+							@RequestParam(required = false) LocalDateTime startTime,
+							@RequestParam(required = false) Point endCoordinates,
+							@RequestParam(required = false) LocalDateTime endTime,
+							@RequestParam(required = false) Integer userId) {
+		Route route = routeRepository.findById(id).orElse(null);
+		if (route != null) {
+			if (startCoordinates != null) {
+				route.setStartCoordinates(startCoordinates);
+			}
+			if (startTime != null) {
+				route.setStartTime(startTime);
+			}
+			if (endCoordinates != null) {
+				route.setEndCoordinates(endCoordinates);
+			}
+			if (endTime != null) {
+				route.setEndTime(endTime);
+			}
+			if (userId != null) {
+				User user = userRepository.findById(userId).orElse(null);
+				if (user != null) {
+					route.setUser(user);
+				} else {
+					return false;
+				}
+			}
+			routeRepository.save(route);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Delete
+	@DeleteMapping("/routes/deleteRoute/{id}")
+	public boolean deleteRoute(@PathVariable Integer id) {
+		Route route = routeRepository.findById(id).orElse(null);
+		if (route != null) {
+			routeRepository.delete(route);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

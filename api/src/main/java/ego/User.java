@@ -2,11 +2,16 @@ package ego;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -52,6 +57,9 @@ public class User {
 	
     @Column(name = "points", nullable = false)
 	private Integer points = 0;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Route> routes = new ArrayList<>();
     
 	public User(String email, String password, String name, String surname, Date birthDate, byte[] profileImage, LocalDateTime registrationDate) {
         this.email = email;
@@ -155,6 +163,11 @@ public class User {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public void addRoute(Route route) {
+        routes.add(route);
+        route.setUser(this);
     }
 
     @Override
