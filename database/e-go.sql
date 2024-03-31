@@ -46,7 +46,6 @@ CREATE TABLE `route` (
   `startTime` datetime NOT NULL,
   `endCoordinates` point DEFAULT NULL,
   `endTime` datetime DEFAULT NULL,
-  `done` tinyint(1) NOT NULL DEFAULT 0,
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
