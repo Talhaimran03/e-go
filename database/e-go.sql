@@ -37,10 +37,10 @@ CREATE TABLE `rewards` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `route`
+-- Struttura della tabella `routes`
 --
 
-CREATE TABLE `route` (
+CREATE TABLE `routes` (
   `id` int(11) NOT NULL,
   `startCoordinates` point NOT NULL,
   `startTime` datetime NOT NULL,
@@ -103,11 +103,11 @@ ALTER TABLE `rewards`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `route`
+-- Indici per le tabelle `routes`
 --
-ALTER TABLE `route`
+ALTER TABLE `routes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_route_users` (`userId`);
+  ADD KEY `FK_routes_users` (`userId`);
 
 --
 -- Indici per le tabelle `settings`
@@ -140,9 +140,9 @@ ALTER TABLE `rewards`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `route`
+-- AUTO_INCREMENT per la tabella `routes`
 --
-ALTER TABLE `route`
+ALTER TABLE `routes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -168,10 +168,10 @@ ALTER TABLE `users_rewards`
 --
 
 --
--- Limiti per la tabella `route`
+-- Limiti per la tabella `routes`
 --
-ALTER TABLE `route`
-  ADD CONSTRAINT `FK_route_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `routes`
+  ADD CONSTRAINT `FK_routes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `users_rewards`
