@@ -1,6 +1,7 @@
 package ego;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,11 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.nio.file.Path;
 
 @Controller
@@ -37,10 +41,10 @@ public class MainController {
 											@RequestParam(required = false) MultipartFile profileImage) throws URISyntaxException {
 		
 		// Validate user data
-		Boolean valid = userService.validateUserData(email, password, name, surname, birthDate);
-		if (!valid) {
+		List<String> valid = userService.validateUserData(email, password, name, surname, birthDate);
+		if (valid.isEmpty()) {
 			return false;
-		}
+		  }
 		password = userService.encodePassword(password);
 		
 		// Convert profile image to byte array
@@ -59,8 +63,11 @@ public class MainController {
 		}
 		
 		LocalDateTime registrationDate = LocalDateTime.now();
-		
-		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate);
+
+		Random rand = new Random();
+		int otp = 1000 + rand.nextInt(9000);
+				
+		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate, otp);
 		userRepository.save(user);
 		return true;
 	}
@@ -153,6 +160,9 @@ public class MainController {
 
 	// Routes operations
 
+	@Autowired
+    private RouteRepository routeRepository;
+
 	// Create
 	@PostMapping("/routes/addRoute")
 	public boolean addRoute(@RequestParam Point startCoordinates,
@@ -171,12 +181,15 @@ public class MainController {
 	}
 
 	// Read
-	@GetMapping("/routes/getAllRoutes")
-	public List<Route> getAllRoutes() {
-		return routeRepository.findAll();
-	}
+	@GetMapping("/getAllRoutes")
+    public List<Route> getAllRoutes() {
+        Iterable<Route> routesIterable = routeRepository.findAll();
+        List<Route> routesList = new ArrayList<>();
+        routesIterable.forEach(routesList::add);
+        return routesList;
+    }
 
-	// UPDATE
+	// Update
 	@PutMapping("/routes/updateRoute/{id}")
 	public boolean updateRoute(@PathVariable Integer id,
 							@RequestParam(required = false) Point startCoordinates,

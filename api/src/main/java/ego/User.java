@@ -50,7 +50,7 @@ public class User {
     private LocalDateTime registrationDate;
 	
 	@Column(name = "otp")
-	private Integer otp = null;
+	private Integer otp;
 
 	@Column(name = "active", nullable = false)
 	private Boolean active = false;
@@ -61,7 +61,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
     
-	public User(String email, String password, String name, String surname, Date birthDate, byte[] profileImage, LocalDateTime registrationDate) {
+	public User(String email, String password, String name, String surname, Date birthDate, byte[] profileImage, LocalDateTime registrationDate, Integer otp) {
         this.email = email;
         this.password = password;
         this.name = name;

@@ -3,7 +3,9 @@ package ego;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +20,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Boolean validateUserData(String email, String password, String name, String surname, Date birthDate) {
-        if (isValidEmail(email) && isValidPassword(password) && isValidName(name) && isValidSurname(surname) && isValidBirthDate(birthDate)) {
-            return true;
+    public List<String> validateUserData(String email, String password, String name, String surname, Date birthDate) {
+        List<String> errors = new ArrayList<>();
+
+        if (!isValidEmail(email)) {
+            errors.add("Email non valida o già registrata");
         }
-        return false;
+        if (!isValidPassword(password)) {
+            errors.add("Password non valida");
+        }
+        if (!isValidName(name)) {
+            errors.add("Nome non valido");
+        }
+        if (!isValidSurname(surname)) {
+            errors.add("Cognome non valido");
+        }
+        if (!isValidBirthDate(birthDate)) {
+            errors.add("Data di nascita non valida");
+        }
+
+        return errors;
     }
 
     public boolean isValidEmail(String email) {
