@@ -84,6 +84,7 @@ public class User {
         this.birthDate = birthDate;
         this.profileImage = profileImage;
         this.registrationDate = registrationDate;
+        this.otp = otp;
     }
 
     public User() {
