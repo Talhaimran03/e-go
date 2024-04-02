@@ -3,6 +3,8 @@ package ego;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +35,7 @@ public class MainController {
 
     // Create
     @PostMapping(path="/users/addUser")
-    public @ResponseBody boolean addNewUser(@RequestParam String email,
+    public @ResponseBody ResponseEntity<Response<Boolean>> addNewUser(@RequestParam String email,
                                             @RequestParam String password,
                                             @RequestParam String name,
                                             @RequestParam String surname,
@@ -42,9 +44,10 @@ public class MainController {
 		
 		// Validate user data
 		List<String> valid = userService.validateUserData(email, password, name, surname, birthDate);
-		if (valid.isEmpty()) {
-			return false;
-		  }
+		if (!valid.isEmpty()) {
+            Response<Boolean> response = new Response<>(false, valid);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
 		password = userService.encodePassword(password);
 		
 		// Convert profile image to byte array
@@ -69,51 +72,79 @@ public class MainController {
 				
 		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate, otp);
 		userRepository.save(user);
-		return true;
+		
+		Response<Boolean> response = new Response<>(true);
+        return ResponseEntity.ok(response);
 	}
 
     // Read
-    @GetMapping(path="/users/getAllUsers")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+    @GetMapping("/users/getAllUsers")
+    public ResponseEntity<Response<Iterable<User>>> getAllUsers() {
+        Iterable<User> users = userRepository.findAll();
+        Response<Iterable<User>> response = new Response<>(true, users);
+        return ResponseEntity.ok(response);
     }
 
-	@GetMapping(path="/users/getUser")
-	public @ResponseBody User getUserById(@RequestParam Integer id) {
+	@GetMapping(path="/users/getUserById")
+	public ResponseEntity<Response<User>> getUserById(@RequestParam Integer id) {
 		Optional<User> userOptional = userRepository.findById(id);
-		return userOptional.orElse(null);
+		if (userOptional.isPresent()) {
+			Response<User> response = new Response<>(true, userOptional.get());
+			return ResponseEntity.ok(response);
+		} else {
+			Response<User> response = new Response<>(false, new ArrayList<>());
+			response.setErrors("Utente non trovato");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
 	}
 
     // Update
-	@PutMapping(path="/users/updateUser/{id}")
-	public @ResponseBody boolean updateUser(@PathVariable Integer id,
-											@RequestParam(required = false) String email,
-											@RequestParam(required = false) String password,
-											@RequestParam(required = false) String name,
-											@RequestParam(required = false) String surname,
-											@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-											@RequestParam(required = false) MultipartFile profileImage,
-											@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime registrationDate,
-											@RequestParam(required = false) Boolean active,
-											@RequestParam(required = false) Integer points) {
-		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+	@PutMapping(path="/users/updateUser")
+	public ResponseEntity<Response<Boolean>> updateUser(@RequestParam Integer id,
+														@RequestParam(required = false) String email,
+														@RequestParam(required = false) String password,
+														@RequestParam(required = false) String name,
+														@RequestParam(required = false) String surname,
+														@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
+														@RequestParam(required = false) MultipartFile profileImage,
+														@RequestParam(required = false) Boolean active,
+														@RequestParam(required = false) Integer points) {
+		
+		User user = userRepository.findById(id).orElse(null);
+		if (user == null) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Utente non trovato");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+		}
+
+		List<String> errors = new ArrayList<>();
 
 		// Update only required parameters
-		if (email != null && userService.isValidEmail(email)) {
-			user.setEmail(email);
-		}
-		if (password != null && userService.isValidPassword(password)) {
-			user.setPassword(userService.encodePassword(password));
-		}
-		if (name != null && userService.isValidName(name)) {
-			user.setName(name);
-		}
-		if (surname != null && userService.isValidSurname(surname)) {
-			user.setSurname(surname);
-		}
-		if (birthDate != null && userService.isValidBirthDate(birthDate)) {
-			user.setBirthDate(birthDate);
-		}
+		if (email != null) {
+			if (userService.isValidEmail(email) && !userRepository.existsByEmail(email)) {
+				user.setEmail(email);
+			} else {
+				if (!userService.isValidEmail(email)) {
+					errors.add("Formato email non valido");
+				}
+				if (userRepository.existsByEmail(email)) {
+					errors.add("Email già registrata");
+				}
+			}
+		}		
+
+		if (password != null && userService.isValidPassword(password)) user.setPassword(userService.encodePassword(password));
+		else errors.add("Password non valida");
+
+		if (name != null && userService.isValidName(name)) user.setName(name);
+		else errors.add("Nome non valido");
+
+		if (surname != null && userService.isValidSurname(surname)) user.setSurname(surname);
+		else errors.add("Cognome non valido");
+
+		if (birthDate != null && userService.isValidBirthDate(birthDate)) user.setBirthDate(birthDate);
+		else errors.add("Data di nascita non valida");
+
 		if (profileImage != null) {
 			byte[] profileImageData = null;
 			try {
@@ -121,42 +152,62 @@ public class MainController {
 				user.setProfileImage(profileImageData);
 			} catch (IOException e) {
 				e.printStackTrace();
+				errors.add("Errore nel salvataggio dell'immagine profilo");
 			}
 		}
-		if (registrationDate != null && userService.isValidRegistrationDate(registrationDate)) {
-			user.setRegistrationDate(registrationDate);
-		}
-		if (active != null) {
-			user.setActive(active);
-		}
-		if (points != null) {
-            user.setPoints(points);
-        }
-		
+
+		if (active != null) user.setActive(active);
+		if (points != null) user.setPoints(points);
+
+		// Save user and create response
 		userRepository.save(user);
-		return true;
+		Response<Boolean> response;
+		if (errors.isEmpty()) response = new Response<>(true);
+		else response = new Response<>(false, errors);
+
+		HttpStatus status = errors.isEmpty() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+		return ResponseEntity.status(status).body(response);
 	}
 
     // Delete
-    @DeleteMapping(path="/users/deleteUser/{id}")
-    public @ResponseBody boolean  deleteUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-		userRepository.delete(user);
-		return true;
+	@DeleteMapping(path="/users/deleteUser")
+	public ResponseEntity<Response<Boolean>> deleteUser(@RequestParam Integer id) {
+		try {
+			User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+			userRepository.delete(user);
+			return ResponseEntity.ok(new Response<>(true));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Utente non trovato");
+			errors.add("Errore nell'eliminazione dell'utente: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
 	}
 
 	// Login
 	@PostMapping(path="/users/login")
-	public @ResponseBody boolean loginUser(@RequestParam String email, @RequestParam String password) {
-		User user = userRepository.findByEmail(email);
-		
-		if (user != null && userService.verifyPassword(password, user.getPassword())) {
-			return true;
-		} else {
-			return false;
+	public ResponseEntity<Response<Boolean>> loginUser(@RequestParam String email, @RequestParam String password) {
+		try {
+			User user = userRepository.findByEmail(email);
+			if (user != null) {
+				if (userService.verifyPassword(password, user.getPassword())) {
+					return ResponseEntity.ok(new Response<>(true));
+				} else {
+					List<String> errors = new ArrayList<>();
+					errors.add("Password errata");
+					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<>(false, errors));
+				}
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Email non trovata");
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore durante il login: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
-
 
 	// Routes operations
 
@@ -165,76 +216,214 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public boolean addRoute(@RequestParam Point startCoordinates,
-							@RequestParam LocalDateTime startTime,
-							@RequestParam Point endCoordinates,
-							@RequestParam LocalDateTime endTime,
-							@RequestParam Integer userId) {
-		User user = userRepository.findById(userId).orElse(null);
-		if (user != null) {
-			Route route = new Route(startCoordinates, startTime, endCoordinates, endTime, user);
-			routeRepository.save(route);
-			return true;
-		} else {
-			return false;
+	public ResponseEntity<Response<Boolean>> addRoute(@RequestParam Point startCoordinates,
+													@RequestParam LocalDateTime startTime,
+													@RequestParam Point endCoordinates,
+													@RequestParam LocalDateTime endTime,
+													@RequestParam Integer userId) {
+		try {
+			User user = userRepository.findById(userId).orElse(null);
+			if (user != null) {
+				Route route = new Route(startCoordinates, startTime, endCoordinates, endTime, user);
+				routeRepository.save(route);
+				return ResponseEntity.ok(new Response<>(true));
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Utente non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nell'inserimento del percorso: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
 
 	// Read
 	@GetMapping("/getAllRoutes")
-    public List<Route> getAllRoutes() {
-        Iterable<Route> routesIterable = routeRepository.findAll();
-        List<Route> routesList = new ArrayList<>();
-        routesIterable.forEach(routesList::add);
-        return routesList;
-    }
+	public ResponseEntity<Response<List<Route>>> getAllRoutes() {
+		Iterable<Route> routesIterable = routeRepository.findAll();
+		List<Route> routesList = new ArrayList<>();
+		routesIterable.forEach(routesList::add);
+		return ResponseEntity.ok(new Response<>(true, routesList));
+	}
+
+	@GetMapping("/routes/getRoutesByUserId")
+	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(@RequestParam Integer userId) {
+		try {
+			User user = userRepository.findById(userId).orElse(null);
+			if (user != null) {
+				List<Route> routes = routeRepository.findByUserId(userId);
+				return ResponseEntity.ok(new Response<>(true, routes));
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Utente non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nella ricerca dei percorsi: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
 
 	// Update
-	@PutMapping("/routes/updateRoute/{id}")
-	public boolean updateRoute(@PathVariable Integer id,
-							@RequestParam(required = false) Point startCoordinates,
-							@RequestParam(required = false) LocalDateTime startTime,
-							@RequestParam(required = false) Point endCoordinates,
-							@RequestParam(required = false) LocalDateTime endTime,
-							@RequestParam(required = false) Integer userId) {
+	@PutMapping("/routes/updateRoute")
+	public ResponseEntity<Response<Boolean>> updateRoute(@RequestParam Integer id,
+														@RequestParam(required = false) Point startCoordinates,
+														@RequestParam(required = false) LocalDateTime startTime,
+														@RequestParam(required = false) Point endCoordinates,
+														@RequestParam(required = false) LocalDateTime endTime,
+														@RequestParam(required = false) Integer userId) {
 		Route route = routeRepository.findById(id).orElse(null);
-		if (route != null) {
-			if (startCoordinates != null) {
-				route.setStartCoordinates(startCoordinates);
+		if (route == null) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Percorso non trovato");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+		}
+
+		List<String> errors = new ArrayList<>();
+
+		// Update only required parameters
+		if (startCoordinates != null) {
+			route.setStartCoordinates(startCoordinates);
+		}
+		if (startTime != null) {
+			route.setStartTime(startTime);
+		}
+		if (endCoordinates != null) {
+			route.setEndCoordinates(endCoordinates);
+		}
+		if (endTime != null) {
+			route.setEndTime(endTime);
+		}
+		if (userId != null) {
+			User user = userRepository.findById(userId).orElse(null);
+			if (user != null) {
+				route.setUser(user);
+			} else {
+				errors.add("Utente non trovato");
 			}
-			if (startTime != null) {
-				route.setStartTime(startTime);
-			}
-			if (endCoordinates != null) {
-				route.setEndCoordinates(endCoordinates);
-			}
-			if (endTime != null) {
-				route.setEndTime(endTime);
-			}
-			if (userId != null) {
-				User user = userRepository.findById(userId).orElse(null);
-				if (user != null) {
-					route.setUser(user);
-				} else {
-					return false;
-				}
-			}
-			routeRepository.save(route);
-			return true;
+		}
+
+		routeRepository.save(route);
+
+		Response<Boolean> response;
+		if (errors.isEmpty()) {
+			response = new Response<>(true);
 		} else {
-			return false;
+			response = new Response<>(false, errors);
+		}
+
+		HttpStatus status = errors.isEmpty() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+		return ResponseEntity.status(status).body(response);
+	}
+
+	// Delete
+	@DeleteMapping("/routes/deleteRoute")
+	public ResponseEntity<Response<Boolean>> deleteRoute(@RequestParam Integer id) {
+		try {
+			Route route = routeRepository.findById(id).orElse(null);
+			if (route != null) {
+				routeRepository.delete(route);
+				return ResponseEntity.ok(new Response<>(true));
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Percorso non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nell'eliminazione del percorso: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+	
+	// Rewards operations
+
+	@Autowired
+    private RewardRepository rewardRepository;
+
+    // Create
+	@PostMapping("/rewards/addReward")
+	public ResponseEntity<Response<Boolean>> addReward(@RequestParam String company,
+														@RequestParam double discountPercentage,
+														@RequestParam Integer requiredPoints,
+														@RequestParam String url) {
+		try {
+			Reward reward = new Reward(company, discountPercentage, requiredPoints, url);
+			rewardRepository.save(reward);
+			return ResponseEntity.ok(new Response<>(true));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nell'aggiunte della ricompensa: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+
+	// Read
+	@GetMapping("/rewards/getAllRewards")
+	public ResponseEntity<Response<List<Reward>>> getAllRewards() {
+		try {
+			Iterable<Reward> rewardsIterable = rewardRepository.findAll();
+			List<Reward> rewardsList = new ArrayList<>();
+			rewardsIterable.forEach(rewardsList::add);
+			return ResponseEntity.ok(new Response<>(true, rewardsList));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nella riceerca delle ricompense: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+
+	@GetMapping("/rewards/getRewardsByUserId")
+	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestParam Integer userId) {
+		try {
+			List<Reward> rewards = rewardRepository.findByUserId(userId);
+			if (!rewards.isEmpty()) {
+				return ResponseEntity.ok(new Response<>(true, rewards));
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+
+	// Update
+	@PutMapping("/rewards/updateReward")
+	public ResponseEntity<Response<Reward>> updateReward(@RequestParam Integer id, @RequestParam Reward rewardDetails) {
+		try {
+			Reward reward = rewardRepository.findById(id)
+											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
+			reward.setCompany(rewardDetails.getCompany());
+			reward.setDiscountPercentage(rewardDetails.getDiscountPercentage());
+			reward.setUrl(rewardDetails.getUrl());
+			Reward updatedReward = rewardRepository.save(reward);
+			return ResponseEntity.ok(new Response<>(true, updatedReward));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore durante l'aggiornamento della ricompensa: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
 
 	// Delete
-	@DeleteMapping("/routes/deleteRoute/{id}")
-	public boolean deleteRoute(@PathVariable Integer id) {
-		Route route = routeRepository.findById(id).orElse(null);
-		if (route != null) {
-			routeRepository.delete(route);
-			return true;
-		} else {
-			return false;
+	@DeleteMapping("/rewards/deleteReward")
+	public ResponseEntity<Response<Boolean>> deleteReward(@RequestParam Integer id) {
+		try {
+			Reward reward = rewardRepository.findById(id)
+											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
+			rewardRepository.delete(reward);
+			return ResponseEntity.ok(new Response<>(true));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore durante l'eliminazione della ricompensa: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
 

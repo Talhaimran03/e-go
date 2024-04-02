@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 
 @Repository
-public interface RouteRepository extends CrudRepository<Route, Integer> {
-    List<Route> findByUserId(Integer userId);
+public interface RewardRepository extends CrudRepository<Reward, Integer> {
+    List<Reward> findByUserId(Integer userId);
 }

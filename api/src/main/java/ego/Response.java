@@ -17,6 +17,10 @@ public class Response<T> {
         this.success = success;
         this.errors = errors;
     }
+    
+    public Response(boolean success) {
+        this.success = success;
+    }
 
     // Getters and setters
 

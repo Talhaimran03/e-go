@@ -24,7 +24,10 @@ public class UserService {
         List<String> errors = new ArrayList<>();
 
         if (!isValidEmail(email)) {
-            errors.add("Email non valida o già registrata");
+            errors.add("Formato email non valido");
+        }
+        if (userRepository.existsByEmail(email)) {
+            errors.add("Email già registrata");
         }
         if (!isValidPassword(password)) {
             errors.add("Password non valida");
@@ -46,7 +49,7 @@ public class UserService {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches() && !userRepository.existsByEmail(email);
+        return matcher.matches();
     }
 
     public boolean isEmailAlreadyRegistered(String email) {

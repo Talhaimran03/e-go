@@ -7,11 +7,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -60,7 +65,17 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_rewards",
+        joinColumns = @JoinColumn(name = "userId"),
+        inverseJoinColumns = @JoinColumn(name = "rewardId")
+    )
+    private Set<Reward> rewards = new HashSet<>();
     
+    // Constructor
+
 	public User(String email, String password, String name, String surname, Date birthDate, byte[] profileImage, LocalDateTime registrationDate, Integer otp) {
         this.email = email;
         this.password = password;
@@ -72,7 +87,7 @@ public class User {
     }
 
     public User() {
-        // Default
+        // Default constructor
     }
 
     // Getters and setters

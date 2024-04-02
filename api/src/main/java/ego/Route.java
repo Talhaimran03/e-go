@@ -36,6 +36,8 @@ public class Route {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
+    // Constructor
+
     public Route(Point startCoordinates, LocalDateTime startTime, Point endCoordinates, LocalDateTime endTime, User user) {
         this.startCoordinates = startCoordinates;
         this.startTime = startTime;
@@ -92,5 +94,17 @@ public class Route {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", startCoordinates=" + startCoordinates +
+                ", startTime=" + startTime +
+                ", endCoordinates=" + endCoordinates +
+                ", endTime=" + endTime +
+                ", user=" + user +
+                '}';
     }
 }
