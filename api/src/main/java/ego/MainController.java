@@ -240,7 +240,7 @@ public class MainController {
 	}
 
 	// Read
-	@GetMapping("/getAllRoutes")
+	@GetMapping("/routes/getAllRoutes")
 	public ResponseEntity<Response<List<Route>>> getAllRoutes() {
 		Iterable<Route> routesIterable = routeRepository.findAll();
 		List<Route> routesList = new ArrayList<>();
