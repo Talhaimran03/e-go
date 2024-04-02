@@ -5,7 +5,6 @@ import org.springframework.data.geo.Point;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +20,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.nio.file.Path;
 
-@Controller
+@RestController
 @RequestMapping(path="/ego")
 public class MainController {
 	
@@ -35,7 +34,7 @@ public class MainController {
 
     // Create
     @PostMapping(path="/users/addUser")
-    public @ResponseBody ResponseEntity<Response<Boolean>> addNewUser(@RequestParam String email,
+    public ResponseEntity<Response<Boolean>> addNewUser(@RequestParam String email,
                                             @RequestParam String password,
                                             @RequestParam String name,
                                             @RequestParam String surname,
