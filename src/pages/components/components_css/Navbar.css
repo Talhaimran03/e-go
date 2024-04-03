@@ -38,12 +38,22 @@
     margin: 0 20%;
 }
 
-.active{
-    color: #23AB31;
+.link{
+    color: rgba(204, 204, 204, 1);
 
     svg {
         path {
-        stroke: #23AB31;
+        stroke: rgba(204, 204, 204, 1);
+        }
+    }
+}
+
+.active{
+    color: #4aa18b;
+
+    svg {
+        path {
+        stroke: #4aa18b;
         }
     }
 }
