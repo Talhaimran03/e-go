@@ -1,5 +1,5 @@
 import './components_css/Navbar.css';
-import Buttons from './Buttons.js';
+import Button from './Button.js';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as Punti } from "../img/punti.svg";
@@ -15,22 +15,22 @@ function Navbar() {
                 <ul className='menu'>
                     <div className="col-4">
                         <li>
-                            <Link to='../points' activeClassName="active">
-                                <Buttons img={ Punti } testo="Punti"/>                    
+                            <Link to='../points'>
+                                <Button img={ Punti } testo="Punti"/>                    
                             </Link>
                         </li>
                     </div>
                     <div className="col-4">
                         <li>
-                            <Link to='../' activeClassName="">
-                                <Buttons img={ Home } testo="Home"/>   
+                            <Link to='../' className="active">
+                                <Button img={ Home } testo="Home"/>   
                             </Link>
                         </li>
                     </div>
                     <div className="col-4">
                         <li>
-                            <Link to='../settings' activeClassName="">
-                                <Buttons img={ Settings } testo="Impostazioni"/>   
+                            <Link to='../settings'>
+                                <Button img={ Settings } testo="Impostazioni"/>   
                             </Link>
                         </li>
                     </div>

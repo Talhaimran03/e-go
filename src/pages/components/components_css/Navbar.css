@@ -40,5 +40,10 @@
 
 .active{
     color: #23AB31;
-    background-color: #23AB31;
+
+    svg {
+        path {
+        stroke: #23AB31;
+        }
+    }
 }
