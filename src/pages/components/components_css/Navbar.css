@@ -39,11 +39,11 @@
 }
 
 .link{
-    color: rgba(204, 204, 204, 1);
+    color: #cccccc;
 
     svg {
         path {
-        stroke: rgba(204, 204, 204, 1);
+        stroke: #cccccc;
         }
     }
 }

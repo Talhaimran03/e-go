@@ -7,9 +7,9 @@ import Logo from "./components/logo";
 export default function Settings() {
     return (
         <>
-            <div className="pos-logo">
+            {/* <div className="pos-logo">
                 <Logo></Logo>
-            </div>
+            </div> */}
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>

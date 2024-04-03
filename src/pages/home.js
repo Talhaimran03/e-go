@@ -5,13 +5,13 @@ import Logo from "./components/logo";
 
 export default function Home() {
     return (
-        <>
-            <div className="pos-logo">
+        <div className='home'>
+            {/* <div className="pos-logo">
                 <Logo></Logo>
-            </div>
+            </div> */}
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
-        </>
+        </div>
     );
 }
