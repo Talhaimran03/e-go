@@ -44,6 +44,10 @@ public class Reward {
         this.url = url;
     }
 
+    public Reward() {
+        // Default constructor
+    }
+
     // Getters and setters
 
     public Long getId() {

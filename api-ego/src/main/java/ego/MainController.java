@@ -24,6 +24,7 @@ import java.nio.file.Path;
 @RequestMapping(path="/ego")
 public class MainController {
 	
+	/************************************************************************************************************************/
 	// Users operations
 
     @Autowired
@@ -120,29 +121,43 @@ public class MainController {
 
 		// Update only required parameters
 		if (email != null) {
-			if (userService.isValidEmail(email) && !userRepository.existsByEmail(email)) {
-				user.setEmail(email);
-			} else {
-				if (!userService.isValidEmail(email)) {
-					errors.add("Formato email non valido");
-				}
-				if (userRepository.existsByEmail(email)) {
+			if (userService.isValidEmail(email)) {
+				if (!userRepository.existsByEmail(email))
+					user.setEmail(email);
+				else
 					errors.add("Email già registrata");
-				}
+			} else {
+				errors.add("Formato email non valido");
 			}
-		}		
+		}
 
-		if (password != null && userService.isValidPassword(password)) user.setPassword(userService.encodePassword(password));
-		else errors.add("Password non valida");
+		if (password != null) {
+			if (userService.isValidPassword(password))
+				user.setPassword(userService.encodePassword(password));
+			else 
+				errors.add("Password non valida");
+		}
 
-		if (name != null && userService.isValidName(name)) user.setName(name);
-		else errors.add("Nome non valido");
+		if (name != null) {
+			if (userService.isValidName(name))
+				user.setName(name);
+			else
+				errors.add("Nome non valido");
+		}
 
-		if (surname != null && userService.isValidSurname(surname)) user.setSurname(surname);
-		else errors.add("Cognome non valido");
+		if (surname != null) {
+			if (userService.isValidSurname(surname))
+				user.setSurname(surname);
+			else
+				errors.add("Cognome non valido");
+		}
 
-		if (birthDate != null && userService.isValidBirthDate(birthDate)) user.setBirthDate(birthDate);
-		else errors.add("Data di nascita non valida");
+		if (birthDate != null) {
+			if (userService.isValidBirthDate(birthDate))
+				user.setBirthDate(birthDate);
+			else
+				errors.add("Data di nascita non valida");
+		}
 
 		if (profileImage != null) {
 			byte[] profileImageData = null;
@@ -208,6 +223,7 @@ public class MainController {
 		}
 	}
 
+	/************************************************************************************************************************/
 	// Routes operations
 
 	@Autowired
@@ -216,14 +232,12 @@ public class MainController {
 	// Create
 	@PostMapping("/routes/addRoute")
 	public ResponseEntity<Response<Boolean>> addRoute(@RequestParam Point startCoordinates,
-													@RequestParam LocalDateTime startTime,
-													@RequestParam Point endCoordinates,
-													@RequestParam LocalDateTime endTime,
 													@RequestParam Integer userId) {
 		try {
 			User user = userRepository.findById(userId).orElse(null);
 			if (user != null) {
-				Route route = new Route(startCoordinates, startTime, endCoordinates, endTime, user);
+				LocalDateTime startTime = LocalDateTime.now();
+				Route route = new Route(startCoordinates, startTime, user);
 				routeRepository.save(route);
 				return ResponseEntity.ok(new Response<>(true));
 			} else {
@@ -338,6 +352,8 @@ public class MainController {
 		}
 	}
 	
+
+	/************************************************************************************************************************/
 	// Rewards operations
 
 	@Autowired
@@ -375,35 +391,29 @@ public class MainController {
 		}
 	}
 
-	@GetMapping("/rewards/getRewardsByUserId")
-	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestParam Integer userId) {
-		try {
-			List<Reward> rewards = rewardRepository.findByUserId(userId);
-			if (!rewards.isEmpty()) {
-				return ResponseEntity.ok(new Response<>(true, rewards));
-			} else {
-				List<String> errors = new ArrayList<>();
-				errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
-			}
-		} catch (Exception e) {
-			List<String> errors = new ArrayList<>();
-			errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-		}
-	}
-
 	// Update
 	@PutMapping("/rewards/updateReward")
-	public ResponseEntity<Response<Reward>> updateReward(@RequestParam Integer id, @RequestParam Reward rewardDetails) {
+	public ResponseEntity<Response<Reward>> updateReward(@RequestParam Integer id, 
+														@RequestParam(required = false) String company,
+														@RequestParam(required = false) Double discountPercentage,
+														@RequestParam(required = false) String url) {
 		try {
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
-			reward.setCompany(rewardDetails.getCompany());
-			reward.setDiscountPercentage(rewardDetails.getDiscountPercentage());
-			reward.setUrl(rewardDetails.getUrl());
-			Reward updatedReward = rewardRepository.save(reward);
-			return ResponseEntity.ok(new Response<>(true, updatedReward));
+
+			// Update only required parameters
+			if (company != null) {
+				reward.setCompany(company);
+			}
+			if (discountPercentage != null) {
+				reward.setDiscountPercentage(discountPercentage);
+			}
+			if (url != null) {
+				reward.setUrl(url);
+			}
+
+			rewardRepository.save(reward);
+			return ResponseEntity.ok(new Response<>(true));
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore durante l'aggiornamento della ricompensa: " + e.getMessage());
@@ -425,5 +435,69 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
+
+
+	/************************************************************************************************************************/
+	// Users/Rewards operations
+
+	@GetMapping("/users/getRewardsByUserId")
+	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestParam Integer userId) {
+		try {
+			List<Reward> rewards = rewardRepository.findByUserId(userId);
+			if (!rewards.isEmpty()) {
+				return ResponseEntity.ok(new Response<>(true, rewards));
+			} else {
+				List<String> errors = new ArrayList<>();
+				errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+
+	@PutMapping("/users/linkReward")
+    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestParam Integer userId,
+                                                              @RequestParam Integer rewardId) {
+        try {
+            User user = userRepository.findById(userId)
+                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+            Reward reward = rewardRepository.findById(rewardId)
+                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
+
+            user.getRewards().add(reward);
+            userRepository.save(user);
+
+            return ResponseEntity.ok(new Response<>(true));
+        } catch (Exception e) {
+            List<String> errors = new ArrayList<>();
+            errors.add("Errore durante il collegamento dell'utente alla ricompensa: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+        }
+    }
+
+    @DeleteMapping("/users/unlinkReward")
+    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestParam Integer userId,
+                                                                  @RequestParam Integer rewardId) {
+        try {
+            User user = userRepository.findById(userId)
+                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+            Reward reward = rewardRepository.findById(rewardId)
+                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
+
+            user.getRewards().remove(reward);
+            userRepository.save(user);
+
+            return ResponseEntity.ok(new Response<>(true));
+        } catch (Exception e) {
+            List<String> errors = new ArrayList<>();
+            errors.add("Errore durante lo scollegamento dell'utente dalla ricompensa: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+        }
+    }
 
 }

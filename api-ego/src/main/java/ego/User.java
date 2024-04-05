@@ -68,7 +68,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-        name = "user_rewards",
+        name = "users_rewards",
         joinColumns = @JoinColumn(name = "userId"),
         inverseJoinColumns = @JoinColumn(name = "rewardId")
     )
@@ -184,6 +184,14 @@ public class User {
     public void addRoute(Route route) {
         routes.add(route);
         route.setUser(this);
+    }
+
+    public Set<Reward> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(Set<Reward> rewards) {
+        this.rewards = rewards;
     }
 
     @Override

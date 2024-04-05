@@ -38,12 +38,14 @@ public class Route {
 
     // Constructor
 
-    public Route(Point startCoordinates, LocalDateTime startTime, Point endCoordinates, LocalDateTime endTime, User user) {
+    public Route(Point startCoordinates, LocalDateTime startTime, User user) {
         this.startCoordinates = startCoordinates;
         this.startTime = startTime;
-        this.endCoordinates = endCoordinates;
-        this.endTime = endTime;
         this.user = user;
+    }
+
+    public Route() {
+        // Default constructor
     }
 
     // Getters and setters
