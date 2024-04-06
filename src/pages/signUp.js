@@ -4,7 +4,7 @@ import './components/components_css/signUp.css';
 
 
 
-function SignUp() {
+function Sign() {
     return (
         <div>
             <div className='body flexcount'>
@@ -24,9 +24,9 @@ function SignUp() {
             </form>
             <div className='shapesign'></div>
             <div className='buttonalign'>
-                <div className='buttonsign'></div>
+                <input type="submit" class="buttonsign" value=""></input>
             </div>
         </div>
     )
 }
-export default SignUp;
+export default Sign;

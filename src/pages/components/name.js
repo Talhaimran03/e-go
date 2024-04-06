@@ -5,7 +5,9 @@ function Name() {
     return (
         <body>
             <div>
-                <div className='background'></div>
+                <div className='margine'>
+                    <div className='background'></div>
+                </div>
                 <div className='flexshapelogo'>
                     <div className='shapelogo'>
                         <Logo></Logo>

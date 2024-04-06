@@ -16,9 +16,15 @@ body{
     z-index: 0;
 }
 
+.margine{
+    width: 100%;
+}
+
 .flexshapelogo{
     display: flex;
     justify-content: space-around;
+    position: relative;
+    z-index: 1;
 }
 
 
