@@ -1,5 +1,7 @@
 
-
+body{
+    background-color: rgba(227, 238, 222, 1);
+}
 
 
 .background{
@@ -14,7 +16,7 @@
     z-index: 0;
 }
 
-.flexlogo{
+.flexshapelogo{
     display: flex;
     justify-content: space-around;
 }
@@ -26,7 +28,12 @@
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 40px;  
+    margin-top: 40px;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;  
 }
 
 .flexform{
@@ -82,7 +89,7 @@
 .accedi:hover{
     width: 17rem;
     height: 4rem;
-    background-color: rgba(255, 255, 255, 0.658);
+    background-color: rgba(255, 255, 255, 0.733);
     border-radius: 50px;
     position: absolute;
     z-index: 1;
@@ -103,3 +110,4 @@
     color: white;
     font-weight: lighter;
 }
+
