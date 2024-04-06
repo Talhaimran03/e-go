@@ -1,13 +1,9 @@
 import './components/components_css/signUp.css';
 
-
-
-
-
 function Sign() {
     return (
         <div>
-            <div className='body flexcount'>
+            <div className='flexcount'>
                 <div className='count1'>1</div>
                 <div className='count2'>2</div>
             </div>
@@ -22,7 +18,7 @@ function Sign() {
                 <input type="text" className='boxemail' placeholder='password'/>
                 <input type="text" className='boxemail' placeholder='ripeti password'/>
             </form>
-            <div className='shapesign'></div>
+            {/* <div className='shapesign'></div> */}
             <div className='buttonalign'>
                 <input type="submit" class="buttonsign" value=""></input>
             </div>
