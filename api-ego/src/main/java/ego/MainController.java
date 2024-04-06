@@ -36,11 +36,11 @@ public class MainController {
     // Create
     @PostMapping(path="/users/addUser")
     public ResponseEntity<Response<Boolean>> addNewUser(@RequestParam String email,
-                                            @RequestParam String password,
-                                            @RequestParam String name,
-                                            @RequestParam String surname,
-                                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-											@RequestParam(required = false) MultipartFile profileImage) throws URISyntaxException {
+														@RequestParam String password,
+														@RequestParam String name,
+														@RequestParam String surname,
+														@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
+														@RequestParam(required = false) MultipartFile profileImage) throws URISyntaxException {
 		
 		// Validate user data
 		List<String> valid = userService.validateUserData(email, password, name, surname, birthDate);
@@ -231,8 +231,7 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public ResponseEntity<Response<Boolean>> addRoute(@RequestParam Point startCoordinates,
-													@RequestParam Integer userId) {
+	public ResponseEntity<Response<Boolean>> addRoute(@RequestParam Point startCoordinates, @RequestParam Integer userId) {
 		try {
 			User user = userRepository.findById(userId).orElse(null);
 			if (user != null) {
@@ -287,11 +286,11 @@ public class MainController {
 	// Update
 	@PutMapping("/routes/updateRoute")
 	public ResponseEntity<Response<Boolean>> updateRoute(@RequestParam Integer id,
-														@RequestParam(required = false) Point startCoordinates,
-														@RequestParam(required = false) LocalDateTime startTime,
-														@RequestParam(required = false) Point endCoordinates,
-														@RequestParam(required = false) LocalDateTime endTime,
-														@RequestParam(required = false) Integer userId) {
+														 @RequestParam(required = false) Point startCoordinates,
+														 @RequestParam(required = false) LocalDateTime startTime,
+														 @RequestParam(required = false) Point endCoordinates,
+														 @RequestParam(required = false) LocalDateTime endTime,
+														 @RequestParam(required = false) Integer userId) {
 		Route route = routeRepository.findById(id).orElse(null);
 		if (route == null) {
 			List<String> errors = new ArrayList<>();
@@ -366,9 +365,9 @@ public class MainController {
     // Create
 	@PostMapping("/rewards/addReward")
 	public ResponseEntity<Response<Boolean>> addReward(@RequestParam String company,
-														@RequestParam double discountPercentage,
-														@RequestParam Integer requiredPoints,
-														@RequestParam String url) {
+													   @RequestParam double discountPercentage,
+													   @RequestParam Integer requiredPoints,
+													   @RequestParam String url) {
 		try {
 			Reward reward = new Reward(company, discountPercentage, requiredPoints, url);
 			rewardRepository.save(reward);
@@ -398,9 +397,9 @@ public class MainController {
 	// Update
 	@PutMapping("/rewards/updateReward")
 	public ResponseEntity<Response<Reward>> updateReward(@RequestParam Integer id, 
-														@RequestParam(required = false) String company,
-														@RequestParam(required = false) Double discountPercentage,
-														@RequestParam(required = false) String url) {
+														 @RequestParam(required = false) String company,
+														 @RequestParam(required = false) Double discountPercentage,
+														 @RequestParam(required = false) String url) {
 		try {
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
@@ -463,8 +462,7 @@ public class MainController {
 	}
 
 	@PutMapping("/users/linkReward")
-    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestParam Integer userId,
-                                                              @RequestParam Integer rewardId) {
+    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestParam Integer userId, @RequestParam Integer rewardId) {
         try {
             User user = userRepository.findById(userId)
                                        .orElseThrow(() -> new RuntimeException("Utente non trovato"));
@@ -484,8 +482,7 @@ public class MainController {
     }
 
     @DeleteMapping("/users/unlinkReward")
-    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestParam Integer userId,
-                                                                  @RequestParam Integer rewardId) {
+    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestParam Integer userId, @RequestParam Integer rewardId) {
         try {
             User user = userRepository.findById(userId)
                                        .orElseThrow(() -> new RuntimeException("Utente non trovato"));
