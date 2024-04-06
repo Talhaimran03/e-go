@@ -1,10 +1,9 @@
 import './components/components_css/login.css';
 import Logo from "./components/logo.js";
-import Background from './components/background.js';
+import { ReactComponent as Background } from "./img/background.svg";
 
 function Login() {
     return (
-        <body>
             <div>
                 <div className='background'>
                     <Background></Background>
@@ -27,7 +26,6 @@ function Login() {
                     </form>
                 </div>
             </div>
-        </body>
     );
 }
 
