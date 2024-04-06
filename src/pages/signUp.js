@@ -1,10 +1,10 @@
-import './components/components_css/sign.css';
+import './components/components_css/signUp.css';
 
 
 
 
 
-function Sign() {
+function SignUp() {
     return (
         <div>
             <div className='body flexcount'>
@@ -29,4 +29,4 @@ function Sign() {
         </div>
     )
 }
-export default Sign;
+export default SignUp;
