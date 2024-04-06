@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -18,13 +19,13 @@ public class BusPath {
     private Integer id;
 
     @ManyToOne
-    @Column(name = "busNumber", nullable = false)
+    @JoinColumn(name = "bus_number_id")
     private BusNumber busNumber;
 
-    @Column(name = "latitude", nullable = false)
+    @Column(name = "latitude", nullable = false, precision = 10, scale = 8)
     private BigDecimal latitude;
 
-    @Column(name = "longitude", nullable = false)
+    @Column(name = "longitude", nullable = false, precision = 10, scale = 8)
     private BigDecimal longitude;
 
     // Constructor
@@ -32,6 +33,10 @@ public class BusPath {
         this.busNumber = busNumber;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public BusPath() {
+        // Default
     }
 
     // Getter

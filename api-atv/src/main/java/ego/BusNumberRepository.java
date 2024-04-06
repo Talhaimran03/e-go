@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 // CRUD refers Create, Read, Update, Delete
 
 public interface BusNumberRepository extends CrudRepository<BusNumber, Integer> {
+    BusNumber findByNumber(Integer number);
 }

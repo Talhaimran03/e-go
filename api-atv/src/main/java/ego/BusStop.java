@@ -3,6 +3,8 @@ package ego;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,15 +23,16 @@ public class BusStop {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "latitude", nullable = false)
+    @Column(name = "latitude", nullable = false, precision = 10, scale = 8)
     private BigDecimal latitude;
 
-    @Column(name = "longitude", nullable = false)
+    @Column(name = "longitude", nullable = false, precision = 10, scale = 8)
     private BigDecimal longitude;
 
     @Column(name = "qr_code_number", nullable = false)
     private Integer qrCodeNumber;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "busStops")
     private List<BusNumber> busNumbers;
 
@@ -40,6 +43,10 @@ public class BusStop {
         this.longitude = longitude;
         this.qrCodeNumber = qrCodeNumber;
         this.busNumbers = bus;
+    }
+
+    public BusStop() {
+        // Default
     }
 
     // Getters
@@ -65,5 +72,10 @@ public class BusStop {
 
     public List<BusNumber> getBusNumbers() {
         return busNumbers;
+    }
+
+    public void setNearestPath(BusPath nearestPath) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setNearestPath'");
     }
 }
