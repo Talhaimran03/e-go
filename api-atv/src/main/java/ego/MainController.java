@@ -47,21 +47,30 @@ public class MainController {
     @GetMapping("/getBusStopsByBusNumber")
     public List<BusStop> getBusStopsByBusNumber(@RequestParam Integer busNumber) {
         BusNumber bus = busNumberRepository.findByNumber(busNumber);
-        return bus.getBusStops();
+        if (bus != null && bus.getBusStops() != null) {
+            return bus.getBusStops();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @GetMapping("/getBusPathsByBusNumber")
     public List<BusPath> getBusPathsByBusNumber(@RequestParam Integer busNumber) {
         BusNumber bus = busNumberRepository.findByNumber(busNumber);
-        return bus.getBusPaths();
+        if (bus != null && bus.getBusPaths() != null) {
+            return bus.getBusPaths();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
-    @GetMapping("/grtBusNumbersByBusStop")
-    public List<BusNumber> getBusNumbersByBusStop(@RequestParam Integer stopId) {
-        BusStop stop = busStopRepository.findById(stopId).orElse(null);
-        return stop != null ? stop.getBusNumbers() : Collections.emptyList();
+    @GetMapping("/getBusNumbersByBusStop")
+    public List<BusNumber> getBusNumbersByBusStop(@RequestParam Integer qrcodeNumber) {
+        BusStop stop = busStopRepository.findByQrCodeNumber(qrcodeNumber);
+        if (stop != null && stop.getBusNumbers() != null) {
+            return stop.getBusNumbers();
+        } else {
+            return Collections.emptyList();
+        }
     }
-
-    /* To do → Ottenere tutte le fermate attraversate da un certo percorso fatto da un utente avendo la posizione di partenza e fine */
-
 }

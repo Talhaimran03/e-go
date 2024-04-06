@@ -2,6 +2,8 @@ package ego;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class BusPath {
 
     @ManyToOne
     @JoinColumn(name = "bus_number_id")
+    @JsonIgnoreProperties("busPaths")
     private BusNumber busNumber;
 
     @Column(name = "latitude", nullable = false, precision = 10, scale = 8)

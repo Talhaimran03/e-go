@@ -73,9 +73,4 @@ public class BusStop {
     public List<BusNumber> getBusNumbers() {
         return busNumbers;
     }
-
-    public void setNearestPath(BusPath nearestPath) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setNearestPath'");
-    }
 }

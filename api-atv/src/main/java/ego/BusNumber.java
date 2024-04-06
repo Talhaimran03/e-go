@@ -23,7 +23,7 @@ public class BusNumber {
     private int id;
     
     @Column(name = "number", unique = true, nullable = false)
-    private String number;
+    private Integer number;
     
     @Column(name = "qr_code_number")
     private Integer qrCodeNumber;
@@ -41,7 +41,7 @@ public class BusNumber {
     private List<BusPath> busPaths;
     
     // Constructor
-    public BusNumber(String number, Integer qrCodeNumber, List<BusStop> busStops) {
+    public BusNumber(Integer number, Integer qrCodeNumber, List<BusStop> busStops) {
         this.number = number;
         this.qrCodeNumber = qrCodeNumber;
         this.busStops = busStops;
@@ -56,7 +56,7 @@ public class BusNumber {
         return id;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
     

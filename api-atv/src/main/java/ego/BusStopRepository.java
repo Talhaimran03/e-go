@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 // CRUD refers Create, Read, Update, Delete
 
 public interface BusStopRepository extends CrudRepository<BusStop, Integer> {
+    BusStop findByQrCodeNumber(Integer qrCodeNumber);
 }
