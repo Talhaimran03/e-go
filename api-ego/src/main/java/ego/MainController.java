@@ -239,6 +239,10 @@ public class MainController {
 				LocalDateTime startTime = LocalDateTime.now();
 				Route route = new Route(startCoordinates, startTime, user);
 				routeRepository.save(route);
+
+				user.setPoints(user.getPoints() + 10);
+				userRepository.save(user);
+
 				return ResponseEntity.ok(new Response<>(true));
 			} else {
 				List<String> errors = new ArrayList<>();
