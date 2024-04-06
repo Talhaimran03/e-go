@@ -18,6 +18,7 @@ function Name() {
                         <input type="text" className='email' placeholder="Email" />
                         <input type="text" className='password' placeholder="Password" />
                         <button type='button' className='accedi'>ACCEDI</button>
+                        <button type='button' className='signUp'>REGISTRATI</button>
                         <h3 className='pwddimenticata'>password dimenticata?</h3>
                     </form>
                 </div>
