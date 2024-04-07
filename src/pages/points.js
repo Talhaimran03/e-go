@@ -4,8 +4,8 @@ import Navbar from "./components/Navbar";
 import Switch from './components/switch';
 import Card from './components/card';
 
-import { ReactComponent as bitmobility } from "./img/bitmobility.svg";
-import { ReactComponent as atv } from "./img/atv.svg";
+import bitmobility from "./img/bitmobility.svg";
+import atv from "./img/atv.svg";
 
 
 export default function Points() {
