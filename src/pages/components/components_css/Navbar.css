@@ -21,6 +21,7 @@
     height: 70px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     outline: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 0;
 }
 
 .menu{
@@ -29,8 +30,7 @@
     align-items: center;
     height: 70px;
     padding: 0;
-    margin: auto 0; 
-
+    margin: 0; 
 }
 
 .menu li{
@@ -56,4 +56,140 @@
         stroke: #4aa18b;
         }
     }
+}
+
+.login{
+    display: none;
+}
+.registrati{
+    display: none;
+}
+
+.info{
+    display: none;
+}
+
+.Home1{
+    display: none;
+}
+
+.impostazioni1{
+    display: none;
+}
+
+
+@media only screen and (min-width: 769px) {
+    .home{
+        background-color: #ebeaeb1b;
+    }
+    .login{
+        display: block;
+    }
+    .registrati{
+        display: block;
+    }
+    .punti{
+        display: none;
+    }
+    .info{
+        display: block;
+        width: 13%;
+        text-align: center;
+    }
+
+    .navbar{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        border-radius: 0;
+        outline: none;
+        box-shadow: none;
+        z-index: 1000;
+    }
+
+    .icons{
+        display: none;
+    }
+
+    .pos-navbar {
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+
+    .navbar{
+        background-color: none;
+        color: black;
+        height: 100px;
+        text-align: right;
+        margin-top: 0px;
+        border-bottom: 1px solid grey;
+    }
+    a{
+        color: black;
+    }
+
+    p{
+        display: none;
+    }
+
+    .Home1{
+        display: block;
+        margin-left: 100px;
+        width: 13%;
+        text-align: center;
+    }
+    .impostazioni1{
+        display: block;
+        width: 13%;
+        text-align: center;
+    }
+    .login{
+        border: 1px solid #4AA18B;
+        background-color: #4AA18B;
+        border-radius: 30px;
+        width: 15%;
+        height: 40%;
+        margin-right: 50px;
+        
+    }
+    .registrati{
+        margin-right: 0;
+        width: 20%;
+    }
+    .login1{
+      text-align: center;
+      padding-top: 3%;
+    }
+    .registrati1{
+        padding-left: 20px;
+    }
+
+    .settings{
+        display: none;
+    }
+    .menu{
+        margin-top: 15px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

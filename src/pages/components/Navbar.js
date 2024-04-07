@@ -25,7 +25,7 @@ function Navbar() {
         <div className="navbar">
             <div className="row">
                 <ul className='menu'>
-                    <div className="col-4">
+                    <div className="col-4 punti">
                         <li>
                             <Link to='../points' className={activeLink === 'points' ? "link active" : "link"} onClick={() => handleLinkClick('points')}>
                                 <Button img={ Punti } testo="Punti"/>                    
@@ -39,16 +39,43 @@ function Navbar() {
                             </Link>
                         </li>
                     </div>
-                    <div className="col-4">
+                   <div className="col-4 Home1">
+                        <li>
+                           <Link to='/home'>Home</Link> 
+                        </li>
+                    </div>
+                    <div className="col-4 info">
+                        <li>
+                           <Link to='/info'>Info</Link> 
+                        </li>                            
+                    </div>
+                    <div className="col-4 impostazioni1">
+                        <li>
+                           <Link to='/impostazioni'>Impostazioni</Link> 
+                        </li>                         
+                    </div>
+                    
+                    <div className="col-4 settings">
                         <li>
                             <Link to='../settings' className={activeLink === 'settings' ? "link active" : "link"} onClick={() => handleLinkClick('settings')}>
                                 <Button img={ Settings } testo="Impostazioni"/>   
                             </Link>
                         </li>
                     </div>
+                    <div className="col-4 registrati">
+                        <li className='registrati1'>
+                           <Link to='/registrati'>Registrati</Link> 
+                        </li>
+                    </div>
+                    <div className="col-4 login">
+                        <li className='login1'>
+                           <Link to='/login'>Login</Link> 
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>
+    
     );
 }
 

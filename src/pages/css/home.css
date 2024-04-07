@@ -3,6 +3,10 @@
     background-color: #409576;
 }
 
+.row{
+    width: 100%;
+}
+
 .row::after {
     content: "";
     clear: both;
@@ -41,3 +45,113 @@
     margin-top: 2%;
 }
 
+.footer{
+    display: none;
+}
+
+img{
+    display: none;
+}
+
+.frase1{
+    display: none;
+}
+.frase2{
+    display: none;
+}
+.frase3{
+    display: none;
+}
+@media screen and (min-width:769px){
+    .col-1 {width: 8.33%;}
+        .col-2 {width: 16.66%;}
+        .col-22 {width: 16.66%;}
+        .col-3 {width: 25%;}
+        .col-4 {width: 33.33%;}
+        .col-5 {width: 41.66%;}
+        .col-6 {width: 50%;}
+        .col-7 {width: 58.33%;}
+        .col-8 {width: 66.66%;}
+        .col-9 {width: 75%;}
+        .col-10 {width: 83.33%;}
+        .col-11 {width: 91.66%;}
+        .col-12 {width: 100%;}
+    }
+
+@media only screen and (min-width: 769px){
+
+    .footer{
+        display:flex;
+        bottom: 0;
+    }
+
+    img{
+        display: block;
+    }
+    
+    .imgMockup{
+        margin-top: 15%;
+        margin-left: 57%;
+    }
+    h1{
+        width: 40%;
+        z-index: 0;
+        position: relative;
+    }
+    .frase1{
+        display: block;
+        bottom: 55%;
+        left: 3%;
+        z-index: 0;
+    }
+    .frase2{
+        display: block;
+        bottom: 54%;
+        left: 25%;
+    }
+    .frase3{
+        display: block;
+        bottom: 53%;
+        left: 11%;
+    }
+
+    .footer{
+        background-color: #409576;
+        height: 20%;
+        bottom: 0;
+        width: 100%;
+        position: relative;
+    }
+
+    .partner{
+        /* border: 1px solid black; */
+        text-align: center;
+        height: 70%;
+        margin-top: 2%;
+    }
+
+    .partner2{
+        /* border: 1px solid black; */
+        text-align: center;
+        height: 70%;
+        margin-top: 2%;
+    }
+
+    .partner3{
+        /* border: 1px solid black; */
+        text-align: center;
+        height: 70%;
+        margin-top: 2%;
+    }
+
+    .partner4{
+        /* border: 1px solid black; */
+        text-align: center;
+        height: 70%;
+        margin-top: 2%;
+    }
+
+    .pos-navbar{
+        height: 90px;
+    }
+}
