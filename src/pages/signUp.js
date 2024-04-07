@@ -1,5 +1,5 @@
 import './components/components_css/signUp.css';
-import { ReactComponent as BkgSignUp } from "./img/bkgsignup.svg";
+import { ReactComponent as BkgSignUp } from "./img/BkgSignUp.svg";
 
 function Sign() {
     return (
