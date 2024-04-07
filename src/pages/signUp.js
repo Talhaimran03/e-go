@@ -1,5 +1,6 @@
 import './components/components_css/signUp.css';
 import { ReactComponent as BkgSignUp } from "./img/BkgSignUp.svg";
+import { ReactComponent as Icongoogle } from "./img/Google__G__logo.svg";
 
 function Sign() {
     return (
@@ -25,6 +26,8 @@ function Sign() {
             {/* <div className='shapesign'></div> */}
             <div className='buttonalign'>
                 <input type="submit" class="buttonsign" value=""></input>
+                <input type="submit" class="buttongoogle" value=""></input>
+                <div className='logogoogle'><Icongoogle></Icongoogle></div>
             </div>
         </div>
     )

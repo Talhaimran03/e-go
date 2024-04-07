@@ -82,7 +82,20 @@
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 80px;
+    margin-top: 30px;
+    position: absolute;
+    z-index: 1;
+    border: none;
+    
+}
+
+.buttongoogle{
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    margin-top: 150px;
     position: absolute;
     z-index: 1;
     border: none;
@@ -92,4 +105,10 @@
 .buttonalign{
     display: flex;
     justify-content: space-around
+}
+
+.logogoogle{
+    position: relative;
+    top: 166px;
+    z-index: 2;
 }

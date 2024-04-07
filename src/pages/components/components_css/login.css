@@ -133,3 +133,22 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
     font-weight: bold;   
 }
+
+.logogooglelogin{
+    position: relative;
+    top: 591px;
+    z-index: 2;
+}
+
+.buttongooglelogin{
+    width: 3rem;
+    height: 3rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    margin-top: 580px;
+    position: absolute;
+    z-index: 1;
+    border: none;
+    
+}
