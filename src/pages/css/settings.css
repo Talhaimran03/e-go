@@ -34,3 +34,18 @@
     justify-content: center;
     top: 70%;
 }
+
+.container{
+    height: 30000px;
+    background-color: #409576;
+    display: flex;
+    justify-content: center;
+}
+
+.userPosition{
+    margin-top: 20%;
+}
+
+/* .settings{
+
+} */
