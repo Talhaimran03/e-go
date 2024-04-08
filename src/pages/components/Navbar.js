@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Punti } from "../img/punti.svg";
 import { ReactComponent as Home } from "../img/home.svg";
 import { ReactComponent as Settings } from "../img/impostazioni.svg";
+import logo4 from "../img/logo4.png";
 
 function Navbar() {
     const [activeLink, setActiveLink] = useState('');
@@ -25,6 +26,9 @@ function Navbar() {
         <div className="navbar">
             <div className="row">
                 <ul className='menu'>
+                    <div className='logo'>
+                        <img src={logo4} id='logo4'></img>
+                    </div>
                     <div className="col-4 punti">
                         <li>
                             <Link to='../points' className={activeLink === 'points' ? "link active" : "link"} onClick={() => handleLinkClick('points')}>

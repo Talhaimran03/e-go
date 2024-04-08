@@ -2,7 +2,7 @@ import './css/home.css'
 import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Logo from "./components/logo";
-import mockup from "./img/mockup.jpeg";
+import mask from "./img/mask.png";
 
 export default function Home() {
     return (
@@ -14,7 +14,7 @@ export default function Home() {
                 <Navbar></Navbar>
             </div>
             <div className='imgMockup'>
-               <img src={mockup}></img>
+               <img src={mask}></img>
             </div>
             
             <h1 className='frase1'>Lavoriamo per spronarti a prendere </h1>
