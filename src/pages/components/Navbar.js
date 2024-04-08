@@ -28,21 +28,21 @@ function Navbar() {
                     <div className="col-4">
                         <li>
                             <Link to='../points' className={activeLink === 'points' ? "link active" : "link"} onClick={() => handleLinkClick('points')}>
-                                <Button img={ Punti } testo="Punti"/>                    
+                                <Button img={ Punti } testo={activeLink === 'points' ? "Punti" : " "}/>                    
                             </Link>
                         </li>
                     </div>
                     <div className="col-4">
                         <li>
                             <Link to='../' className={activeLink === 'home' ? "link active" : "link"} onClick={() => handleLinkClick('home')}>
-                                <Button img={ Home } testo="Home"/>   
+                                <Button img={ Home } testo={activeLink === 'home' ? "Home" : " "}/>   
                             </Link>
                         </li>
                     </div>
                     <div className="col-4">
                         <li>
                             <Link to='../settings' className={activeLink === 'settings' ? "link active" : "link"} onClick={() => handleLinkClick('settings')}>
-                                <Button img={ Settings } testo="Impostazioni"/>   
+                                <Button img={ Settings } testo={activeLink === 'settings' ? "Impostazioni" : " "}/>   
                             </Link>
                         </li>
                     </div>
