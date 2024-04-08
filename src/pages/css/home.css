@@ -154,4 +154,27 @@ img{
     .pos-navbar{
         height: 90px;
     }
+
+    .suDiNoi{
+        margin-left: 10%;
+        font-size: 22px;
+    }
+
+    #progetto{
+        z-index: 0;
+        margin-left: 10%;
+        width: 80%;
+        display: block;
+        font-size: 18px;
+    }
+
+    #surprise{
+        margin-left: 35%;
+    }
+    .bus{
+        position:absolute;
+        left: 20%;
+        top: 30%;
+    }
+   
 }
