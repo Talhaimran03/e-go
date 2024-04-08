@@ -48,6 +48,13 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
 }
 
+.iconuser{
+    position: relative;
+    top: 220px;
+    right: -20px;
+    z-index: 1;
+}
+
 .password{
     width: 17rem;
     height: 4rem;
@@ -61,6 +68,14 @@
     border: none;
     text-align: center; 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px; 
+}
+
+
+.iconpwd{
+    position: relative;
+    top: 320px;
+    right: 112px;
+    z-index: 1;
 }
 
 .accedi{
@@ -105,7 +120,7 @@
 
 .signUp{
     width: 8rem;
-    height: 2vh;
+    height: 2.5vh;
     background-color: rgb(255, 255, 255);
     border-radius: 50px;
     position: absolute;
@@ -121,7 +136,7 @@
 
 .signUp:hover{
     width: 8rem;
-    height: 2vh;
+    height: 2.5vh;
     background-color: rgb(226, 226, 226);    border-radius: 50px;
     position: absolute;
     z-index: 1;
@@ -137,6 +152,7 @@
 .logogooglelogin{
     position: relative;
     top: 591px;
+    right: 130px;
     z-index: 2;
 }
 

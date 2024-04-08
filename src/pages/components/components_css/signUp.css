@@ -3,6 +3,13 @@
     top: 0px;
 }
 
+.arrowreturn{
+    position: relative;
+    z-index: 1;
+    left: 30px;
+    top: 30px;
+}
+
 .count1{
     width: 2vh;
     height: 2vh;
@@ -31,7 +38,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .sign{
@@ -54,6 +61,48 @@
     border: none;
     text-align: center;
     box-shadow: rgba(74, 161, 139, 1)0px 5px 4px;
+}
+
+.emailicon{
+    position: relative;
+    z-index: 3;
+    left: 70px;
+    top: 34px;
+}
+
+.iconautente{
+    position: absolute;
+    z-index: 3;
+    left: 67px;
+    top: 330px;
+}
+
+.iconautentesurname{
+    position: absolute;
+    z-index: 3;
+    left: 67px;
+    top: 390px;
+}
+
+.calendaricon{
+    position: absolute;
+    z-index: 3;
+    top: 448px;
+    left: 67px;
+}
+
+.pswicon{
+    position: absolute;
+    z-index: 3;
+    top: 509px;
+    left: 66px;
+}
+
+.pswiconrepeat{
+    position: absolute;
+    z-index: 3;
+    top: 569px;
+    left: 66px;
 }
 
 .alignboxsign{
@@ -82,7 +131,7 @@
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 30px;
+    margin-top: 60px;
     position: absolute;
     z-index: 1;
     border: none;
@@ -90,12 +139,12 @@
 }
 
 .buttongoogle{
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 150px;
+    margin-top: 155px;
     position: absolute;
     z-index: 1;
     border: none;
@@ -111,4 +160,12 @@
     position: relative;
     top: 166px;
     z-index: 2;
+}
+
+.arrowavanti{
+    position: absolute;
+    top: 667px;
+    left: 177px;
+    z-index: 3;
+    rotate: 180deg;
 }
