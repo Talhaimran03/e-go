@@ -1,13 +1,7 @@
-
-body{
-    overflow-y: hidden;
-
-}
-
 .welcome{
     position: absolute;
-    height: 6.6vh;
-    width: 80%;
+    height: 7vh;
+    width: 86%;
     top: 4.1vh;
     left: 40px;
     margin: 0;
@@ -44,6 +38,6 @@ body{
 
 .user-icon{
     position: absolute;
-    top: -.5vh;
+    top: 0vh;
     left: 71vw;
 }

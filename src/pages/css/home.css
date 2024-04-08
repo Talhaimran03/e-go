@@ -1,3 +1,19 @@
+*{
+    overflow-y: hidden;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.home {
+    height: 53rem;
+    background-color: #E3EEDE;
+}
+
 .row::after {
     content: "";
     clear: both;
@@ -10,15 +26,6 @@
     /* border: 1px solid red; */
 }
 
-  body{
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-}
-
-* {
-    box-sizing: border-box;
-}
 
 .pos-navbar {
     display: flex;
@@ -27,6 +34,8 @@
     left: 0;
     bottom: 2%;
     right: 0;
+    z-index: 999999;
+    overflow-y: visible;
 }
 
 .pos-logo{
@@ -34,4 +43,82 @@
     justify-content: center;
     height: auto;
     margin-top: 2%;
+}
+
+.background{
+    position: absolute;
+    top: 14vh;
+    left: 8vw;
+}
+
+.points{
+    position: absolute;
+    top: 17vh;
+    left: 36vw;
+    background: none;
+    color: #FFFF;
+    font-size: 24px;
+}
+
+.graphic{
+    position: absolute;
+    top: 26vh;
+    left: 15.5vw;
+}
+
+.qr{
+    position: absolute;
+    top: 34vh;
+    left: 22.5vw;
+}
+
+.saving{
+    position: absolute;
+    background: linear-gradient(#409576, #3B7C76);
+    top: 61.2vh;
+    left: 9vw;
+    width: 83vw;
+    height: 20vh;
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slider-maps{
+    background: none;
+    position: absolute;
+    top: 91vh;
+    width: 100%;
+    height: auto;
+    left: 0;
+    overflow-y: show;
+    margin-bottom: 100vh;
+}
+
+.maps{
+    display: flex;
+    background: linear-gradient(#409576, #3B7C76);
+    width: 60vw;
+    height: 14vh;
+    border-radius: 12px;  
+    box-shadow: inset 0 0 4px 4px rgba(0, 0, 0, 0.2);
+    margin-left: 3%;
+}
+
+.path{
+    position: absolute;
+    top: 83vh;
+    left: 34vw;
+    color: #5E6A5A;
+}
+
+.uno{
+    margin-left: 67vw;
+    margin-top: -14vh;
+    opacity: 0.5;
+}
+
+.due{
+    margin-left: 131vw;
+    margin-top: -14vh;
+    opacity: 0.5;
 }
