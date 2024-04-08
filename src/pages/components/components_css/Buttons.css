@@ -3,24 +3,26 @@
 }
 
 a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
 }
 
-a:hover {
-  color: #23AB31;
-
-  svg {
-    path {
-      stroke: #23AB31;
-    }
-  }
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.button:hover {
+  color: #23AB31;
+}
+
+.button:hover svg path {
+  stroke: #23AB31;
+}
 
 #testo {
   margin: 0;
+
 }
+
+

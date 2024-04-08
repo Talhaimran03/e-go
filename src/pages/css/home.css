@@ -10,7 +10,7 @@ body{
 }
 
 .home {
-    height: 53rem;
+    height: 55rem;
     background-color: #E3EEDE;
 }
 
@@ -91,7 +91,6 @@ body{
     height: auto;
     left: 0;
     overflow-y: show;
-    margin-bottom: 100vh;
 }
 
 .maps{
