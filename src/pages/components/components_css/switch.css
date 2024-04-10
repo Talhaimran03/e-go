@@ -1,0 +1,19 @@
+.row::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+[class*="col-"] {
+    float: left;
+    padding: 0px;
+    /* border: 1px solid red; */
+}
+
+.col-6{
+    width: 50%;
+}
+
+.section{
+    font-style: none;
+}

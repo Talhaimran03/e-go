@@ -1,15 +1,14 @@
-import './css/settings.css';
+// import './css/ranking.css';
 import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
-import Logo from "./components/logo";
+import Switch from './components/switch';
 
-
-export default function Settings() {
+export default function Ranking() {
     return (
         <>
-            {/* <div className="pos-logo">
-                <Logo></Logo>
-            </div> */}
+            <div>
+                <Switch></Switch>
+            </div>
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>

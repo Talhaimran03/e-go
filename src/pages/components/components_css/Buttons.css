@@ -3,16 +3,14 @@
 }
 
 a {
-  text-decoration: none;
-}
-
-.button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
-.button:hover {
+a:hover {
   color: #23AB31;
 
   svg {
