@@ -5,13 +5,8 @@
 .flexshapelogo{
     display: flex;
     justify-content: space-around;
-    position: relative;
+    /* position: relative; */
     z-index: 1;
-}
-
-.background{
-    position: absolute;
-    z-index: 0;
 }
 
 .shapelogo{
@@ -20,7 +15,7 @@
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 40px;
+    margin-top: 80px;
     display: flex;
     align-content: center;
     flex-wrap: wrap;
@@ -29,51 +24,39 @@
 }
 
 .flexform{
-    display: flex; 
-    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    gap: 20px;
+}
+
+.containerform{
+    padding: 8px 8px;
+    height:50px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 40px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px; 
 }
 
 .email{
-    width: 17rem;
-    height: 4rem;
-    background-color: rgb(255, 255, 255);
-    border-radius: 50px;
-    position: absolute;
-    z-index: 1;
-    color: rgba(74, 161, 139, 0.5);
-    font-size: 22px;
-    top: 400px;
+    width: 15rem;
+    background: transparent;
     border: none;
-    text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    outline: none;
 }
 
-.iconuser{
-    position: relative;
-    top: 220px;
-    right: -20px;
-    z-index: 1;
-}
-
-.password{
-    width: 17rem;
-    height: 4rem;
-    background-color: rgb(255, 255, 255);
-    border-radius: 50px;
-    position: absolute;
-    z-index: 1;
-    color: rgba(74, 161, 139, 0.5);
-    font-size: 22px;
-    top: 500px;
-    border: none;
-    text-align: center; 
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px; 
-}
 
 
 .iconpwd{
     position: relative;
-    top: 320px;
+    top: 240px;
     right: 112px;
     z-index: 1;
 }
@@ -81,79 +64,43 @@
 .accedi{
     width: 17rem;
     height: 4rem;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(74, 161, 139, 1);
     border-radius: 50px;
-    position: absolute;
+    /* position: absolute; */
     z-index: 1;
-    color: rgba(74, 161, 139, 1);
+    color:white;
     font-size: 22px;
-    top: 625px;
+    top: 600px;
     border: none;
     text-align: center; 
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;    
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    margin-top: 3rem;    
 }
 
-.accedi:hover{
-    width: 17rem;
-    height: 4rem;
-    background-color: rgb(226, 226, 226);
-    border-radius: 50px;
-    position: absolute;
-    z-index: 1;
-    color: rgba(74, 161, 139, 1);
-    font-size: 22px;
-    top: 625px;
-    border: none;
-    text-align: center; 
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;    
-}
+
 
 .pwddimenticata{
-    position: absolute;
-    top: 725px;
-    z-index: 1;
     font-size: 15px;
     text-decoration: underline;
-    color: white;
+    color: black;
     font-weight: lighter;
+    margin: 0rem;
 }
 
 .signUp{
     width: 8rem;
     height: 2.5vh;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(74, 161, 139, 1);
     border-radius: 50px;
-    position: absolute;
+    /* position: absolute; */
     z-index: 1;
-    color: rgba(74, 161, 139, 1);
-    font-size: 15px;
-    top: 710px;
+    color: white;
+    font-size: 11px;
+    top: 720px;
     border: none;
     text-align: center; 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
     font-weight: bold; 
-}
-
-.signUp:hover{
-    width: 8rem;
-    height: 2.5vh;
-    background-color: rgb(226, 226, 226);    border-radius: 50px;
-    position: absolute;
-    z-index: 1;
-    color: rgba(74, 161, 139, 1);
-    font-size: 15px;
-    top: 710px;
-    border: none;
-    text-align: center; 
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
-    font-weight: bold;   
-}
-
-.logogooglelogin{
-    position: relative;
-    top: 591px;
-    right: 130px;
-    z-index: 2;
 }
 
 .buttongooglelogin{
@@ -162,9 +109,12 @@
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
-    margin-top: 580px;
-    position: absolute;
-    z-index: 1;
     border: none;
-    
+}
+
+.buttonflex{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
 }

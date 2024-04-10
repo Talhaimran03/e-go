@@ -8,9 +8,6 @@ import { ReactComponent as Iconpwd } from "./img/icona_lucchetto.svg";
 function Login() {
     return (
         <div>
-            <div className='background'>
-                <Background></Background>
-            </div>
             <div className='margine'>
                 <div className='background'></div>
             </div>
@@ -19,20 +16,31 @@ function Login() {
                     <Logo></Logo>
                 </div>
             </div>
-            <div className='flexplace'>
-                <form className='flexform' action="">
+            
+            
+            
+            <form className='flexform'>
+                
+                <div className='containerform'>
+                    <div><Iconuser></Iconuser></div>
                     <input type="text" className='email' placeholder="Email" />
-                    <div className='iconuser'><Iconuser></Iconuser></div>
-                    <input type="text" className='password' placeholder="Password" />
-                    <div className='iconpwd'><Iconpwd></Iconpwd></div>
-                    <button type='button' className='accedi'>ACCEDI</button>
-                    <button type='button' className='signUp'>REGISTRATI</button>
-                    <h3 className='pwddimenticata'>password dimenticata?</h3>
-                    
-                    <input type="submit" class="buttongooglelogin" value=""></input>
-                    <div className='logogooglelogin'><Icongoogle></Icongoogle></div>
-                </form>
-            </div>
+                </div>
+                
+                <div className='containerform'>
+                    <div><Iconpwd></Iconpwd></div>
+                    <input type="text" className='email' placeholder="Password" />
+                </div>
+               
+                <button type='button' className='accedi'>ACCEDI</button>
+                <h3 className='pwddimenticata'>password dimenticata?</h3>
+                <button type='button' className='signUp'>REGISTRATI</button>
+
+                <div className='buttonflex'>
+                    <button class="buttongooglelogin" value="">
+                        <Icongoogle></Icongoogle>
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

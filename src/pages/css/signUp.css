@@ -45,7 +45,7 @@
     position: relative;
     text-align: center;
     font-size: 48px;
-    color: rgba(74, 161, 139, 1);
+    color: black;
     z-index: 2;
 }
 
@@ -63,11 +63,9 @@
     box-shadow: rgba(74, 161, 139, 1)0px 5px 4px;
 }
 
-.emailicon{
-    position: relative;
-    z-index: 3;
-    left: 70px;
-    top: 34px;
+.flexinput{
+    display: flex;
+    align-items: center;
 }
 
 .iconautente{

@@ -9,9 +9,11 @@ function VerifyCode() {
                     <div className='countcode1'>1</div>
                     <div className='countcode2'>2</div>
                 </div>
-                <div className='align'>
-                    <h1 className='verifyCode center'>Codice Verifica</h1>
-                    <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo <br /> inviato tramite email</p>
+                <div  className='align'>
+                    <div>
+                        <h1 className='verifyCode center'>Codice Verifica</h1>
+                        <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo <br /> inviato tramite email</p>
+                    </div>
                 </div>
                 <form className='flexboxnumber'>
                     <input type="text" className='box' placeholder='' />

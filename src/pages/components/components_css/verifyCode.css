@@ -1,6 +1,3 @@
-body{
-    background-color: rgba(227, 238, 222, 1)
-}
 .countcode1{
     
     width: 1.5vh;
@@ -28,8 +25,10 @@ body{
 }
 
 .align{
-    margin-left: 40px;
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
 }
 
 .verifyCode{
