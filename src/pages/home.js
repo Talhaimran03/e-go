@@ -1,14 +1,19 @@
 import './css/home.css'
 import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
-import Logo from "./components/logo";
 import App from './components/hero.js'
 import './components/components_css/hero.css'
-import background from './img/background.svg'
 import graph from './img/graph.svg'
 import qr from './img/qr.svg'
+import Bus from './img/bus.svg'
+import Map from './img/map.svg'
 
 export default function Home() {
+
+    const height = {
+        fontSize: '12px',
+    };
+
     return (
         <div className='home'>
             <div className='pos-navbar'>
@@ -16,21 +21,35 @@ export default function Home() {
             </div>
             <App></App>
             <div className='background'>
-                <img src={background} alt="background" />
-            </div>
             <div className='points'>
-                <b><p> 145 punti </p></b>
+                <b><p className='p'> 145 </p></b>
+                <b><p className='p secondo'> punti </p></b>
             </div>
-            <img className='graphic' src={graph} alt="graphic" />
-            <Link to="#">
-                <img className='qr' src={qr} alt="qr" />
-            </Link>
+            <div className='div-graphic'>
+                <img className='graphic' src={graph} alt="graphic" />
+            </div>
+            <div className='div-qr'>
+                <Link to="#">
+                    <img className='qr' src={qr} alt="qr" />
+                </Link>
+            </div>
             <div className='saving'>
-
+                <b><p> CO2 RISPARMIATA </p></b>
             </div>
-            <b><p className='path'> Ultimo percorso </p></b>
+            </div>
             <div className='slider-maps'>
                 <div className='maps'>
+                    <div className='interactive-map'>
+                        <img className='map' src={Map} alt="Map"></img>
+                    </div>
+                    <div className='maps-p'>
+                        <p> Stazione FS/Via XX...</p>
+                        <p style={height}> Orario percorrenza </p>
+                        <div className='bus-icon'>
+                            <img className='busIcon' src={Bus} alt="Bus"></img>
+                            <p> 20min </p>
+                        </div>
+                    </div>
                 </div>
                 <div className='maps uno'>
                 </div>
