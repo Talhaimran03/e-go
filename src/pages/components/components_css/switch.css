@@ -7,7 +7,6 @@
 [class*="col-"] {
     float: left;
     padding: 0px;
-    /* border: 1px solid red; */
 }
 
 .col-6{
@@ -16,4 +15,16 @@
 
 .section{
     font-style: none;
+}
+
+.switch{
+    text-align: center;
+}
+
+.switchText.active{
+    color: white;
+}
+
+.section.active {
+    background-color: #4AA18B;
 }

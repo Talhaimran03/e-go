@@ -1,0 +1,21 @@
+#positionRankingSection{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 2% 0;
+    padding: 0 5%;
+}
+
+#positionRankingSection:hover{
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+
+#iconRanking{
+    height: 50px;
+    padding-left: 5%;
+}
+
+#textRanking{
+    padding-left: 5%;
+}
