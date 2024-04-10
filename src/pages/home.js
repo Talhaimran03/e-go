@@ -21,21 +21,21 @@ export default function Home() {
             </div>
             <App></App>
             <div className='background'>
-            <div className='points'>
-                <b><p className='p'> 145 </p></b>
-                <b><p className='p secondo'> punti </p></b>
-            </div>
-            <div className='div-graphic'>
-                <img className='graphic' src={graph} alt="graphic" />
-            </div>
-            <div className='div-qr'>
-                <Link to="#">
-                    <img className='qr' src={qr} alt="qr" />
-                </Link>
-            </div>
-            <div className='saving'>
-                <b><p> CO2 RISPARMIATA </p></b>
-            </div>
+                <div className='points'>
+                    <b><p className='p'> 145 </p></b>
+                    <b><p className='p secondo'> punti </p></b>
+                </div>
+                <div className='div-graphic'>
+                    <img className='graphic' src={graph} alt="graphic" />
+                </div>
+                <div className='div-qr'>
+                    <Link to="#">
+                        <img className='qr' src={qr} alt="qr" />
+                    </Link>
+                </div>
+                <div className='saving'>
+                    <b><p> CO2 RISPARMIATA </p></b>
+                </div>
             </div>
             <div className='slider-maps'>
                 <div className='maps'>
@@ -43,7 +43,8 @@ export default function Home() {
                         <img className='map' src={Map} alt="Map"></img>
                     </div>
                     <div className='maps-p'>
-                        <p> Stazione FS/Via XX...</p>
+                        <p className='short-via'> Stazione FS/Via XX...</p>
+                        <p className='large-via'>Stazione FS/Via XXV Aprile, 8, 37138 Verona VR</p>
                         <p style={height}> Orario percorrenza </p>
                         <div className='bus-icon'>
                             <img className='busIcon' src={Bus} alt="Bus"></img>
@@ -54,6 +55,8 @@ export default function Home() {
                 <div className='maps uno'>
                 </div>
                 <div className='maps due'>
+                </div>
+                <div className='maps tre'>
                 </div>
             </div>
         </div>
