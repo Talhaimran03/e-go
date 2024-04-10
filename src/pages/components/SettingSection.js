@@ -1,5 +1,5 @@
 import './components_css/SettingSection.css';
-// import Arrow from '../img/arrow.svg';
+import Arrow from '../img/arrow.svg';
 
 function SettingSection ({ icon: ImgComponent, text }) {
     return(
@@ -8,7 +8,7 @@ function SettingSection ({ icon: ImgComponent, text }) {
                 <img src={ImgComponent} alt='icon' id='icon' />
                 <p id='text'> { text } </p>
             </div>
-            <p id='arrow'>></p>
+            <img src={ Arrow } alt="arrow" />
         </div>
     );
 };
