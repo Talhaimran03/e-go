@@ -4,9 +4,11 @@ import './components_css/SettingSection.css';
 function SettingSection ({ icon: ImgComponent, text }) {
     return(
         <div id='position'>
-            <img src={ImgComponent} alt='icon' id='icon' />
-            <p id='testo'> { text } </p>
-            <p>></p>
+            <div className="positionFirst">
+                <img src={ImgComponent} alt='icon' id='icon' />
+                <p id='text'> { text } </p>
+            </div>
+            <p id='arrow'>></p>
         </div>
     );
 };

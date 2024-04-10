@@ -35,17 +35,26 @@
     top: 70%;
 }
 
-.container{
-    height: 30000px;
-    background-color: #409576;
+.containerSettings{
+    height: auto;
+    background-color: #C3C3C3;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings{
+    background-color: white;
+    width: 100%;
+    height: 600px;
+    border-radius: 50px 50px 0 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 15%;
 }
 
 .userPosition{
-    margin-top: 20%;
+    padding-top: 20%;
+    padding-bottom: 10%;
 }
-
-/* .settings{
-
-} */
