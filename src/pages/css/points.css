@@ -14,7 +14,6 @@
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
-    background-color: #E3EEDE;
 }
 
 * {
@@ -34,10 +33,4 @@
     display: flex;
     justify-content: center;
     top: 2%;
-}
-
-
-.row{
-    display: flex;
-    flex-direction: row;
 }

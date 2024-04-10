@@ -1,4 +1,4 @@
-.rowNavbar::after {
+.row::after {
     content: "";
     clear: both;
     display: block;
@@ -38,7 +38,22 @@
     margin: 0 20%;
 }
 
+.link{
+    color: #cccccc;
+
+    svg {
+        path {
+        stroke: #cccccc;
+        }
+    }
+}
+
 .active{
-    color: #23AB31;
-    background-color: #23AB31;
+    color: #4aa18b;
+
+    svg {
+        path {
+        stroke: #4aa18b;
+        }
+    }
 }
