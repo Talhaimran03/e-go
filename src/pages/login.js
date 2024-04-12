@@ -1,9 +1,9 @@
 import './components/components_css/login.css';
 import Logo from "./components/logo.js";
-import { ReactComponent as Background } from "./img/background.svg";
 import { ReactComponent as Icongoogle } from "./img/Google__G__logo.svg";
 import { ReactComponent as Iconuser } from "./img//icona_utente.svg";
 import { ReactComponent as Iconpwd } from "./img/icona_lucchetto.svg";
+import { Link } from 'react-router-dom';
 
 function Login() {
     return (
@@ -34,11 +34,11 @@ function Login() {
                 <input type='submit' className='accedi' value="ACCEDI"></input>
                 <h3 className='pwddimenticata'>password dimenticata?</h3>
            
-                <button type='submit' className='signUp'>REGISTRATI</button>
+                <Link className='signUp' to='/signUp'>REGISTRATI</Link>
             
 
             <div className='buttonflex'>
-                <button class="buttongooglelogin" value="">
+                <button className="buttongooglelogin" value="">
                     <Icongoogle></Icongoogle>
                 </button>
             </div>

@@ -4,8 +4,8 @@ function SignUpSection ({ icon: ImgComponent, text, type }) {
     return(
         <div className='suAlign'> 
         <div className='suStyle'>
-            <ImgComponent alt="icon" id="iconStyle"/>
-            <input type={type} placeholder={text} id="inputStyle"/>
+            <ImgComponent alt="icon" className="iconStyle"/>
+            <input type={type} placeholder={text} className="inputStyle"/>
         </div>
         </div>
                 
