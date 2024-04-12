@@ -19,7 +19,7 @@ export default function Home() {
             <div className='suDiNoi'>
                 <h2>IL NOSTRO PROGETTO </h2>
             </div>
-            <div>
+            <div className='spiegazione'>
                 <p id='progetto'> 
                     
                     Siamo un team di 5 ragazzi che studiano presso il corso ITS Last Academy di Verona con indirizzo in Web Development. <br />

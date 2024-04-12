@@ -24,7 +24,7 @@ function Navbar() {
 
     return(
         <div className="navbar">
-            <div className="row">
+            <div className="row-landinPage">
                 <ul className='menu'>
                     <div className='logo'>
                         <img src={logo4} id='logo4'></img>
@@ -45,22 +45,22 @@ function Navbar() {
                     </div>
                     <div className='col-6 containerLink'>
                         <div className="col-4 Home1">
-                                <li>
+                                <li id='homeid'>
                                 <Link to='/landingPage'>Home</Link> 
                                 </li>
                             </div>
                             <div className="col-4 info">
-                                <li>
+                                <li id='infoid'>
                                 <Link to='/info'>Info</Link> 
                                 </li>                            
                             </div>
                             <div className="col-4 impostazioni1">
-                                <li>
+                                <li id='impoid'>
                                 <Link to='/impostazioni'>Impostazioni</Link> 
                                 </li>                         
                             </div>
                             <div className="col-4 Punti1">
-                                <li>
+                                <li id='puntiid'>
                                 <Link to='/landingPage'>Punti</Link> 
                                 </li>
                             </div>
@@ -74,12 +74,12 @@ function Navbar() {
                     </div>
                     <div className='col-4 containerLogin'>
                         <div className="col-4 registrati">
-                            <li className='registrati1'>
+                            <li id='registrati1'>
                             <Link to='/registrati'>Registrati</Link> 
                             </li>
                         </div>
                         <div className="col-4 login">
-                            <li className='login1'>
+                            <li id='login1'>
                             <Link to='/login'>Login</Link> 
                             </li>
                         </div>

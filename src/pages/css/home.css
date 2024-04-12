@@ -62,6 +62,22 @@ img{
 .frase3{
     display: none;
 }
+
+@media screen and (max-width: 768px){
+    .spiegazione{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .suDiNoi{
+        margin-left: 10%;
+    }
+
+    #surprise{
+        text-align: center;
+    }
+
+}
+
 @media screen and (min-width:769px){
     .col-1 {width: 8.33%;}
         .col-2 {width: 16.66%;}
@@ -204,4 +220,6 @@ img{
    .containerLanding{
     height: 620px;
    }
+
+   
 }
