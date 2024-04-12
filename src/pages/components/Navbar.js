@@ -43,22 +43,28 @@ function Navbar() {
                             </Link>
                         </li>
                     </div>
-                   <div className="col-4 Home1">
-                        <li>
-                           <Link to='/home'>Home</Link> 
-                        </li>
+                    <div className='col-6 containerLink'>
+                        <div className="col-4 Home1">
+                                <li>
+                                <Link to='/landingPage'>Home</Link> 
+                                </li>
+                            </div>
+                            <div className="col-4 info">
+                                <li>
+                                <Link to='/info'>Info</Link> 
+                                </li>                            
+                            </div>
+                            <div className="col-4 impostazioni1">
+                                <li>
+                                <Link to='/impostazioni'>Impostazioni</Link> 
+                                </li>                         
+                            </div>
+                            <div className="col-4 Punti1">
+                                <li>
+                                <Link to='/landingPage'>Punti</Link> 
+                                </li>
+                            </div>
                     </div>
-                    <div className="col-4 info">
-                        <li>
-                           <Link to='/info'>Info</Link> 
-                        </li>                            
-                    </div>
-                    <div className="col-4 impostazioni1">
-                        <li>
-                           <Link to='/impostazioni'>Impostazioni</Link> 
-                        </li>                         
-                    </div>
-                    
                     <div className="col-4 settings">
                         <li>
                             <Link to='../settings' className={activeLink === 'settings' ? "link active" : "link"} onClick={() => handleLinkClick('settings')}>
@@ -66,15 +72,17 @@ function Navbar() {
                             </Link>
                         </li>
                     </div>
-                    <div className="col-4 registrati">
-                        <li className='registrati1'>
-                           <Link to='/registrati'>Registrati</Link> 
-                        </li>
-                    </div>
-                    <div className="col-4 login">
-                        <li className='login1'>
-                           <Link to='/login'>Login</Link> 
-                        </li>
+                    <div className='col-4 containerLogin'>
+                        <div className="col-4 registrati">
+                            <li className='registrati1'>
+                            <Link to='/registrati'>Registrati</Link> 
+                            </li>
+                        </div>
+                        <div className="col-4 login">
+                            <li className='login1'>
+                            <Link to='/login'>Login</Link> 
+                            </li>
+                        </div>
                     </div>
                 </ul>
             </div>

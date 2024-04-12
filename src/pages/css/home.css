@@ -80,38 +80,55 @@ img{
 
 @media only screen and (min-width: 769px){
 
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .home{
+        height:80vh;
+    }
+  
     .footer{
         display:flex;
         bottom: 0;
+        position: relative;
     }
 
     img{
         display: block;
+        max-width: 100%;
+        position: relative;
+        height: auto;
+        z-index: 0;
     }
     
     .imgMockup{
+        width: 300px;
         margin-top: 15%;
-        margin-left: 57%;
+        margin-left: 65%;
     }
+    
     h1{
         width: 40%;
         z-index: 0;
-        position: relative;
     }
     .frase1{
         display: block;
-        bottom: 55%;
-        left: 3%;
+        bottom: 480px;
+        left: 40%;
+        width: 100%;
     }
     .frase2{
         display: block;
-        bottom: 54%;
-        left: 25%;
+        bottom: 475px;
+        padding-left: 45%;
+        width: 20%;
     }
     .frase3{
         display: block;
         bottom: 53%;
-        left: 11%;
+        margin-left: 120px;
+        width: 80%;
     }
 
     .footer{
@@ -119,7 +136,7 @@ img{
         height: 20%;
         bottom: 0;
         width: 100%;
-        position: relative;
+        position: absolute;
     }
 
     .partner{
@@ -157,6 +174,7 @@ img{
     .suDiNoi{
         margin-left: 10%;
         font-size: 22px;
+        z-index: 1000;
     }
 
     #progetto{
@@ -165,6 +183,7 @@ img{
         width: 80%;
         display: block;
         font-size: 18px;
+        z-index: 1000;
     }
 
     #surprise{
@@ -174,6 +193,15 @@ img{
         position:absolute;
         left: 20%;
         top: 30%;
+        z-index: 0;
     }
+   .frasi{
+    position: relative;
+    bottom: 350px;
+    margin-left: 5%;
+   } 
    
+   .containerLanding{
+    height: 620px;
+   }
 }

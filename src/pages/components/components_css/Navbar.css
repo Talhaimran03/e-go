@@ -118,6 +118,7 @@
         left: 0;
         right: 0;
         top: 0;
+        z-index: 1000;
     }
 
 
@@ -139,35 +140,38 @@
 
     .Home1{
         display: block;
-        margin-left: 100px;
+        width: auto;
+       /*  margin-left: 100px;
         width: 13%;
-        text-align: center;
+        text-align: center; */
     }
     .impostazioni1{
         display: block;
-        width: 13%;
-        text-align: center;
+        width: auto;
+        /*width: 13%;
+        text-align: center; */
     }
     .login{
         border: 1px solid #4AA18B;
         background-color: #4AA18B;
         border-radius: 30px;
-        width: 15%;
+        width: 20%;
         height: 40%;
         margin-right: 50px;
+        text-align: center;
         
     }
-    .registrati{
+    /* .registrati{
         margin-right: 0;
         width: 20%;
-    }
-    .login1{
+    } */
+   /*  .login1{
       text-align: center;
       padding-top: 3%;
     }
     .registrati1{
         padding-left: 20px;
-    }
+    } */
 
     .settings{
         display: none;
@@ -181,13 +185,26 @@
         margin-left: 45%;
     }
 
+    .logo{
+        width: 10%;
+    }
 
+    .containerLogin{
+        display: flex;
+        flex-direction: row;
+        align-items: normal;
+        justify-content:center;
+    }
+    .containerLink{
+        display: flex;
+        /* flex-direction: row;
+        align-items: normal; */
+        width: 50%;
+        justify-content: space-between;
+    }
+   
 
-
-
-
-
-
+    
 
 
 
