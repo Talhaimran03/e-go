@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+import busIcon from '../img/bus-stop.png';
 
 const App = () => {
   const [route, setRoute] = useState([]);
@@ -42,13 +45,20 @@ const App = () => {
     setBusStops(busStopsData);
   };
 
+  const customIcon = L.icon({
+    iconUrl: busIcon,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40]
+  });
+
   return (
     <div style={{ height: '600px', width: '100%' }}>
       <MapContainer center={[45.45742120, 10.94631000]} zoom={16} style={{ height: '100%', width: '100%' }}>
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap contributors' />
         {route.length > 0 && <Polyline positions={route} color='blue' />}
-        {busStops.map(stop => (
-          <Marker position={[stop.lat, stop.lng]} key={stop.name}>
+        {busStops.map((stop, index) => (
+          <Marker position={[stop.lat, stop.lng]} key={index} icon={customIcon}>
             <Popup>{stop.name}</Popup>
           </Marker>
         ))}
