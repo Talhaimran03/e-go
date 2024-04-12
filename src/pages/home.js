@@ -13,6 +13,14 @@ export default function Home() {
         fontSize: '12px',
     };
 
+    const heightLink = {
+        height: '10vh',
+        display: 'block',
+        width: '28vw',
+        zIndex: '9999',
+        position: 'absolute',
+    };
+
 {/*
    const htmlFile = `
    <!DOCTYPE html>
@@ -114,7 +122,7 @@ export default function Home() {
             <div className='slider-maps'>
                 <div className='maps'> 
                 <div className='interactive-map'>
-                    <Link to="/map">  
+                    <Link style={heightLink} to="/map">  
                         <img className='map' src={Map} alt="Map"></img>
                     </Link>
                 </div>
