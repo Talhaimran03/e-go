@@ -18,33 +18,38 @@ export default function Sign() {
                 <div className='count1'>1</div>
                 <div className='count2'>2</div>
             </div>
-            <div>
-                <h1 className='sign'>REGISTRATI</h1>
+                <div>
+                    <h1 className='sign'>REGISTRATI</h1>
+                </div>
+            <div className='sualign'>
+            <div className='sushaperegister'>
+
+                <div>
+                    <SignUpSection icon={Emailicon} text="Email" type="email"></SignUpSection>
+                </div>
+                <div>
+                    <SignUpSection icon={Iconautente} text="Nome" type="text"></SignUpSection>
+                </div>
+                <div>
+                    <SignUpSection icon={Iconautente} text="Cognome" type="text"></SignUpSection>
+                </div>
+                <div>
+                    <SignUpSection icon={Calendaricon} text="Data di nascita" type='date'></SignUpSection>
+                </div>
+                <div>
+                    <SignUpSection icon={Pswicon} text="password" type='password' required></SignUpSection>
+                </div>
+                <div>
+                    <SignUpSection icon={Pswicon} text="ripeti password" type='password'></SignUpSection>
+                </div>
+
+            </div>
             </div>
 
-            <div>
-                <SignUpSection icon={Emailicon} text="Email"></SignUpSection>
-            </div>
-            <div>
-                <SignUpSection icon={Iconautente} text="Nome"></SignUpSection>
-            </div>
-            <div>
-                <SignUpSection icon={Iconautente} text="Cognome"></SignUpSection>
-            </div>
-            <div>
-                <SignUpSection icon={Calendaricon} text="Data di nascita"></SignUpSection>
-            </div>
-            <div>
-                <SignUpSection icon={Pswicon} text="password"></SignUpSection>
-            </div>
-            <div>
-                <SignUpSection icon={Pswicon} text="ripeti password"></SignUpSection>
-            </div>
-
-
-            <div className='suReturnShape' >
-            <button className='suReturn'><Arrowreturn></Arrowreturn></button>
-            </div>
+                <div className='suReturnShape' >
+                    <button className='suinvia'><Arrowreturn></Arrowreturn></button>
+                </div>
+            <div className='sumarginfooter'></div>
         </div>
 
     );

@@ -16,30 +16,32 @@ function Login() {
                     <Logo></Logo>
                 </div>
             </div>
-            
-            
-            
+
+
+
             <form className='flexform'>
-                
+
                 <div className='containerform'>
                     <div><Iconuser></Iconuser></div>
-                    <input type="text" className='email' placeholder="Email" />
+                    <input type="text" className='email' placeholder="Email" required />
                 </div>
-                
+
                 <div className='containerform'>
                     <div><Iconpwd></Iconpwd></div>
-                    <input type="text" className='email' placeholder="Password" />
+                    <input type="password" className='email' placeholder="Password" required />
                 </div>
-               
-                <button type='button' className='accedi'>ACCEDI</button>
-                <h3 className='pwddimenticata'>password dimenticata?</h3>
-                <button type='button' className='signUp'>REGISTRATI</button>
 
-                <div className='buttonflex'>
-                    <button class="buttongooglelogin" value="">
-                        <Icongoogle></Icongoogle>
-                    </button>
-                </div>
+                <input type='submit' className='accedi' value="ACCEDI"></input>
+                <h3 className='pwddimenticata'>password dimenticata?</h3>
+           
+                <button type='submit' className='signUp'>REGISTRATI</button>
+            
+
+            <div className='buttonflex'>
+                <button class="buttongooglelogin" value="">
+                    <Icongoogle></Icongoogle>
+                </button>
+            </div>
             </form>
         </div>
     );
