@@ -164,6 +164,10 @@ body{
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
+.tre{
+    display: none;
+}
+
 .interactive-map{
     position: absolute;
     top: 1.5vh;
@@ -214,6 +218,20 @@ body{
 .large-via{
     display: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -282,11 +300,6 @@ body{
 }
 
 
-.interactive-map{
-    top: 1.9vh;
-    left: 4vw;
-}
-
 .maps-p{
     top: 1.9vh;
     left: -10vw;
@@ -321,5 +334,14 @@ body{
     margin-left: 1.5vw;
 }
 
+.tre{
+    display: block;
+    margin-left: -14vh 0 0 115vw;
+    background: linear-gradient(#C0E39F, #A6CCB1);
+}
 
+.interactive-map{
+    top: 2vh;
+    left: 4vw;
+}
   }
