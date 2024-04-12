@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -23,6 +25,9 @@ import java.nio.file.Path;
 @RestController
 @RequestMapping(path="/ego")
 public class MainController {
+
+	@Autowired
+    private HttpSession httpSession;
 	
 	/************************************************************************************************************************/
 	// Users operations
@@ -72,6 +77,8 @@ public class MainController {
 				
 		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate, otp);
 		userRepository.save(user);
+
+		httpSession.setAttribute("user", user);
 		
 		Response<Boolean> response = new Response<>(true);
         return ResponseEntity.ok(response);
@@ -205,6 +212,7 @@ public class MainController {
 			User user = userRepository.findByEmail(email);
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
+					httpSession.setAttribute("user", user);
 					return ResponseEntity.ok(new Response<>(true));
 				} else {
 					List<String> errors = new ArrayList<>();
@@ -222,6 +230,13 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
+
+	// Logout
+    @PostMapping(path="/users/logout")
+    public ResponseEntity<Response<Boolean>> logoutUser() {
+        httpSession.invalidate();
+        return ResponseEntity.ok(new Response<>(true));
+    }
 
 	/************************************************************************************************************************/
 	// Routes operations
