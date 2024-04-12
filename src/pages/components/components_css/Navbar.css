@@ -155,8 +155,8 @@
 
         }
     .login{
-        border: 1px solid #4AA18B;
-        background-color: #4AA18B;
+        border: 1px solid black;
+        background: linear-gradient(1.2rad, #409576, white);
         border-radius: 30px;
         height: 40%;
         margin-right: 50px;

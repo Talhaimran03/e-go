@@ -147,61 +147,55 @@ img{
         width: 80%;
     }
 
-    .footer{
-        background-color: #409576;
-        height: 20%;
-        bottom: 0;
-        width: 100%;
-        position: absolute;
-    }
-
+    
     .partner{
         /* border: 1px solid black; */
         text-align: center;
         height: 70%;
         margin-top: 2%;
     }
-
+    
     .partner2{
         /* border: 1px solid black; */
         text-align: center;
         height: 70%;
         margin-top: 2%;
     }
-
+    
     .partner3{
         /* border: 1px solid black; */
         text-align: center;
         height: 70%;
         margin-top: 2%;
     }
-
+    
     .partner4{
         /* border: 1px solid black; */
         text-align: center;
         height: 70%;
         margin-top: 2%;
     }
-
+    
     .pos-navbar{
         height: 90px;
     }
-
+    
     .suDiNoi{
+        margin-top: 5%;
         margin-left: 10%;
         font-size: 22px;
         z-index: 1000;
     }
-
+    
     #progetto{
         z-index: 0;
         margin-left: 10%;
         width: 80%;
         display: block;
-        font-size: 18px;
+        font-size: 15px;
         z-index: 1000;
     }
-
+    
     #surprise{
         margin-left: 35%;
     }
@@ -211,15 +205,92 @@ img{
         top: 30%;
         z-index: 0;
     }
-   .frasi{
-    position: relative;
-    bottom: 350px;
-    margin-left: 5%;
-   } 
-   
-   .containerLanding{
-    height: 620px;
-   }
+    .frasi{
+        position: relative;
+        bottom: 350px;
+        margin-left: 5%;
+    } 
+    
+    .containerLanding{
+        height: 620px;
+    }
+    #mail{
+        display: block;
+        margin: 0;
+    }
+    #telefono{
+        display: block;
+        margin: 0;
+    }
+    .containerFooter{
+        background-color: #409576;
+        height: 25%;
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+    }
+    #indirizzo{
+        display: block;
+        margin: 0;
+    }
+    #logoFooter{
+        width: 20%;
+        margin-top: 5%;
+    }
+    #sottoLogo{
+        display: block;
+        font-size: 12px;
+    }
+    .menuFooter{
+        font-size: 12px;
+    }
 
-   
+    .callToAction{
+        /* border: 1px solid black; */
+        border-radius: 10px;
+        height: 200px;
+        margin-top: 5%;
+        margin-left: 11%;
+        display: flex;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    #fraseCall{
+        font-size: 20px;
+        font-weight: 600;
+        display: flex;
+        text-align: left;
+        align-items: center;
+        margin-left: 5%;
+    }
+    .bottoni{
+        display: flex;
+        text-align: center;
+        align-items: center;
+        margin-left: 25%;
+    }
+    
+    
+    #puntiCall{
+        display: block;
+        margin-left: 5%;
+        font-size: 12px;
+    }
+    #scarica{
+        background: linear-gradient(1.2rad, #409576, white);
+        border-radius: 25px;
+        color: black;
+        border: 1px solid black;
+        padding: 5%;
+        width: 100px;
+    }
+    #registratiCall{
+        margin-left: 20px;
+        background-color: white;
+        border-radius: 25px;
+        color: black;
+        border: 1px solid black;
+        padding: 5%;
+        width: 100px;
+    }
 }
