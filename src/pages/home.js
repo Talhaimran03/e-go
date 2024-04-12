@@ -13,46 +13,83 @@ export default function Home() {
         fontSize: '12px',
     };
 
-
-    {/*const htmlFile = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
-        
-      </head>
-      <body>
-        <div id="my-map" style="width: 800px; height: 600px; border-radius: 10px">
-        <iframe width="70" height="70" 
-        src="https://www.openstreetmap.org/export/embed.html?bbox=10.979745984077455%2C45.428726496973376%2C10.984252095222473%2C45.43135797978953&amp;layer=mapnik&amp;marker=45.43004225371731%2C10.981999039649963" 
-            ></iframe><br/><small>
-        <a href="https://www.openstreetmap.org/?mlat=45.43004&amp;mlon=10.98200#map=18/45.43004/10.98200"></a>
-        </small>
-        </div>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-        <script>
-          var mapOptions = {
-            center: [45.42989355027215, 10.983624458312988],
-            zoom: 16
-          };
-          
-          var map = new L.map('my-map', mapOptions);
-          
-          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-          
-          map.addLayer(layer);
-        </script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-      </body>
-    </html>
-        `;*/}
+{/*
+   const htmlFile = `
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Mappa con percorso e fermate del bus</title>
+       <!-- Aggiungi il CSS di Leaflet -->
+       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+   </head>
+   <body>
+       <h1>Percorso con fermate del bus</h1>
+       <div id="map" style="width: 600px; height: 450px;"></div>
+   
+       <!-- Aggiungi il JavaScript di Leaflet -->
+       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+       <script>
+           // Crea una mappa utilizzando Leaflet
+           const map = L.map('map').setView([45.45742120, 10.94631000], 16);
+           
+           // Imposta il massimo livello di zoom
+           map.setMaxZoom(18);
+   
+           // Aggiungi uno strato di mappa di OpenStreetMap
+           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+               attribution: '&copy; OpenStreetMap contributors'
+           }).addTo(map);
+   
+           // Aggiungi il percorso alla mappa
+           function addRouteToMap(route) {
+               const routeCoordinates = route.routes[0].geometry.coordinates;
+               const latLngs = routeCoordinates.map(coord => [coord[1], coord[0]]);
+               L.polyline(latLngs, { color: 'blue' }).addTo(map);
+           }
+   
+           // Aggiungi i segnaposto delle fermate del bus
+           function addBusStopsToMap() {
+               // Coordinate delle fermate del bus
+               const busStops = [
+                   { lat: 45.45742120, lng: 10.94631000, name: 'Fermata inizio bus' },
+                   { lat: 45.46287260, lng: 10.93376780, name: 'Fermata fine bus' }
+               ];
+   
+               // Aggiungi i segnaposto delle fermate del bus alla mappa
+               busStops.forEach(stop => {
+                   L.marker([stop.lat, stop.lng]).addTo(map).bindPopup(stop.name);
+               });
+           }
+   
+           // Effettua la richiesta HTTP GET per ottenere il percorso
+           const baseUrl = 'https://router.project-osrm.org/route/v1/driving/';
+           const coordinates = '10.94631000,45.45742120;10.93376780,45.46287260';
+           const options = '?steps=true&geometries=geojson';
+           const requestUrl = baseUrl + coordinates + options;
+   
+           fetch(requestUrl)
+               .then(response => response.json())
+               .then(data => {
+                   // Aggiungi il percorso alla mappa
+                   addRouteToMap(data);
+                   
+                   // Aggiungi i segnaposto delle fermate del bus alla mappa
+                   addBusStopsToMap();
+               })
+               .catch(error => {
+                   console.error('Si è verificato un errore durante la richiesta di routing:', error);
+               });
+       </script>
+   </body>
+   </html>
+   
+            `;*/}
 
 
     return (
         
         <div className='home'>
-
+            
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
@@ -77,13 +114,13 @@ export default function Home() {
             <div className='slider-maps'>
                 <div className='maps'> 
                 <div className='interactive-map'>
-                    <Link to="https://www.openstreetmap.org/way/856788719" rel='noopener' target='_blank'>     
+                    <Link to="/map">  
                         <img className='map' src={Map} alt="Map"></img>
                     </Link>
                 </div>
                     
 
-                    {/*<div className='osm' dangerouslySetInnerHTML={{ __html: htmlFile }}></div> */}
+                {/*<div className='osm' dangerouslySetInnerHTML={{ __html: htmlFile }}></div> */}
                     
                     <div className='maps-p'>
                         <p className='short-via'> Stazione FS/Via XX...</p>
