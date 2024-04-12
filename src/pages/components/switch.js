@@ -16,19 +16,19 @@ function Switch() {
     };
 
     return (
-        <div className='position'>
-            <div className="row">
-                <div className="col-6">
-                    <div className={`section ${activeLink === 'points' ? 'active' : ''}`}>
+        <div className='position-switch'>
+            <div className="row-switch">
+                <div className="col-6-switch">
+                    <div className={`section-switch ${activeLink === 'points' ? 'active' : ''}`}>
                         <Link to='../points' className='switch' onClick={() => handleLinkClick('points')}>
-                            <p className='switchText'>Riscatta</p>                 
+                            <p className='text-switch'>Riscatta</p>                 
                         </Link>
                     </div>
                </div>
-                <div className="col-6">
-                    <div className={`section ${activeLink === 'ranking' ? 'active' : ''}`}>
+                <div className="col-6-switch">
+                    <div className={`section-switch ${activeLink === 'ranking' ? 'active' : ''}`}>
                         <Link to='../ranking' className='switch' onClick={() => handleLinkClick('ranking')}>
-                            <p className='switchText'>Classifica</p>                 
+                            <p className='text-switch'>Classifica</p>                 
                         </Link>
                     </div>
                </div>

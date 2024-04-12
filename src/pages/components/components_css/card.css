@@ -1,51 +1,47 @@
-.cardSize{
+.size-card{
     display: flex;
+    align-items: center;
     justify-content: center;
     background-color: white;
     border-radius: 16px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 25%);
     height: auto;
-    width: 50%;
-    margin: 10px 7px;
+    width: 46%;
+    margin: 10px auto;
 }
 
 a {
     width: 100% ;
 }
 
-#imgPosition{
-    width: 100%;
-    /* border: 1px solid red; */
-    background-image: cover;
-}
-
-#partnerImg{
+#partnerImg-card{
     width: 100%;
 }
 
-#testo{
+#text-card{
     color: black;
     margin-top: 10px;
+    text-align: center;
 }
 
-#punti{
+#points-card{
     color: #0094FF;
+    text-align: center;
     margin-top: 4px;
     margin-bottom: 0;
 }
 
-.outlineCounter{
+.outlineCounter-card{
     width: 90%;
     border: 1px solid #e8e8e8;
     border-radius: 6px;
     background-color: #F5F5F5;
-    margin: 7% 0;
+    margin: 7% auto;
 }
 
-.counter{
+.counter-card{
     width: 20%;
     height: 8px;
     border-radius: 6px;
-    background-color: #FFD900;
-    padding: 0;
+    background-color: #4AA18B;
 }

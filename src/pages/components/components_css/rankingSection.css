@@ -1,4 +1,4 @@
-#positionRankingSection{
+#position-rankingSection{
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -6,16 +6,24 @@
     padding: 0 5%;
 }
 
-#positionRankingSection:hover{
+#position-rankingSection:hover{
     cursor: pointer;
     background-color: #F5F5F5;
 }
 
-#iconRanking{
+.positionFirst-rankingSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+#icon-rankingSection{
     height: 50px;
     padding-left: 5%;
 }
 
-#textRanking{
+#text-rankingSection{
     padding-left: 5%;
 }

@@ -19,6 +19,12 @@ function Navbar() {
         setActiveLink(linkName);
     };
 
+    useEffect(() => {
+        if (location.pathname.includes('/ranking')) {
+            setActiveLink('points');
+        }
+    }, [location.pathname]);
+
     return(
         <div className="navbar">
             <div className="row">

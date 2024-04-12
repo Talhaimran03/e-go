@@ -3,11 +3,11 @@ import './components_css/rankingSection.css';
 
 function RankingSection ({ number, icon: ImgComponent, text, points }) {
     return(
-        <div id='positionRankingSection'>
-            <div className="positionFirst">
+        <div id='position-rankingSection'>
+            <div className="positionFirst-rankingSection">
                 <p>{ number }</p>
-                <img src={ImgComponent} alt='icon' id='iconRanking' />
-                <p id='textRanking'> { text } </p>
+                <img src={ImgComponent} alt='icon' id='icon-rankingSection' />
+                <p id='text-rankingSection'> { text } </p>
             </div>
             <p>{ points }</p>
         </div>
