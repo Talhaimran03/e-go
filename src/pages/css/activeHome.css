@@ -62,10 +62,10 @@ body{
 .background2{
     position: relative;
     display: flex;
-    top: 4vh;
-    left: -2vw;
+    top: 3vh;
+    left: -2.2vw;
     width: 90vw;
-    height: 54vh;
+    height: 59vh;
     margin: 5%;
     background: #FFFF;
     justify-content: center;
