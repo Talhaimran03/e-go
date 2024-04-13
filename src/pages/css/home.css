@@ -1,6 +1,6 @@
 .home {
     height: 53rem;
-    background-color: #409576;
+    background-color: white;
 }
 
 .row{
@@ -19,7 +19,7 @@
     /* border: 1px solid red; */
 }
 
-  body{
+body{
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
@@ -29,14 +29,7 @@
     box-sizing: border-box;
 }
 
-.pos-navbar {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    left: 0;
-    bottom: 2%;
-    right: 0;
-}
+
 
 .pos-logo{
     display: flex;
@@ -62,6 +55,58 @@ img{
 .frase3{
     display: none;
 }
+/* RESP */
+@media screen and (max-width: 877px) {
+    .navbar{
+        display: none;
+    }
+
+    footer{
+       position: fixed;
+       display: flex;
+       bottom: 0;
+    }
+    .navbarResp {
+        background-color: #333;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+    }
+      
+    .navbar-toggle {
+        display: none; /* Nasconde il toggle su schermi più larghi */
+        cursor: pointer;
+    }
+    
+    .navbar-menu {
+        list-style: none;
+        display: flex;
+    }
+    
+    .navbar-menu li {
+        margin-right: 20px;
+    }
+    
+    
+    .navbar-toggle {
+        display: block; /* Mostra il toggle su schermi più piccoli */
+    }
+    
+    .navbar-menu {
+        display: none; /* Nasconde il menu su schermi più piccoli */
+        flex-direction: column; /* Allinea gli elementi verticalmente */
+        padding: 0;
+    }
+    
+    .navbar-menu li {
+        margin: 10px 0;
+    }
+      
+}
+
+
+
 
 @media screen and (max-width: 768px){
     .spiegazione{
@@ -110,12 +155,12 @@ img{
     .home{
         height:80vh;
     }
-  
+  /* 
     .footer{
         display:flex;
         bottom: 0;
         position: relative;
-    }
+    } */
 
     img{
         display: block;
@@ -216,7 +261,7 @@ img{
     }
     .frasi{
         position: relative;
-        bottom: 350px;
+        bottom: 550px;
         margin-left: 5%;
     } 
     
@@ -231,12 +276,26 @@ img{
         display: block;
         margin: 0;
     }
+
     .containerFooter{
-        background-color: #409576;
-        height: 25%;
+        background-color: white;
+        height: 16%;
         bottom: 0;
         width: 100%;
-        position: absolute;
+        position: fixed;
+        flex-wrap: nowrap;
+        border-top: 1px solid black;
+    }
+  /*   .row{
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+    } */
+    .rowFooter{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: stretch;
     }
     #indirizzo{
         display: block;
@@ -245,13 +304,29 @@ img{
     #logoFooter{
         width: 20%;
         margin-top: 5%;
+        margin-left: 5%;
     }
     #sottoLogo{
         display: block;
         font-size: 12px;
+        margin-left: 7%;
     }
     .menuFooter{
-        font-size: 12px;
+        position: relative;
+        font-size: 14px;
+        text-align: center;
+        justify-content: space-around;
+        display: inline-flex;
+        flex-wrap: nowrap;
+        margin-top: 1%;
+        height: 20px;
+        font-weight: 500;
+        right: 0;
+    
+    }
+    .menuFooter a {
+        margin-left: 10px; /* Aggiunge spazio tra i link */
+        margin-right: 10px; /* Aggiunge spazio tra i link */
     }
 
     .callToAction{
@@ -347,5 +422,66 @@ img{
         position: absolute;
         top: 34px;
         left: 59%;
+    }
+    #sottom{
+        display: flex;
+        position: relative;
+        font-size: 12px;
+    }
+    .sottomenu{
+        position: relative;
+        top: 40px;
+        right: 80px;
+    }
+    .row {
+        display: flex; /* Utilizza Flexbox per allineare gli elementi */
+        /* flex-wrap: nowrap; */ /* Consentire il wrapping degli elementi su più righe se necessario */
+        margin-right: -15px; 
+        margin-left: -15px; 
+        
+    }
+    row::after {
+        content: ""; /* Aggiunge un elemento vuoto per il clearfix */
+        display: table; /* Imposta il display su table per utilizzare il clearfix */
+        clear: both; /* Pulisce i float */
+    }
+
+    Footer{
+        display: block;
+        width: 100%;
+    }
+
+   /*  #linkHome{
+        margin-right: 20px;
+    }
+    
+    #linkInfo{
+        margin-right: 20px;
+    }
+
+    #linkContatti{
+        margin-left: 20px;
+    }
+    #linkImpo{
+        margin-left: 20px;
+    }
+    #linkPunti{
+        margin-left: 20px;
+    } */
+
+    .copyy{
+        display: flex;
+        text-align: left;
+        position: relative;
+        top: 44px;
+        right: 255px;
+    }
+
+    #copy{
+        display: block;
+        font-size: 12px;
+    }
+    .navbarResp{
+        display: none;
     }
 }

@@ -128,11 +128,13 @@
 
     .navbar{
         background-color: none;
+        border: 1px solid black;
+        border-radius: 50px;
         color: black;
-        height: 100px;
+        height: 50px;
         text-align: right;
         margin-top: 0px;
-        border-bottom: 1px solid grey;
+        /* border-bottom: 1px solid grey; */
     }
     a{
         color: black;
@@ -179,11 +181,11 @@
         display: none;
     }
     .menu{
-        margin-top: 15px;
+       height: 50px;
     }
 
     #logo4{
-        height: 30px;
+        height: 50px;
         margin-left: 45%;
     }
 

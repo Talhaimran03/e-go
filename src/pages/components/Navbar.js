@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Punti } from "../img/punti.svg";
 import { ReactComponent as Home } from "../img/home.svg";
 import { ReactComponent as Settings } from "../img/impostazioni.svg";
-import logo4 from "../img/logo4.png";
+import EGOGOMMA from "../img/EGOGOMMA.png"; 
 
 function Navbar() {
     const [activeLink, setActiveLink] = useState('');
@@ -27,7 +27,7 @@ function Navbar() {
             <div className="row-landinPage">
                 <ul className='menu'>
                     <div className='logo'>
-                        <img src={logo4} id='logo4'></img>
+                        <img src={EGOGOMMA} id='logo4'></img>
                     </div>
                     <div className="col-4 punti">
                         <li>
