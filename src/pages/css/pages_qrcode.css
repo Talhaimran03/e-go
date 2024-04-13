@@ -1,0 +1,88 @@
+@media screen and (max-width: 390px)
+{
+    .qrreturn{
+        width: 4rem;
+        height: 4rem;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+        border: none;
+        border-radius: 50%;
+    }
+    
+    .qrflexreturn{
+        display: flex;
+        margin-left: 10%;
+        margin-top: 10%;
+    }
+    
+    .qrtext{
+        font-size: 18px;
+        margin-left: 8%;
+        margin-top: 7%;
+        padding: 0px;
+    }
+    
+    .qrboxblack{
+        width: 20rem;
+        height: 30rem;
+        background-color: black;
+        border-radius: 14px 14px 14px 14px;
+        position: absolute;
+        
+    }
+    
+    .qrboxblackflex{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+    }
+    
+    .qrscan{
+        width: 15rem;
+        height: 15rem;
+        background-color: rgba(121, 121, 121, 1);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    
+    .qrborder{
+        position: relative;
+        border: 5px dashed  rgb(255, 255, 255);
+        width: 9rem;
+        height: 9rem;
+        
+    }
+
+    .qralert{
+        visibility: hidden;
+
+    }
+}
+
+@media screen and (min-width: 390.1px)
+{
+    .qrreturn{
+        visibility: hidden;
+    }   
+
+    .qrtext{
+        visibility: hidden;
+    }
+
+    .qralert{
+        display: flex;
+        justify-content: space-around;
+        color: rgba(65, 141, 122, 1);
+        font-size: 40px;
+        margin-top: 10%;
+        text-align: center;
+        padding: 10%;
+    }
+
+
+}
+
+
+
