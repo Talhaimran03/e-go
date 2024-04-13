@@ -13,10 +13,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.nio.file.Path;
 
@@ -38,25 +41,16 @@ public class MainController {
 
     // Create
     @PostMapping(path="/users/addUser")
-    public ResponseEntity<Response<Boolean>> addNewUser(@RequestBody User user) throws URISyntaxException {
+    public ResponseEntity<Response<Boolean>> addNewUser(@RequestBody Map<String, String> userData, 
+														@RequestParam(value = "file", required = false) MultipartFile profileImage) 
+														throws URISyntaxException, ParseException {
 
-		System.out.println(": " + user.toString());
-
-		System.out.println("Email: " + user.getEmail());
-		System.out.println("Password: " + user.getPassword());
-		System.out.println("Password Confirm: " + user.getPasswordConfirm());
-		System.out.println("Name: " + user.getName());
-		System.out.println("Surname: " + user.getSurname());
-		System.out.println("Birth Date: " + user.getBirthDate());
-
-		String email = user.getEmail();
-		String password = user.getPassword(); // to fix
-		String passwordConfirm = user.getPasswordConfirm();
-		String name = user.getName();
-		String surname = user.getSurname();
-		Date birthDate = user.getBirthDate();
-		byte[] profileImage = user.getProfileImage();
-
+		String email = userData.get("email");
+		String password = userData.get("password");
+		String passwordConfirm = userData.get("passwordConfirm");
+		String name = userData.get("name");
+		String surname = userData.get("surname");
+    	Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(userData.get("birthDate"));
 		
 		// Validate user data
 		List<String> valid = userService.validateUserData(email, password, passwordConfirm, name, surname, birthDate);
@@ -75,7 +69,7 @@ public class MainController {
 				Path path = Paths.get(resourceUrl.toURI());
 				profileImageData = Files.readAllBytes(path);
 			} else {
-				profileImageData = profileImage;
+				profileImageData = profileImage.getBytes();
 			}
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();

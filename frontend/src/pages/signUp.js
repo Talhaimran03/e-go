@@ -1,6 +1,6 @@
 // Sign.js
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import axios from 'axios';
 import './css/signUp.css';
 import SignUpSection from "./components/signUpSection";

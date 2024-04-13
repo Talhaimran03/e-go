@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -40,6 +41,7 @@ public class User implements Serializable {
 	@Column(name="password", length=256, nullable=false)
     private String password;
 
+    @Transient
     private String passwordConfirm;
 
 	@Column(name="name", length=256, nullable=false)
