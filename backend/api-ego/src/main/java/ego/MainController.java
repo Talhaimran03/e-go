@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.nio.file.Path;
 
 @RestController
@@ -29,7 +27,7 @@ public class MainController {
 	@Autowired
     private HttpSession httpSession;
 	
-	/************************************************************************************************************************/
+	//
 	// Users operations
 
     @Autowired
@@ -40,15 +38,28 @@ public class MainController {
 
     // Create
     @PostMapping(path="/users/addUser")
-    public ResponseEntity<Response<Boolean>> addNewUser(@RequestParam String email,
-														@RequestParam String password,
-														@RequestParam String name,
-														@RequestParam String surname,
-														@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-														@RequestParam(required = false) MultipartFile profileImage) throws URISyntaxException {
+    public ResponseEntity<Response<Boolean>> addNewUser(@RequestBody User user) throws URISyntaxException {
+
+		System.out.println(": " + user.toString());
+
+		System.out.println("Email: " + user.getEmail());
+		System.out.println("Password: " + user.getPassword());
+		System.out.println("Password Confirm: " + user.getPasswordConfirm());
+		System.out.println("Name: " + user.getName());
+		System.out.println("Surname: " + user.getSurname());
+		System.out.println("Birth Date: " + user.getBirthDate());
+
+		String email = user.getEmail();
+		String password = user.getPassword(); // to fix
+		String passwordConfirm = user.getPasswordConfirm();
+		String name = user.getName();
+		String surname = user.getSurname();
+		Date birthDate = user.getBirthDate();
+		byte[] profileImage = user.getProfileImage();
+
 		
 		// Validate user data
-		List<String> valid = userService.validateUserData(email, password, name, surname, birthDate);
+		List<String> valid = userService.validateUserData(email, password, passwordConfirm, name, surname, birthDate);
 		if (!valid.isEmpty()) {
             Response<Boolean> response = new Response<>(false, valid);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -64,7 +75,7 @@ public class MainController {
 				Path path = Paths.get(resourceUrl.toURI());
 				profileImageData = Files.readAllBytes(path);
 			} else {
-				profileImageData = profileImage.getBytes();
+				profileImageData = profileImage;
 			}
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
@@ -72,17 +83,50 @@ public class MainController {
 		
 		LocalDateTime registrationDate = LocalDateTime.now();
 
-		Random rand = new Random();
-		int otp = 1000 + rand.nextInt(9000);
-		// userService.sendVerificationEmail(email, otp);
-				
-		User user = new User(email, password, name, surname, birthDate, profileImageData, registrationDate, otp);
-		userRepository.save(user);
+		Integer otp = userService.generateOtp();
 
-		httpSession.setAttribute("user", user);
+		userService.sendVerificationEmail(email, otp);
+
+		User newUser = new User(email, password, name, surname, birthDate, profileImageData, registrationDate, otp);
+		userRepository.save(newUser);
 		
 		Response<Boolean> response = new Response<>(true);
         return ResponseEntity.ok(response);
+	}
+
+	@PostMapping(path="/users/validateUser")
+	public ResponseEntity<Response<User>> validateUser(@RequestBody String email, @RequestBody Integer otp) {
+		User user = userRepository.findByEmail(email);
+		
+		if (user == null) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Utente non trovato");
+			Response<User> response = new Response<>(false, errors);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+		
+		if (user.getActive()) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Utente già attivo");
+			Response<User> response = new Response<>(false, errors);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
+		
+		if (user.getOtp() == otp) {
+			user.setActive(true);
+			user.setOtp(null);
+			userRepository.save(user);
+
+			httpSession.setAttribute("user", user);
+			
+			Response<User> response = new Response<>(true, user);
+			return ResponseEntity.ok(response);
+		} else {
+			List<String> errors = new ArrayList<>();
+			errors.add("OTP non valido");
+			Response<User> response = new Response<>(false, errors);
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+		}
 	}
 
     // Read
@@ -94,7 +138,7 @@ public class MainController {
     }
 
 	@GetMapping(path="/users/getUserById")
-	public ResponseEntity<Response<User>> getUserById(@RequestParam Integer id) {
+	public ResponseEntity<Response<User>> getUserById(@RequestBody Integer id) {
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isPresent()) {
 			Response<User> response = new Response<>(true, userOptional.get());
@@ -108,15 +152,15 @@ public class MainController {
 
     // Update
 	@PutMapping(path="/users/updateUser")
-	public ResponseEntity<Response<Boolean>> updateUser(@RequestParam Integer id,
-														@RequestParam(required = false) String email,
-														@RequestParam(required = false) String password,
-														@RequestParam(required = false) String name,
-														@RequestParam(required = false) String surname,
-														@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-														@RequestParam(required = false) MultipartFile profileImage,
-														@RequestParam(required = false) Boolean active,
-														@RequestParam(required = false) Integer points) {
+	public ResponseEntity<Response<Boolean>> updateUser(@RequestBody Integer id,
+														@RequestBody(required = false) String email,
+														@RequestBody(required = false) String password,
+														@RequestBody(required = false) String name,
+														@RequestBody(required = false) String surname,
+														@RequestBody(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
+														@RequestBody(required = false) MultipartFile profileImage,
+														@RequestBody(required = false) Boolean active,
+														@RequestBody(required = false) Integer points) {
 		
 		User user = userRepository.findById(id).orElse(null);
 		if (user == null) {
@@ -193,7 +237,7 @@ public class MainController {
 
     // Delete
 	@DeleteMapping(path="/users/deleteUser")
-	public ResponseEntity<Response<Boolean>> deleteUser(@RequestParam Integer id) {
+	public ResponseEntity<Response<Boolean>> deleteUser(@RequestBody Integer id) {
 		try {
 			User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Utente non trovato"));
 			userRepository.delete(user);
@@ -208,7 +252,7 @@ public class MainController {
 
 	// Login
 	@PostMapping(path="/users/login")
-	public ResponseEntity<Response<Boolean>> loginUser(@RequestParam String email, @RequestParam String password) {
+	public ResponseEntity<Response<Boolean>> loginUser(@RequestBody String email, @RequestBody String password) {
 		try {
 			User user = userRepository.findByEmail(email);
 			if (user != null) {
@@ -239,7 +283,7 @@ public class MainController {
         return ResponseEntity.ok(new Response<>(true));
     }
 
-	/************************************************************************************************************************/
+	//
 	// Routes operations
 
 	@Autowired
@@ -247,7 +291,7 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public ResponseEntity<Response<Boolean>> addRoute(@RequestParam Point startCoordinates, @RequestParam Integer userId) {
+	public ResponseEntity<Response<Boolean>> addRoute(@RequestBody Point startCoordinates, @RequestBody Integer userId) {
 		try {
 			User user = userRepository.findById(userId).orElse(null);
 			if (user != null) {
@@ -281,7 +325,7 @@ public class MainController {
 	}
 
 	@GetMapping("/routes/getRoutesByUserId")
-	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(@RequestParam Integer userId) {
+	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(@RequestBody Integer userId) {
 		try {
 			User user = userRepository.findById(userId).orElse(null);
 			if (user != null) {
@@ -301,12 +345,12 @@ public class MainController {
 
 	// Update
 	@PutMapping("/routes/updateRoute")
-	public ResponseEntity<Response<Boolean>> updateRoute(@RequestParam Integer id,
-														 @RequestParam(required = false) Point startCoordinates,
-														 @RequestParam(required = false) LocalDateTime startTime,
-														 @RequestParam(required = false) Point endCoordinates,
-														 @RequestParam(required = false) LocalDateTime endTime,
-														 @RequestParam(required = false) Integer userId) {
+	public ResponseEntity<Response<Boolean>> updateRoute(@RequestBody Integer id,
+														 @RequestBody(required = false) Point startCoordinates,
+														 @RequestBody(required = false) LocalDateTime startTime,
+														 @RequestBody(required = false) Point endCoordinates,
+														 @RequestBody(required = false) LocalDateTime endTime,
+														 @RequestBody(required = false) Integer userId) {
 		Route route = routeRepository.findById(id).orElse(null);
 		if (route == null) {
 			List<String> errors = new ArrayList<>();
@@ -353,7 +397,7 @@ public class MainController {
 
 	// Delete
 	@DeleteMapping("/routes/deleteRoute")
-	public ResponseEntity<Response<Boolean>> deleteRoute(@RequestParam Integer id) {
+	public ResponseEntity<Response<Boolean>> deleteRoute(@RequestBody Integer id) {
 		try {
 			Route route = routeRepository.findById(id).orElse(null);
 			if (route != null) {
@@ -372,7 +416,7 @@ public class MainController {
 	}
 	
 
-	/************************************************************************************************************************/
+	//
 	// Rewards operations
 
 	@Autowired
@@ -380,10 +424,10 @@ public class MainController {
 
     // Create
 	@PostMapping("/rewards/addReward")
-	public ResponseEntity<Response<Boolean>> addReward(@RequestParam String company,
-													   @RequestParam double discountPercentage,
-													   @RequestParam Integer requiredPoints,
-													   @RequestParam String url) {
+	public ResponseEntity<Response<Boolean>> addReward(@RequestBody String company,
+													   @RequestBody double discountPercentage,
+													   @RequestBody Integer requiredPoints,
+													   @RequestBody String url) {
 		try {
 			Reward reward = new Reward(company, discountPercentage, requiredPoints, url);
 			rewardRepository.save(reward);
@@ -412,10 +456,10 @@ public class MainController {
 
 	// Update
 	@PutMapping("/rewards/updateReward")
-	public ResponseEntity<Response<Reward>> updateReward(@RequestParam Integer id, 
-														 @RequestParam(required = false) String company,
-														 @RequestParam(required = false) Double discountPercentage,
-														 @RequestParam(required = false) String url) {
+	public ResponseEntity<Response<Reward>> updateReward(@RequestBody Integer id, 
+														 @RequestBody(required = false) String company,
+														 @RequestBody(required = false) Double discountPercentage,
+														 @RequestBody(required = false) String url) {
 		try {
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
@@ -442,7 +486,7 @@ public class MainController {
 
 	// Delete
 	@DeleteMapping("/rewards/deleteReward")
-	public ResponseEntity<Response<Boolean>> deleteReward(@RequestParam Integer id) {
+	public ResponseEntity<Response<Boolean>> deleteReward(@RequestBody Integer id) {
 		try {
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
@@ -456,11 +500,11 @@ public class MainController {
 	}
 
 
-	/************************************************************************************************************************/
+	//
 	// Users/Rewards operations
 
 	@GetMapping("/users/getRewardsByUserId")
-	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestParam Integer userId) {
+	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
 		try {
 			List<Reward> rewards = rewardRepository.findByUserId(userId);
 			if (!rewards.isEmpty()) {
@@ -478,7 +522,7 @@ public class MainController {
 	}
 
 	@PutMapping("/users/linkReward")
-    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestParam Integer userId, @RequestParam Integer rewardId) {
+    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
         try {
             User user = userRepository.findById(userId)
                                        .orElseThrow(() -> new RuntimeException("Utente non trovato"));
@@ -498,7 +542,7 @@ public class MainController {
     }
 
     @DeleteMapping("/users/unlinkReward")
-    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestParam Integer userId, @RequestParam Integer rewardId) {
+    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
         try {
             User user = userRepository.findById(userId)
                                        .orElseThrow(() -> new RuntimeException("Utente non trovato"));

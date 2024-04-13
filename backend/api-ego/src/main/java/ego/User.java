@@ -40,6 +40,8 @@ public class User implements Serializable {
 	@Column(name="password", length=256, nullable=false)
     private String password;
 
+    private String passwordConfirm;
+
 	@Column(name="name", length=256, nullable=false)
     private String name;
 
@@ -117,6 +119,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
     public String getName() {
