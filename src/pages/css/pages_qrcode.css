@@ -34,6 +34,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        margin-top: -10%;
         
     }
     
@@ -76,7 +77,6 @@
         justify-content: space-around;
         color: rgba(65, 141, 122, 1);
         font-size: 40px;
-        margin-top: 10%;
         text-align: center;
         padding: 10%;
     }
