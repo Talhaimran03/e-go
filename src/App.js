@@ -7,6 +7,7 @@ import Map from './pages/map';
 import Qr from './pages/components/qr';
 import ActiveHome from './pages/activeHome';
 import QrContainer2 from './pages/components/stopQr';
+import Grafico from './pages/components/graph'
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   { path: '/qr', element: <Qr />},
   { path: '/activeHome', element: <ActiveHome />},
   { path: '/QrContainer2', element: <QrContainer2 />},
+  { path: '/app', element: <Grafico />},
 ]);
 
 function App() {

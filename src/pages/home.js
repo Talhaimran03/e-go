@@ -7,6 +7,7 @@ import graph from './img/graph.svg'
 import qr from './img/qr.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
+import Grafico from './components/graph';
 
 export default function Home() {
     const height = {
@@ -96,6 +97,7 @@ export default function Home() {
     return (
         
         <div className='home'>
+            
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
@@ -113,9 +115,12 @@ export default function Home() {
                         <img className='qr' src={qr} alt="qr" />
                     </Link>
                 </div>
+                
                 <div className='saving'>
-                    <b><p> CO2 RISPARMIATA </p></b>
+                    
+                    <Grafico></Grafico>
                 </div>
+                
             </div>
             <div className='slider-maps'>
                 <div className='maps'> 

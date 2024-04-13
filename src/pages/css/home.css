@@ -51,10 +51,10 @@ body{
 .background{
     position: relative;
     display: flex;
-    top: 4vh;
+    top: 3vh;
     left: 0vw;
     width: 90vw;
-    height: 54vh;
+    height: 59vh;
     margin: 5%;
     background: #FFFF;
     justify-content: center;
@@ -104,7 +104,7 @@ body{
 .div-qr{
     position: relative;
     display: flex;
-    top: 27vh;
+    top: 29vh;
     left: 0;
     width: 100%;
     height: auto;
@@ -113,6 +113,7 @@ body{
 
 .qr{
     position: relative;  
+    scale: .9;
 }
 
 .saving{
@@ -120,10 +121,14 @@ body{
     background: #F7F7F7;
     top: 23vh;
     width: 83vw;
-    height: 20vh;
+    height: 24vh;
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .saving p{
@@ -133,7 +138,7 @@ body{
 .slider-maps{
     background: none;
     position: absolute;
-    top: 80vh;
+    top: 82vh;
     width: 100%;
     height: auto;
     left: 0;
@@ -220,7 +225,13 @@ body{
 }
 
 
-
+.grafico-co2{
+    position: absolute;
+    top: 5vh;
+    left: 4vw;
+    width: 100vw;
+    height: 100vh;
+}
 
 
 
