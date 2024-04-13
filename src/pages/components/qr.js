@@ -28,14 +28,10 @@ class QrContainer extends Component {
 
   render() {
     const camStyle = {
-      width: '85%',
+      width: '100%',
       height: '100%',
     };
 
-    const previewStyle = {
-      width: 30,
-      height: 20,
-    };
 
     return (
       <div className='map-page1'>
@@ -52,7 +48,6 @@ class QrContainer extends Component {
                         onError={this.handleError}
                         onScan={this.handleScan}
                         style={camStyle}
-                        previewStyle={previewStyle}
                     />
                 </div>
             </div>

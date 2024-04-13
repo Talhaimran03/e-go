@@ -7,7 +7,6 @@ import graph from './img/graph.svg'
 import qr from './img/stop-ride.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
-import Grafico from './components/graph';
 
 export default function ActiveHome() {
     const height = {
@@ -115,9 +114,8 @@ export default function ActiveHome() {
                         <img className='qr2' src={qr} alt="qr" />
                     </Link>
                 </div>
-                <div className='saving'>
-                    
-                    <Grafico></Grafico>
+                <div className='saving2'>
+                    <b><p> CO2 RISPARMIATA </p></b>
                 </div>
             </div>
             <div className='slider-maps2'>

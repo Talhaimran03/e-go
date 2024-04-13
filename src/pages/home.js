@@ -8,6 +8,7 @@ import qr from './img/qr.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
 import Grafico from './components/graph';
+import Graph from './components/slider';
 
 export default function Home() {
     const height = {
@@ -108,7 +109,8 @@ export default function Home() {
                     <b><p className='p secondo'> punti </p></b>
                 </div>
                 <div className='div-graphic'>
-                    <img className='graphic' src={graph} alt="graphic" />
+
+                <Graph></Graph>
                 </div>
                 <div className='div-qr'>
                     <Link to="/Qr">

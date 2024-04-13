@@ -14,7 +14,7 @@ body{
 }
 
 .home {
-    height: 55rem;
+    height: 50rem;
     background-color: #FFFF;
 }
 
@@ -91,15 +91,12 @@ body{
 .div-graphic{
     position: absolute;
     display: flex;
-    top: 5vh;
+    top: 6vh;
     width: 100%;
     height: auto;
     justify-content: center;
 }
 
-.graphic{
-    position: relative;
-}
 
 .div-qr{
     position: relative;
