@@ -50,6 +50,10 @@
     position: relative;
     top: 50px;
     border: none;
+    background: transparent;
+    outline: none;
+    text-align: center;
+    font-size: 30px;
 }
 
 .flexboxnumber{

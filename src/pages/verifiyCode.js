@@ -1,9 +1,8 @@
 import './components/components_css/verifyCode.css';
 
-function VerifyCode() {
+export default function VerifyCode() {
     return (
-        <div>
-            <body>
+        <>
                 <div className='margin'></div>
                 <div className='flexcount'>
                     <div className='countcode1'>1</div>
@@ -22,11 +21,9 @@ function VerifyCode() {
                     <input type="text" className='box' placeholder='' />
                 </form>
                 <div className='flexsubmitbtn'>
-                    <div className='submit'>SUBMIT</div>
+                    <button className='submit'>SUBMIT</button>
                 </div>
-            </body>
-        </div>
+        </>
 
     )
 }
-export default VerifyCode;
