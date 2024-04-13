@@ -103,6 +103,22 @@
     font-weight: bold; 
 }
 
+.signUp:hover{
+    width: 8rem;
+    height: 2.5vh;
+    background-color: rgba(74, 161, 139, 1);
+    border-radius: 50px;
+    /* position: absolute; */
+    z-index: 1;
+    color: rgb(255, 255, 255);
+    font-size: 11px;
+    top: 720px;
+    border: none;
+    text-align: center; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    font-weight: bold; 
+}
+
 .buttongooglelogin{
     width: 3rem;
     height: 3rem;

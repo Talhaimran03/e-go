@@ -1,8 +1,6 @@
 import './css/signUp.css';
 import SignUpSection from "./components/signUpSection";
 import { ReactComponent as Emailicon } from "./img/email-icon.svg";
-import { ReactComponent as BkgSignUp } from "./img/BkgSignUp.svg";
-import { ReactComponent as Icongoogle } from "./img/Google__G__logo.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 import { ReactComponent as Iconautente } from "./img/icona_utente.svg";
 import { ReactComponent as Calendaricon } from "./img/calendar_month.svg";
