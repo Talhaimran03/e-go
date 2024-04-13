@@ -1,7 +1,6 @@
-// Sign.js
-
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './css/signUp.css';
 import SignUpSection from "./components/signUpSection";
 import { ReactComponent as Emailicon } from "./img/email-icon.svg";
@@ -11,17 +10,19 @@ import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 
 function Sign() {
+    const navigate = useNavigate(); // Ottieni la funzione di navigazione
+    const [error, setError] = useState(null); // Stato per memorizzare l'errore
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const email = e.target.email.value;
         const password = e.target.password.value;
         const passwordConfirm = e.target.passwordConfirm.value;
         const name = e.target.name.value;
         const surname = e.target.surname.value;
         const birthDate = e.target.birthDate.value;
-    
+
         const userData = {
             email,
             password,
@@ -30,19 +31,27 @@ function Sign() {
             surname,
             birthDate
         };
-    
+
         console.log(userData);
-    
+
         try {
             const response = await axios.post('http://localhost:8080/ego/users/addUser', userData);
-            console.log(response.data);
-            // Gestisci la risposta positiva qui, ad esempio, reindirizza a un'altra pagina
+            if (response.data.success) {
+                navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
+            } else {
+                setError(response.data.errors);
+            }
         } catch (error) {
+            if (error.response.data.errors && error.response.data.errors.includes("Email già registrata, conferma otp")) {
+                navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
+            } else {
+                setError(error.response.data.errors);
+            }
             console.error('Errore:', error.response.data);
-            // Gestisci la risposta negativa qui, ad esempio, mostra un messaggio di errore all'utente
         }
+        
+
     };
-    
 
     return (
         <div>
@@ -82,7 +91,9 @@ function Sign() {
                 <div className='suReturnShape'>
                     <button type="submit" className='suinvia'><Arrowreturn></Arrowreturn></button>
                 </div>
-                <div className='sumarginfooter'></div>
+                <div className='sumarginfooter'>
+                    {error && <div className="error">{error}</div>} {/* Mostra l'errore se presente */}
+                </div>
             </form>
         </div>
     );

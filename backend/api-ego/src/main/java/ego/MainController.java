@@ -89,7 +89,11 @@ public class MainController {
 	}
 
 	@PostMapping(path="/users/validateUser")
-	public ResponseEntity<Response<User>> validateUser(@RequestBody String email, @RequestBody Integer otp) {
+	public ResponseEntity<Response<User>> validateUser(@RequestBody Map<String, String> requestData) {
+		String email = requestData.get("email");
+    	Integer otp = Integer.parseInt(requestData.get("otp"));
+
+		
 		User user = userRepository.findByEmail(email);
 		
 		if (user == null) {
@@ -106,7 +110,7 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 		
-		if (user.getOtp() == otp) {
+		if (user.getOtp().equals(otp)) {
 			user.setActive(true);
 			user.setOtp(null);
 			userRepository.save(user);
@@ -246,13 +250,22 @@ public class MainController {
 
 	// Login
 	@PostMapping(path="/users/login")
-	public ResponseEntity<Response<Boolean>> loginUser(@RequestBody String email, @RequestBody String password) {
+	public ResponseEntity<Response<Boolean>> loginUser(@RequestBody Map<String, String> requestData) {
 		try {
+			String email = requestData.get("email");
+			String password = requestData.get("password");
+
 			User user = userRepository.findByEmail(email);
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
-					httpSession.setAttribute("user", user);
-					return ResponseEntity.ok(new Response<>(true));
+					if (user.getActive()) {
+						httpSession.setAttribute("user", user);
+						return ResponseEntity.ok(new Response<>(true));
+					} else {
+						List<String> errors = new ArrayList<>();
+						errors.add("Account non confermato");
+						return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<>(false, errors));
+					}
 				} else {
 					List<String> errors = new ArrayList<>();
 					errors.add("Password errata");

@@ -5,7 +5,7 @@ import Settings from './pages/settings';
 import Points from './pages/points';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
-import VerifyCode from './pages/verifiyCode';
+import VerifyCode from './pages/verifyCode';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
