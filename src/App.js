@@ -7,6 +7,7 @@ import Info from './pages/info';
 import LandingPage from './pages/landingPage';
 import Footer from './pages/footer';
 
+
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/settings', element: <Settings /> },

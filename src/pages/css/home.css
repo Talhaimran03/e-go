@@ -56,53 +56,227 @@ img{
     display: none;
 }
 /* RESP */
-@media screen and (max-width: 877px) {
+@media screen and (max-width: 769px) {
+    
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-22 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+
     .navbar{
         display: none;
     }
 
+    
+    .imgMockup{
+        display: block;
+        width: 100%;
+        
+    }
+    .navbarResp{
+        display: flex;
+        
+    }
+    .pos-navbar{
+        top: 0;
+        height: 50px;
+        /* border: 1px solid b; */
+        /* border-radius: 20px; */
+        width: 8%;
+    }
+    #menuToggle {
+        display: none;
+    }
+    
+    #menuButton {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 30%;
+    }
+    
+    nav {
+        display: none;
+    }
+    
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    nav ul li {
+        padding: 10px 20px;
+    }
+    
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+    
+    nav ul li a:hover {
+        color: #787474;
+    }
     footer{
        position: fixed;
        display: flex;
        bottom: 0;
     }
-    .navbarResp {
-        background-color: #333;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        height: 40px;
+    footer{
+       position: fixed;
+       display: flex;
+       bottom: 0;
     }
-      
-    .navbar-toggle {
-        display: none; /* Nasconde il toggle su schermi più larghi */
+    footer{
+       position: fixed;
+       display: flex;
+       bottom: 0;
+    }
+    
+    #menuToggle:checked + #menuButton {
+        background-color: #666;
+    }
+    
+    #menuToggle:checked + #menuButton + nav {
+        display: block;
+    }
+    .hamburger-icon {
+        display: block;
+        width: 30px;
+        height: 22px;
+        position: relative;
         cursor: pointer;
     }
     
-    .navbar-menu {
-        list-style: none;
+    .hamburger-icon span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #1e1d1d;
+        border-radius: 9px;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Posiziona le tre linee verticalmente */
+    .hamburger-icon span:nth-child(1) {
+        top: 0;
+    }
+    
+    .hamburger-icon span:nth-child(2) {
+        top: 9px;
+    }
+    
+    .hamburger-icon span:nth-child(3) {
+        top: 18px;
+    }
+    
+    /* Trasformazione delle linee per creare l'effetto di hamburger */
+    #menuToggle:checked ~ .hamburger-icon span:nth-child(1) {
+        transform: translateY(9px) rotate(-45deg);
+    }
+    
+    #menuToggle:checked ~ .hamburger-icon span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    #menuToggle:checked ~ .hamburger-icon span:nth-child(3) {
+        transform: translateY(-9px) rotate(45deg);
+    }
+    
+    /* Stili per il menù */
+    #menu1 {
+        display: none; /* Nascondi il menù di default */
+    }
+    
+    #menuToggle:checked ~ #menu1 {
+        display: block; /* Mostra il menù quando il checkbox è selezionato */
+    }
+    .check{
+        position: fixed;
+        width: 35px;
+        top: 13px;
+        left: 9px;
+        z-index: 1;
+    }
+    .imgResp{
+        display: inline;
+        width: 30%;
+    }
+    .fotoego{
+        position:inherit;       
         display: flex;
+        justify-content: center;
+        left: 0;
+        z-index: 0;
+    }
+    .fotoIphone{
+        position:inherit;       
+        display: flex;
+        justify-content: center;
+        left: 0;
+        top: 300px;
+    }
+    .frasiResp{
+        position:inherit;       
+        display: flex;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        top: 120px;
+        font-weight:700;
+        
+    }
+    .frasiResp2{
+        position:inherit;       
+        display: flex;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        top: 160px;
+        font-weight:700;
+        
+    }
+    .frasiResp3{
+        position:inherit;       
+        display: flex;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        top: 200px;
+        font-weight:700;
+        
     }
     
-    .navbar-menu li {
-        margin-right: 20px;
+    .iphone{
+        display: flex;
+        width: 60%;
+        
+    }
+
+    .footResp{
+       position: fixed;
+       display: flex;
+       bottom: 0;
+       right: 0;
+       background-color: #fff;
     }
     
-    
-    .navbar-toggle {
-        display: block; /* Mostra il toggle su schermi più piccoli */
+    .containerFooterResp{
+        
     }
     
-    .navbar-menu {
-        display: none; /* Nasconde il menu su schermi più piccoli */
-        flex-direction: column; /* Allinea gli elementi verticalmente */
-        padding: 0;
-    }
-    
-    .navbar-menu li {
-        margin: 10px 0;
-    }
-      
 }
 
 
@@ -120,15 +294,11 @@ img{
     #surprise{
         text-align: center;
     }
-
-}
-
-@media screen and (max-width:877px){
-    #progetto{
-        font-size: 12px;
+    .logo{
+        display: none;
     }
-
 }
+
 
 @media screen and (min-width:769px){
     .col-1 {width: 8.33%;}
@@ -145,6 +315,12 @@ img{
         .col-11 {width: 91.66%;}
         .col-12 {width: 100%;}
     }
+
+
+
+
+
+
 
 @media only screen and (min-width: 769px){
 
@@ -482,6 +658,29 @@ img{
         font-size: 12px;
     }
     .navbarResp{
+        display: none;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    #menu1{
+        display: none;
+    }
+
+    .imgResp{
+        display: none;
+    }
+    .iphoneResp{
+        display: none;
+    }
+
+    .fotoIphone{
+        display: none;
+    }
+
+    .footResp{
         display: none;
     }
 }
