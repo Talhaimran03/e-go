@@ -15,14 +15,12 @@ export default function VerifyCode() {
                     </div>
                 </div>
                 <form className='flexboxnumber'>
-                    <input type="text" className='box' placeholder='' />
-                    <input type="text" className='box' placeholder='' />
-                    <input type="text" className='box' placeholder='' />
-                    <input type="text" className='box' placeholder='' />
+                    <input type="number" className='box' placeholder='' />
+                    <input type="number" className='box' placeholder='' />
+                    <input type="number" className='box' placeholder='' />
+                    <input type="number" className='box' placeholder='' />
+                    <input className='submit' type='SUBMIT'/>
                 </form>
-                <div className='flexsubmitbtn'>
-                    <button className='submit'>SUBMIT</button>
-                </div>
         </>
 
     )
