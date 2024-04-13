@@ -4,6 +4,7 @@ import QrReader from 'react-qr-scanner';
 import './components_css/stopQr.css';
 import { Link } from 'react-router-dom';
 import arrow from '../img/arrow.svg'
+import LocationComponent from './geo'
 
 class QrContainer2 extends Component {
   constructor(props) {
@@ -49,6 +50,9 @@ class QrContainer2 extends Component {
                         onScan={this.handleScan}
                         style={camStyle}
                     />
+                </div>
+                <div className='geolocalisation'>
+                  <LocationComponent></LocationComponent>
                 </div>
             </div>
       </div>

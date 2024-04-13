@@ -78,7 +78,16 @@ body{
     scale: 1.8;
 }
 
-
+.geolocalisation{
+    position: absolute;
+    top: 55vh;
+    left: 0;
+    width: auto;
+    height: 5vh;
+    line-height: 1px;
+    color: rgba(0, 0, 0, 0.132);
+    font-weight: 700;
+}
 
 
 
