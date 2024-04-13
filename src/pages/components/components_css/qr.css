@@ -80,8 +80,8 @@ body{
 
 .geolocalisation{
     position: absolute;
-    top: 55vh;
-    left: 0;
+    top: 57vh;
+    left: 1vw;
     width: auto;
     height: 5vh;
     line-height: 1px;
