@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import App from './components/hero.js'
 import './components/components_css/hero.css'
-import graph from './img/graph.svg'
 import qr from './img/qr.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
@@ -110,7 +109,7 @@ export default function Home() {
                 </div>
                 <div className='div-graphic'>
 
-                <Graph></Graph>
+                    <Graph></Graph>
                 </div>
                 <div className='div-qr'>
                     <Link to="/Qr">

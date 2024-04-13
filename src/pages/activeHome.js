@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import App from './components/hero.js'
 import './components/components_css/hero.css'
-import graph from './img/graph.svg'
 import qr from './img/stop-ride.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
+import Graph from './components/slider';
+import Grafico from './components/graph';
 
 export default function ActiveHome() {
     const height = {
@@ -107,7 +108,7 @@ export default function ActiveHome() {
                     <b><p className='p secondo2'> punti </p></b>
                 </div>
                 <div className='div-graphic2'>
-                    <img className='graphic2' src={graph} alt="graphic" />
+                    <Graph></Graph>
                 </div>
                 <div className='div-qr2'>
                     <Link to="/QrContainer2">
@@ -115,7 +116,7 @@ export default function ActiveHome() {
                     </Link>
                 </div>
                 <div className='saving2'>
-                    <b><p> CO2 RISPARMIATA </p></b>
+                    <Grafico></Grafico>
                 </div>
             </div>
             <div className='slider-maps2'>

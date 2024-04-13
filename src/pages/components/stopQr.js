@@ -35,7 +35,7 @@ class QrContainer2 extends Component {
 
     return (
       <div className='map-page3'>
-            <Link to="/"> 
+            <Link to="/activeHome"> 
                 <div className='back3'>
                     <img className='arrow3' src={arrow} alt="arrow"></img>
                 </div>
