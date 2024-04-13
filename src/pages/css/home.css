@@ -78,6 +78,13 @@ img{
 
 }
 
+@media screen and (max-width:877px){
+    #progetto{
+        font-size: 12px;
+    }
+
+}
+
 @media screen and (min-width:769px){
     .col-1 {width: 8.33%;}
         .col-2 {width: 16.66%;}
@@ -181,10 +188,11 @@ img{
     }
     
     .suDiNoi{
-        margin-top: 5%;
-        margin-left: 10%;
-        font-size: 22px;
-        z-index: 1000;
+        position:relative;
+        margin-top: 20%;
+        margin-left: 13%;
+        font-size: 20px;
+        z-index: 1;
     }
     
     #progetto{
@@ -192,8 +200,9 @@ img{
         margin-left: 10%;
         width: 80%;
         display: block;
-        font-size: 15px;
+        font-size: 14px;
         z-index: 1000;
+        margin-top: 0;
     }
     
     #surprise{
@@ -247,12 +256,23 @@ img{
 
     .callToAction{
         /* border: 1px solid black; */
+        position: relative;
         border-radius: 10px;
-        height: 200px;
-        margin-top: 5%;
-        margin-left: 11%;
+        height: 400px;
+        margin-top: 0;
+        margin-left: 99%;
+        left: 30px;
         display: flex;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        width: 80%;
+        bottom: 240px;
+        background-color: white;
+    }
+
+    .call{
+        height: 210px;
+        margin-left: 10%;
+        position: relative;
     }
     
     #fraseCall{
@@ -262,19 +282,26 @@ img{
         text-align: left;
         align-items: center;
         margin-left: 5%;
+        width: 200px;
+        margin-top: 50px;
     }
     .bottoni{
         display: flex;
         text-align: center;
         align-items: center;
-        margin-left: 25%;
+        height: 20%;
+        position: relative;
+        top: 280px;
+        right: 35%;
+        width: 100%;
     }
     
     
     #puntiCall{
         display: block;
-        margin-left: 5%;
-        font-size: 12px;
+        margin-left: 2%;
+        font-size: 15px;
+        width: 300px;
     }
     #scarica{
         background: linear-gradient(1.2rad, #409576, white);
@@ -292,5 +319,33 @@ img{
         border: 1px solid black;
         padding: 5%;
         width: 100px;
+    }
+
+    .cartella{
+        width: 80%;
+        margin-top: 10%;
+        margin-left: 10%;
+        z-index: 0;
+        position: absolute;
+    }
+
+    .spiegazione{
+        width:  42%;
+        margin-left: 8%;
+        font-size: 12px;
+        height: 280px;
+    }
+
+    .scarica{
+        width: 100%;
+    }
+    .registra{
+        width: 100%;
+    }
+    .union{
+        width: 10px;
+        position: absolute;
+        top: 34px;
+        left: 59%;
     }
 }

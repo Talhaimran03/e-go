@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Logo from "./components/logo";
 import bus from "./img/bus.png";
+import cartella from "./img/cartella.svg";
+import Union from "./img/Union.svg";
 
 export default function Home() {
     return (
@@ -13,10 +15,13 @@ export default function Home() {
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
+            <div className='cartella'>
+                <img src={cartella}></img>
+            </div>
             <div className='suDiNoi'>
                 <h2>IL NOSTRO PROGETTO </h2>
             </div>
-            <div className='spiegazione'>
+            <div className='spiegazione col-12'>
                 <p id='progetto'> 
                     
                     Siamo un team di 5 ragazzi che studiano presso il corso ITS Last Academy di Verona con indirizzo in Web Development. <br />
@@ -27,7 +32,7 @@ export default function Home() {
                     
                     </p>
 
-                <div className='callToAction col-9'> 
+                <div className='callToAction col-12'> 
                     <div className='call col-5'>
                         <p id='fraseCall'> Provala anche tu: </p>
                           
@@ -39,11 +44,11 @@ export default function Home() {
                             <br />
                             • farai parte di una comunità consapevole.
                         </p>
-
                    </div>
-                   <div className='bottoni col-3'>
-                    <button id='scarica'> Scarica App </button>
-                    <button id='registratiCall'> Registrati </button>
+                    <div className='bottoni col-3'>
+                        <div className='col-3 scarica'><button id='scarica'> Scarica App </button></div>
+                        <br />
+                        <div className='col-3 registra'><button id='registratiCall'> <img className='union' src={Union}></img>Registrati </button></div>
                    </div>
                 </div>
             </div>
