@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 import './css/signUp.css';
 import SignUpSection from "./components/signUpSection";
 import { ReactComponent as Emailicon } from "./img/email-icon.svg";
@@ -10,8 +10,8 @@ import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 
 function Sign() {
-    const navigate = useNavigate(); // Ottieni la funzione di navigazione
-    const [error, setError] = useState(null); // Stato per memorizzare l'errore
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -92,7 +92,7 @@ function Sign() {
                     <button type="submit" className='suinvia'><Arrowreturn></Arrowreturn></button>
                 </div>
                 <div className='sumarginfooter'>
-                    {error && <div className="error">{error}</div>} {/* Mostra l'errore se presente */}
+                    {error && <div className="error">{error}</div>}
                 </div>
             </form>
         </div>

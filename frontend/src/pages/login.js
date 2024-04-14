@@ -8,32 +8,30 @@ import { ReactComponent as Iconpwd } from "./img/icona_lucchetto.svg";
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-    const navigate = useNavigate(); // Ottieni la funzione di navigazione
-    const [error, setError] = useState(null); // Stato per memorizzare gli errori
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const email = e.target.email.value;
         const password = e.target.password.value;
-
+    
         try {
             const response = await axios.post('http://localhost:8080/ego/users/login', {
                 email: email,
                 password: password
             });
-            console.log(response.data);
+        
             if (response.data.success) {
                 navigate('/');
-            } else {
-                // Se il login non è riuscito, imposta lo stato degli errori
-                setError(response.data.errors);
             }
         } catch (error) {
-            // Gestisci altri tipi di errori, ad esempio errori di rete
-            console.error('Errore durante il login:', error);
+            if (error.response.data.errors) {
+                setError(error.response.data.errors[0]);
+            }
         }
-    };
+    };    
 
     return (
         <div>
@@ -68,7 +66,6 @@ function Login() {
                 </button>
             </div>
 
-            {/* Visualizza gli errori se presenti */}
             {error && <div className="error">{error}</div>}
         </div>
     );

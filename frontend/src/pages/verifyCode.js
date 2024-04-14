@@ -6,8 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function VerifyCode() {
     const location = useLocation();
     const email = location.state.email;
-    const navigate = useNavigate(); // Utilizza useNavigate per la navigazione
-    const [otpError, setOtpError] = useState(false); // Stato per tenere traccia dell'errore OTP
+    const navigate = useNavigate(); 
+    const [otpError, setOtpError] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,34 +18,29 @@ function VerifyCode() {
         const otp3 = e.target.elements.otp3.value;
         const otp4 = e.target.elements.otp4.value;
 
-        // Concatena i valori per formare l'OTP
         const otp = otp1 + otp2 + otp3 + otp4;
 
-        // Validazione dell'OTP
         const otpRegex = /^[0-9]{4}$/;
         if (!otpRegex.test(otp)) {
             console.error('L\'OTP deve essere composto da 4 cifre numeriche.');
-            setOtpError(true); // Imposta lo stato dell'errore OTP a true
+            setOtpError(true);
             return;
         }
 
         try {
             const response = await axios.post('http://localhost:8080/ego/users/validateUser', {
-                email: email, // Utilizza l'email recuperata dall'URL
+                email: email, 
                 otp: otp
             });
             console.log(response.data);
             if (response.data.success) {
-                // Se l'OTP è valido, reindirizza a un'altra pagina
                 navigate('/');
             } else {
-                // Altrimenti, mostra un messaggio di errore sotto al form
                 console.error('OTP non valido');
-                setOtpError(true); // Imposta lo stato dell'errore OTP a true
+                setOtpError(true);
             }
         } catch (error) {
             console.error('Errore:', error.response.data);
-            // Gestisci la risposta negativa qui, ad esempio, mostra un messaggio di errore all'utente
         }
     };
 
@@ -69,7 +64,6 @@ function VerifyCode() {
                 <input type="text" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required />
                 <button type="submit" className='submit'>SUBMIT</button>
             </form>
-            {/* Mostra il messaggio di errore solo se lo stato dell'errore OTP è true */}
             {otpError && <p className="error-message">OTP non valido</p>}
         </div>
     );
