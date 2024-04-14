@@ -36,44 +36,21 @@ export default function LandingPage() {
                         </ul>
                     </nav>
                 </div>
-                <div className='fotoego col-12'>
+                <div className='fotoego col-12 col-res-12'>
                     <img className='imgResp' src={EGOGOMMA}></img>
                 </div>
-                <div className='frasiResp col-12'>
-                    <p className='frasiResp'> Lavoriamo per spronarti a prendere </p>
-                    <p className='frasiResp2'> consapevolmente </p>
-                    <p className='frasiResp3'> parte del cambiamento. </p>
-                </div>
-                <div className='fotoIphone col-12'>
-                    <img className='iphone' src={iPhonedef}></img>
-                </div>
-                <footer className='footResp col-12'>
-                    <div className="containerFooterResp">
-                    
-                            <div className="col-2">
-                                <p id='sottoLogo'> ego.project.work@gmail.com</p>
-                                
-                            </div>
-                            <div className="col-8 menuFooter row">
-                                    <a href="/landingPage" id='linkHome col-2'>HOME</a>                             
-                                    <a href="/info" id='linkInfo col-2'>INFO</a>
-                                    <a href='/contatti' id='linkContattti'> CONTATTI</a>
-                                    <a href='/contatti' id='linkImpo col-2'> IMPOSTAZIONI</a>
-                                    <a href='/contatti' id='linkPunti col-2'> PUNTI</a>
-                            </div>
-                            <div className='col-2 copyy'>
-                                <p id='copy'> © Copyright 2024. All rights reserved </p>
-                            </div>
-                            <div className='col-2 sottomenu row'>
-                                <p id='sottom'>Telefono: 045-456-7890 <br/> Lungadige Galtarossa 21 <br/> Verona, 37133</p>
-                            </div>
-
-                            
-                    
-                    </div>    
-            </footer>
             
             </div>
+                <div className='landingPageResponsive col-12'>
+                    <div className='frasiResp col-12'>
+                        <p className='frasiResp1'> Lavoriamo per spronarti a prendere </p>
+                        <p className='frasiResp2'> consapevolmente </p>
+                        <p className='frasiResp3'> parte del cambiamento. </p>
+                    </div>
+                    <div className='fotoIphone col-12'>
+                        <img className='iphone' src={iPhonedef}></img>
+                    </div>
+                </div>
             <div className='col-12 containerLanding'>
                 <div className='col-6 imgMockup'>
                     <img src={iPhonedef}></img>
@@ -85,24 +62,18 @@ export default function LandingPage() {
                 </div>
             </div>
             <footer>
-                <div className="containerFooter row">
+                <div className="containerFooter col-12">
                 
-                        <div className="col-4">
+                        <div className="LogoFooter col-4 col-res-3">
                             <img id='logoFooter' src={EGOGOMMA}></img>
                             <p id='sottoLogo'> ego.project.work@gmail.com</p>
                             
                         </div>
-                        <div className="col-8 menuFooter row">
-                                <a href="/landingPage" id='linkHome col-2'>HOME</a>                             
-                                <a href="/info" id='linkInfo col-2'>INFO</a>
-                                <a href='/contatti' id='linkContattti'> CONTATTI</a>
-                                <a href='/contatti' id='linkImpo col-2'> IMPOSTAZIONI</a>
-                                <a href='/contatti' id='linkPunti col-2'> PUNTI</a>
-                        </div>
-                        <div className='col-2 copyy'>
+                    
+                        <div className='col-4 copyy col-res-1'>
                             <p id='copy'> © Copyright 2024. All rights reserved </p>
                         </div>
-                        <div className='col-2 sottomenu row'>
+                        <div className='col-4 sottomenu col-res-1'>
                             <p id='sottom'>Telefono: 045-456-7890 <br/> Lungadige Galtarossa 21 <br/> Verona, 37133</p>
                         </div>
 

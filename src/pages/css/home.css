@@ -72,16 +72,30 @@ img{
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
 
+    .col-res-1 {width: 8.33%;}
+    .col-res-2 {width: 16.66%;}
+    .col-res-3 {width: 25%;}
+    .col-res-4 {width: 33.33%;}
+    .col-res-5 {width: 41.66%;}
+    .col-res-6 {width: 50%;}
+    .col-res-7 {width: 58.33%;}
+    .col-res-8 {width: 66.66%;}
+    .col-res-9 {width: 75%;}
+    .col-res-10 {width: 83.33%;}
+    .col-res-11 {width: 91.66%;}
+    .col-res-12 {width: 100%;}
+
+    .home{
+        overflow:auto;
+        z-index: 0;
+        position: relative;
+    }
     .navbar{
         display: none;
     }
 
     
-    .imgMockup{
-        display: block;
-        width: 100%;
-        
-    }
+    
     .navbarResp{
         display: flex;
         
@@ -203,6 +217,7 @@ img{
     #menuToggle:checked ~ #menu1 {
         display: block; /* Mostra il menù quando il checkbox è selezionato */
     }
+
     .check{
         position: fixed;
         width: 35px;
@@ -210,12 +225,29 @@ img{
         left: 9px;
         z-index: 1;
     }
+    .containerLanding{
+        display: none;
+        justify-content: center;
+
+    }
+    .landingPageResponsive{
+        width: 100%;
+        top: 50px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
     .imgResp{
         display: inline;
         width: 30%;
+
     }
     .fotoego{
-        position:inherit;       
+        width: 100%;
+        position:fixed;       
         display: flex;
         justify-content: center;
         left: 0;
@@ -226,17 +258,28 @@ img{
         display: flex;
         justify-content: center;
         left: 0;
-        top: 300px;
+        top: 90px;
     }
     .frasiResp{
+        position:inherit;       
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        top: 60px;
+        left: 0;
+        right: 0;
+        font-weight:700;
+        
+    }
+
+    .frasiResp1{
         position:inherit;       
         display: flex;
         justify-content: center;
         left: 0;
         right: 0;
-        top: 120px;
         font-weight:700;
-        
     }
     .frasiResp2{
         position:inherit;       
@@ -244,7 +287,6 @@ img{
         justify-content: center;
         left: 0;
         right: 0;
-        top: 160px;
         font-weight:700;
         
     }
@@ -254,7 +296,6 @@ img{
         justify-content: center;
         left: 0;
         right: 0;
-        top: 200px;
         font-weight:700;
         
     }
@@ -272,11 +313,144 @@ img{
        right: 0;
        background-color: #fff;
     }
-    
-    .containerFooterResp{
-        
+    footer{
+        position: fixed;
+        z-index: 1;
+        overflow: auto;
+        bottom: 0;
     }
-    
+    .containerFooter{
+        background-color: #fff;
+        display: flex;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .LogoFooter{
+        display: flex;
+        font-size: 12px;
+        flex-direction: column;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    #logoFooter{
+        display: flex;
+        height: 40px;
+        width: 50%;
+    }
+
+    #sottoLogo{
+        display: block;
+       overflow-wrap: break-word;
+    }
+
+    .copyy{
+        display: flex;
+        align-items: center;
+    }
+    .sottomenu{
+        display: flex;
+        align-items: center;
+    }
+
+    ul{
+        position: absolute;
+        display: flex;
+        height: 40px;
+        border-radius: 30px;
+        width: 100%;
+    }
+
+    /* PAGINA INFO */
+
+   /*  .suDiNoi{
+        position: relative;
+        display: flex;
+        top: 110px;
+        margin-left: 0%;
+    }
+    .spiegazione{
+        position: relative;
+        margin-left: 0%;
+        display: flex;
+        top: 120px;
+        flex-direction: column;
+    }
+
+    #progetto{
+        display: flex;
+        margin: 0%;
+    } */
+
+    .infoPage{
+      position: relative;
+        display: flex;
+        flex-direction: column;
+        top: 120px;
+        align-items: center;
+    }
+
+    .spiegazione{
+      width: 80%;
+      border: 1px solid #1e1d1d;
+      border-radius: 25px;
+    }
+    .suDiNoi{
+        margin-left: 10px;
+    }
+    #progetto{
+        padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .callToAction{
+        width: 500px;
+        border: 1px solid #1e1d1d;
+        border-radius: 25px;
+    }
+    .infoCall{
+        display: flex;
+        flex-direction: row;
+        width: 300px;
+        justify-content: center;
+        height: 400px;
+    }
+
+    .call{
+        width: 300px;
+    }
+
+    .cartella{
+        display: none;
+    }
+    .cartellaPiccola{
+        position: relative;
+        display: block;
+        width: 320px;
+        height: 320px;
+        z-index: 1000;
+    }
+    #fraseCall,
+    #puntiCall{
+        padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .bottoni{
+        display: flex;
+        margin-left: 10px;
+      flex-direction: column;
+    }
+    #scarica{
+        height: 22px;
+    }
+
+    #registratiCall{
+        margin-top: 20px;
+    }
+
 }
 
 
@@ -410,7 +584,6 @@ img{
     
     .suDiNoi{
         position:relative;
-        margin-top: 20%;
         margin-left: 13%;
         font-size: 20px;
         z-index: 1;
@@ -420,7 +593,7 @@ img{
         z-index: 0;
         margin-left: 10%;
         width: 80%;
-        display: block;
+        display: flex;
         font-size: 14px;
         z-index: 1000;
         margin-top: 0;
@@ -461,12 +634,10 @@ img{
         position: fixed;
         flex-wrap: nowrap;
         border-top: 1px solid black;
-    }
-  /*   .row{
         display: flex;
-        flex-wrap: nowrap;
-        width: 100%;
-    } */
+        justify-content: space-between;
+    }
+  
     .rowFooter{
         display: flex;
         flex-wrap: nowrap;
@@ -487,19 +658,7 @@ img{
         font-size: 12px;
         margin-left: 7%;
     }
-    .menuFooter{
-        position: relative;
-        font-size: 14px;
-        text-align: center;
-        justify-content: space-around;
-        display: inline-flex;
-        flex-wrap: nowrap;
-        margin-top: 1%;
-        height: 20px;
-        font-weight: 500;
-        right: 0;
-    
-    }
+
     .menuFooter a {
         margin-left: 10px; /* Aggiunge spazio tra i link */
         margin-right: 10px; /* Aggiunge spazio tra i link */
@@ -511,12 +670,10 @@ img{
         border-radius: 10px;
         height: 400px;
         margin-top: 0;
-        margin-left: 99%;
-        left: 30px;
         display: flex;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-        width: 80%;
-        bottom: 240px;
+        max-width: 400px;
+        min-width: 100px;
         background-color: white;
     }
 
@@ -553,6 +710,7 @@ img{
         margin-left: 2%;
         font-size: 15px;
         width: 300px;
+        word-wrap:break-word;
     }
     #scarica{
         background: linear-gradient(1.2rad, #409576, white);
@@ -573,16 +731,21 @@ img{
     }
 
     .cartella{
-        width: 80%;
+        width:70%;
         margin-top: 10%;
-        margin-left: 10%;
+        margin-left: 15%;
         z-index: 0;
         position: absolute;
     }
 
+    .cartellaPiccola{
+        display: none;
+    }
+
     .spiegazione{
-        width:  42%;
-        margin-left: 8%;
+        display: flex;
+        flex-direction: column;
+        width:  30%;
         font-size: 12px;
         height: 280px;
     }
@@ -606,8 +769,10 @@ img{
     }
     .sottomenu{
         position: relative;
-        top: 40px;
-        right: 80px;
+        display: flex;
+        margin-right: 30px;
+        justify-content: flex-end;
+        margin-top: 30px;
     }
     .row {
         display: flex; /* Utilizza Flexbox per allineare gli elementi */
@@ -647,16 +812,23 @@ img{
 
     .copyy{
         display: flex;
-        text-align: left;
         position: relative;
-        top: 44px;
-        right: 255px;
+        justify-content: center;
+        align-content: center;
     }
 
     #copy{
-        display: block;
+        display: flex;
         font-size: 12px;
+        margin-top: 50px;
     }
+    .LogoFooter{
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .navbarResp{
         display: none;
     }
@@ -682,5 +854,20 @@ img{
 
     .footResp{
         display: none;
+    }
+
+    .infoPage{
+        position: relative;
+        display: flex;
+        align-items: baseline;
+        flex-direction: row;
+        top: 300px;
+        justify-content: center;
+    }
+
+    .infoCall{
+        display: flex;
+        align-content: center;
+        justify-content: center;
     }
 }
