@@ -52,6 +52,12 @@
     border: none;
 }
 
+.box[type='number']::-webkit-inner-spin-button,
+.box[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .flexboxnumber{
     display: flex;
     gap: 29px;

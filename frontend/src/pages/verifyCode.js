@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // Aggiungi useRef per ottenere riferimenti agli input
 import axios from 'axios';
 import './components/components_css/verifyCode.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 function VerifyCode() {
     const location = useLocation();
-    const email = location.state.email;
+    const email = location.state ? location.state.email : null;
     const navigate = useNavigate(); 
     const [otpError, setOtpError] = useState(false); 
+
+    useEffect(() => {
+        if (!email) {
+            navigate('/signUp');
+        }
+    }, [email, navigate]);
+
+    const inputRefs = useRef([]); // Utilizza useRef per mantenere i riferimenti agli input
+
+    // Funzione per spostare il focus all'input successivo
+    const focusNextInput = index => {
+        if (index < inputRefs.current.length - 1) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Raccogli i valori dei campi OTP
-        const otp1 = e.target.elements.otp1.value;
-        const otp2 = e.target.elements.otp2.value;
-        const otp3 = e.target.elements.otp3.value;
-        const otp4 = e.target.elements.otp4.value;
-
-        const otp = otp1 + otp2 + otp3 + otp4;
+        const otp = inputRefs.current.reduce((acc, input) => acc + input.value, '');
 
         const otpRegex = /^[0-9]{4}$/;
         if (!otpRegex.test(otp)) {
@@ -58,13 +67,17 @@ function VerifyCode() {
                 </div>
             </div>
             <form className='flexboxnumber' onSubmit={handleSubmit}>
-                <input type="text" className='box' placeholder='' name="otp1" pattern="[0-9]{1}" maxLength="1" required />
-                <input type="text" className='box' placeholder='' name="otp2" pattern="[0-9]{1}" maxLength="1" required />
-                <input type="text" className='box' placeholder='' name="otp3" pattern="[0-9]{1}" maxLength="1" required />
-                <input type="text" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required />
+                <input ref={el => inputRefs.current[0] = el} type="number" className='box' placeholder='' name="otp1" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(0)}
+                />
+                <input ref={el => inputRefs.current[1] = el} type="number" className='box' placeholder='' name="otp2" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(1)}
+                />
+                <input ref={el => inputRefs.current[2] = el} type="number" className='box' placeholder='' name="otp3" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(2)}
+                />
+                <input ref={el => inputRefs.current[3] = el} type="number" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(3)} />
                 <button type="submit" className='submit'>SUBMIT</button>
             </form>
             {otpError && <p className="error-message">OTP non valido</p>}
+            {!email && <p>Non hai ancora un account? <Link to="/signUp">Registrati qui</Link></p>}
         </div>
     );
 }
