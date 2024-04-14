@@ -1,7 +1,5 @@
 package ego;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -9,17 +7,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = "spring:session:sessions:" + request.getHeader("Authorization");
-        if (token == null || !isValidToken(token)) {
+        if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
+            return true;
+        };
+
+        HttpSession session = request.getSession();
+
+        String token = request.getHeader("Authorization");
+        
+        if (token == null || session.getAttribute("token") == null) {
             
             Response<String> errorResponse = new Response<>(false);
             errorResponse.setErrors("Token mancante o non valido");
@@ -32,7 +35,4 @@ public class AuthInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean isValidToken(String token) {
-        return redisTemplate.hasKey(token);
-    }
 }

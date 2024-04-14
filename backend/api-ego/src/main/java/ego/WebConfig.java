@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/ego/**")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true);
     }
 }

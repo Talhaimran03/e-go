@@ -29,10 +29,6 @@ import java.nio.file.Path;
 @RequestMapping(path="/ego")
 public class MainController {
 
-	@Autowired
-    private HttpSession httpSession;
-	
-	//
 	// Users operations
 
     @Autowired
@@ -116,9 +112,8 @@ public class MainController {
 			user.setActive(true);
 			user.setOtp(null);
 			userRepository.save(user);
-
-			user.setAuthenticated(true);
-			httpSession.setAttribute("user", user);
+			
+			userService.writeSession();
 			
 			Response<User> response = new Response<>(true, user);
 			return ResponseEntity.ok(response);
@@ -276,8 +271,7 @@ public class MainController {
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
 					if (user.getActive()) {
-						user.setAuthenticated(true);
-						httpSession.setAttribute("user", user);
+						userService.writeSession();
 						return ResponseEntity.ok(new Response<>(true));
 					} else {
 						List<String> errors = new ArrayList<>();
@@ -304,17 +298,16 @@ public class MainController {
 	// Logout
     @PostMapping(path="/users/logout")
     public ResponseEntity<Response<Boolean>> logoutUser() {
-        httpSession.invalidate();
+        userService.deleteSession();
         return ResponseEntity.ok(new Response<>(true));
     }
 
 	@GetMapping("/users/checkSession")
 	public ResponseEntity<Response<Boolean>> checkSession(HttpSession session) {
-		Object user = session.getAttribute("user");
+		Object user = session.getAttribute("token");
 		boolean isAuthenticated = user != null;
 		return ResponseEntity.ok(new Response<>(isAuthenticated));
 	}
-
 	
 	// Routes operations
 
@@ -448,7 +441,6 @@ public class MainController {
 	}
 	
 
-	//
 	// Rewards operations
 
 	@Autowired

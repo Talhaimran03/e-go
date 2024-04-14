@@ -15,7 +15,7 @@ export const checkSession = async () => {
 
 export const redirectIfLogged = async (navigate, currentPage) => {
     const isLoggedIn = await checkSession();
-    if (isLoggedIn) {
+    if (isLoggedIn.success) {
         navigate('/');
     } else {
         if (currentPage === 'login') {

@@ -44,9 +44,6 @@ public class User implements Serializable {
     @Transient
     private String passwordConfirm;
 
-    @Transient
-    private boolean authenticated;
-
 	@Column(name="name", length=256, nullable=false)
     private String name;
 
@@ -128,14 +125,6 @@ public class User implements Serializable {
 
     public String getPasswordConfirm() {
         return passwordConfirm;
-    }
-    
-    public boolean isAuthenticated() {
-        return authenticated;
-    }
-    
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
     }
 
     public String getName() {

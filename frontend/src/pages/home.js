@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import Navbar from "./components/Navbar";
 import { checkSession } from './components/sessionService';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function Home() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isSessionChecked, setIsSessionChecked] = useState(false); 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSession = async () => {
-            if (!isSessionChecked) { 
                 const isLoggedIn = await checkSession(navigate);
-                setIsLoggedIn(isLoggedIn);
-                setIsSessionChecked(true); 
-            }
+                if (!isLoggedIn.success) {
+                    navigate('/login');
+                }
+                
+                try {
+                    const response = await axios.get('http://localhost:8080/ego/users/getAllUsers', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `${Cookies.get('SESSION')}`
+                        },
+                        withCredentials: true
+                    });
+
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Errore durante il recupero degli utenti:', error);
+                }
         };
 
         fetchSession();
-    }, [isSessionChecked, navigate]);
+    }, []);
 
     return (
         <>
             <div className='pos-navbar'>
-                <Navbar isLoggedIn={isLoggedIn} />
+                <Navbar />
             </div>
         </>
     );
