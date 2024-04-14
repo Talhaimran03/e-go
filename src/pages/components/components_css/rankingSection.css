@@ -27,3 +27,29 @@
 #text-rankingSection{
     padding-left: 5%;
 }
+
+@media only screen and (min-width: 1025px) {
+    #number-rankingSection{
+        font-size: 25px;
+    }
+
+    #text-rankingSection{
+        font-size: 25px;
+    }
+
+    #position-rankingSection{
+        display: flex;
+        flex-direction: row;
+        margin: 2% 0;
+        padding: 0 5%;
+    }
+
+    #points-rankingSection{
+        font-size: 25px;
+    }
+
+    #icon-rankingSection{
+        height: 60px;
+        padding-left: 6%;
+    }
+}

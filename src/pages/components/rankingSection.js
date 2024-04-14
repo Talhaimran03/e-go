@@ -5,11 +5,11 @@ function RankingSection ({ number, icon: ImgComponent, text, points }) {
     return(
         <div id='position-rankingSection'>
             <div className="positionFirst-rankingSection">
-                <p>{ number }</p>
+                <p id='number-rankingSection'>{ number }</p>
                 <img src={ImgComponent} alt='icon' id='icon-rankingSection' />
                 <p id='text-rankingSection'> { text } </p>
             </div>
-            <p>{ points }</p>
+            <p id='points-rankingSection'>{ points }</p>
         </div>
     );
 };

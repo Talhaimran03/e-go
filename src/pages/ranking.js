@@ -8,7 +8,7 @@ import QrCode from './components/qrCode';
 export default function Ranking() {
     return (
         <>
-            <div>
+            <div className='positionSwitch-ranking'>
                 <Switch></Switch>
             </div>
 

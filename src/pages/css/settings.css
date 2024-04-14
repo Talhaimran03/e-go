@@ -10,16 +10,6 @@
     /* border: 1px solid red; */
 }
 
-  body{
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-}
-
-* {
-    box-sizing: border-box;
-}
-
 .pos-navbar {
     display: flex;
     justify-content: center;
@@ -27,12 +17,6 @@
     left: 0;
     bottom: 2%;
     right: 0;
-}
-
-.pos-logo{
-    display: flex;
-    justify-content: center;
-    top: 70%;
 }
 
 .containerSettings{
@@ -57,4 +41,22 @@
 .userPosition{
     padding-top: 20%;
     padding-bottom: 10%;
+}
+
+
+@media only screen and (min-width: 1025px) {
+    #userSize-settings{
+        width: 200px;
+    }
+
+    .userPosition{
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+
+    .settings{
+        padding-top: 6%;
+        padding-bottom: 37%;
+        width: 60%;
+    }
 }

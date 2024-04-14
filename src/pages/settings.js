@@ -20,7 +20,7 @@ export default function Settings() {
         <>
             <div className='containerSettings'>
                 <div className="userPosition">
-                    <img src={ User } alt="user" />
+                    <img src={ User } alt="user" id="userSize-settings"/>
                 </div>
                 <div className="settings">
                     <SettingSection icon={ Profile } text="Profilo"/>

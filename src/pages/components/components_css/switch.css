@@ -24,6 +24,7 @@
 
 .col-6-switch{
     width: 50%;
+    border-radius: 6px;
 }
 
 .section-switch{
@@ -53,5 +54,25 @@
     background-color: #4AA18B;
     .text-switch{
         color: white;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .switch{
+        height: 50px;
+        font-size: 30px;
+    }
+
+    .position-switch{
+        position: fixed;
+        width: 60%;
+    }
+
+    .section-switch{
+        border-radius: 60px;
+    }
+
+    .row-switch{
+        border-radius: 60px;
     }
 }

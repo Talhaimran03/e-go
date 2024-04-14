@@ -3,8 +3,8 @@ import Arrow from '../img/arrow.svg';
 
 function SettingSection ({ icon: ImgComponent, text }) {
     return(
-        <div id='position'>
-            <div className="positionFirst">
+        <div className='position-settingSection'>
+            <div className="positionFirst-settingSection">
                 <img src={ImgComponent} alt='icon' id='icon' />
                 <p id='text'> { text } </p>
             </div>
