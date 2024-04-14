@@ -13,9 +13,20 @@ body{
     scroll-behavior: smooth;
 }
 
-.home {
-    height: 50rem;
+.home2 {
+    height: 60rem;
     background-color: #FFFF;
+    background: #1F9900;
+}
+
+.window{
+    position: absolute;
+    top: -.5vh;
+    left: 2.5vw;
+    height: 107%;
+    width: 95vw;
+    background: #FFFFFF;
+    border-radius: 25px;
 }
 
 .row::after {
@@ -30,7 +41,7 @@ body{
 }
 
 
-.pos-navbar {
+.pos-navbar2 {
     display: flex;
     justify-content: center;
     position: fixed;
@@ -41,20 +52,20 @@ body{
     overflow-y: visible;
 }
 
-.pos-logo{
+.pos-logo2{
     display: flex;
     justify-content: center;
     height: auto;
     margin-top: 2%;
 }
 
-.background{
+.background2{
     position: relative;
     display: flex;
-    top: 3vh;
-    left: 0vw;
+    top: 4vh;
+    left: -2vw;
     width: 90vw;
-    height: 59vh;
+    height: 54vh;
     margin: 5%;
     background: #FFFF;
     justify-content: center;
@@ -63,7 +74,7 @@ body{
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
-.points{
+.points2{
     position: absolute;
     color: #000;
     font-size: 30px;
@@ -76,66 +87,67 @@ body{
     align-items: center;
 }
 
-.p{
+.p2{
     margin-top: 15vh;
     margin-bottom: -5px;
     padding-top: 0;
 }
 
-.secondo{
+.secondo2{
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 0;
 }
 
-.div-graphic{
+.div-graphic2{
     position: absolute;
     display: flex;
-    top: 6vh;
+    top: 5vh;
     width: 100%;
     height: auto;
     justify-content: center;
 }
 
+.graphic2{
+    position: relative;
+}
 
-.div-qr{
+.div-qr2{
     position: relative;
     display: flex;
-    top: 29vh;
+    top: 27vh;
     left: 0;
     width: 100%;
     height: auto;
     justify-content: center;
 }
 
-.qr{
+.qr2{
     position: relative;  
-    scale: .9;
 }
 
-.saving{
+.saving2{
     position: absolute;
     background: #F7F7F7;
     top: 23vh;
     width: 83vw;
-    height: 24vh;
+    height: 20vh;
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     display: flex;
-
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.saving p{
+.saving2 p{
     margin-left: 4vw;
 }
 
-.slider-maps{
+.slider-maps2{
     background: none;
     position: absolute;
-    top: 82vh;
+    top: 80vh;
     width: 100%;
     height: auto;
     left: 0;
@@ -143,7 +155,7 @@ body{
     padding-bottom: 5vh;
 }
 
-.maps{
+.maps2{
     display: flex;
     background: #F5F5F5;
     width: 64vw;
@@ -154,29 +166,29 @@ body{
     overflow-y: hidden;
 }
 
-.uno{
+.uno2{
     margin-left: 73vw;
     margin-top: -14vh;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
-.due{
+.due2{
     margin-left: 144vw;
     margin-top: -14vh;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
-.tre{
+.tre2{
     display: none;
 }
 
-.interactive-map{
+.interactive-map2{
     position: absolute;
     top: 1.5vh;
     left: 5vw;
 }
 
-.maps-p{
+.maps-p2{
     position: absolute;
     display: flex;
     top: 1.5vh;
@@ -185,13 +197,13 @@ body{
     font-size: 14px;
 }
 
-.maps-p p{
+.maps-p2 p{
     margin: 0 0 0 21vw;
     padding: 0;
     line-height: 20px;
 }
 
-.bus-icon{
+.bus-icon2{
     position: absolute;
     display: flex;
     left: 20vw;
@@ -205,30 +217,24 @@ body{
     border-radius: 5px;
 }
 
-.bus-icon img{
+.bus-icon2 img{
     margin: 3px;
     padding: 0;
 }
 
 
-.bus-icon p{
+.bus-icon2 p{
     margin: 3px;
     padding: 0;
     font-size: 12px;
 }
 
-.large-via{
+.large-via2{
     display: none;
 }
 
 
-.grafico-co2{
-    position: absolute;
-    top: 5vh;
-    left: 4vw;
-    width: 100vw;
-    height: 100vh;
-}
+
 
 
 
@@ -248,7 +254,7 @@ body{
     body{
         overflow-y: hidden;
     }
-    .home{
+    .home2{
         display: flex;
         width: 100%;
         margin: 0;
@@ -257,7 +263,7 @@ body{
         align-items: center;
     }
 
-    .background{
+    .background2{
         top: -8vh;
         left: 0vw;
         width: 40vw;
@@ -271,7 +277,7 @@ body{
         scale: 0.95;
     }
 
-    .saving{
+    .saving2{
         width: 35vw;
         height: 20vh;
         border-radius: 12px;
@@ -283,72 +289,72 @@ body{
         top: 73vh;
     }
 
-.maps{
+.maps2{
     width: 30vw;
     height: 14vh;
     margin-left: 3%;
 }
 
-.uno{
+.uno2{
     margin-left: 40vw;
     margin-top: -14vh;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
-.due{
+.due2{
     margin-left: 78vw;
     margin-top: -14vh;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
-.tre{
+.tre2{
     margin-left: 115vw;
     margin-top: -14vh;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
 
-.maps-p{
+.maps-p2{
     top: 1.9vh;
     left: -10vw;
 }
 
-.maps-p p{
+.maps-p2 p{
     margin: 0 0 0 20vw;
     padding: 0;
     line-height: 20px;
 }
 
-.bus-icon{
+.bus-icon2{
     width: 5vw;
 }
 
 
-.bus-icon p{
+.bus-icon2 p{
     margin: 3px;
     padding: 0;
     font-size: 12px;
 }
 
-.large-via{
+.large-via2{
     display: block;
 }
 
-.short-via{
+.short-via2{
     display: none;
 }
 
-.saving p{
+.saving2 p{
     margin-left: 1.5vw;
 }
 
-.tre{
+.tre2{
     display: block;
     margin-left: -14vh 0 0 115vw;
     background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
-.interactive-map{
+.interactive-map2{
     top: 2vh;
     left: 4vw;
 }
