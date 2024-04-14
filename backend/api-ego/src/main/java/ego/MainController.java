@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -115,6 +117,7 @@ public class MainController {
 			user.setOtp(null);
 			userRepository.save(user);
 
+			user.setAuthenticated(true);
 			httpSession.setAttribute("user", user);
 			
 			Response<User> response = new Response<>(true, user);
@@ -136,15 +139,29 @@ public class MainController {
     }
 
 	@GetMapping(path="/users/getUserById")
-	public ResponseEntity<Response<User>> getUserById(@RequestBody Integer id) {
-		Optional<User> userOptional = userRepository.findById(id);
-		if (userOptional.isPresent()) {
-			Response<User> response = new Response<>(true, userOptional.get());
-			return ResponseEntity.ok(response);
+	public ResponseEntity<Response<User>> getUserById(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); // Get session, but not create a new one
+		if (session != null) {
+			Integer userId = (Integer) session.getAttribute("userId");
+			if (userId != null) {
+				Optional<User> userOptional = userRepository.findById(userId);
+				if (userOptional.isPresent()) {
+					Response<User> response = new Response<>(true, userOptional.get());
+					return ResponseEntity.ok(response);
+				} else {
+					Response<User> response = new Response<>(false, new ArrayList<>());
+					response.setErrors("Utente non trovato");
+					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+				}
+			} else {
+				Response<User> response = new Response<>(false, new ArrayList<>());
+				response.setErrors("Id utente non trovato nella sessione");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			}
 		} else {
 			Response<User> response = new Response<>(false, new ArrayList<>());
-			response.setErrors("Utente non trovato");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+			response.setErrors("Sessione non trovata");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
 
@@ -259,6 +276,7 @@ public class MainController {
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
 					if (user.getActive()) {
+						user.setAuthenticated(true);
 						httpSession.setAttribute("user", user);
 						return ResponseEntity.ok(new Response<>(true));
 					} else {
@@ -290,7 +308,14 @@ public class MainController {
         return ResponseEntity.ok(new Response<>(true));
     }
 
-	//
+	@GetMapping("/users/checkSession")
+	public ResponseEntity<Response<Boolean>> checkSession(HttpSession session) {
+		Object user = session.getAttribute("user");
+		boolean isAuthenticated = user != null;
+		return ResponseEntity.ok(new Response<>(isAuthenticated));
+	}
+
+	
 	// Routes operations
 
 	@Autowired

@@ -18,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
             .addPathPatterns("/ego/**")
             .excludePathPatterns("/ego/users/addUser")
             .excludePathPatterns("/ego/users/validateUser")
+            .excludePathPatterns("/ego/users/checkSession")
             .excludePathPatterns("/ego/users/login");
     }
 

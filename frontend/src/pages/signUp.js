@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './css/signUp.css';
@@ -8,10 +8,15 @@ import { ReactComponent as Iconautente } from "./img/icona_utente.svg";
 import { ReactComponent as Calendaricon } from "./img/calendar_month.svg";
 import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
+import { redirectIfLogged } from './components/sessionService';
 
 function Sign() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        redirectIfLogged(navigate, 'signUp');
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
