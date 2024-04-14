@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         };
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
 
         String token = request.getHeader("Authorization");
         

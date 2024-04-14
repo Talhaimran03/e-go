@@ -16,7 +16,7 @@ export default function Home() {
                 }
                 
                 try {
-                    const response = await axios.get('http://localhost:8080/ego/users/getAllUsers', {
+                    const response = await axios.get('http://localhost:8080/ego/users/getUserById', {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `${Cookies.get('SESSION')}`

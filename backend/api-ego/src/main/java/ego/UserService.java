@@ -41,11 +41,14 @@ public class UserService {
         }
     }
 
-    public void writeSession() {
+    public void writeSession(User user) {
         String value = UUID.randomUUID().toString();
         String key = "token";
     
         httpSession.setAttribute(key, value);
+        
+        user.setToken(value);
+        userRepository.save(user);
     }
 
     public String readSession() {

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.nio.file.Path;
 
 @RestController
@@ -113,7 +111,7 @@ public class MainController {
 			user.setOtp(null);
 			userRepository.save(user);
 			
-			userService.writeSession();
+			userService.writeSession(user);
 			
 			Response<User> response = new Response<>(true, user);
 			return ResponseEntity.ok(response);
@@ -133,29 +131,25 @@ public class MainController {
         return ResponseEntity.ok(response);
     }
 
-	@GetMapping(path="/users/getUserById")
-	public ResponseEntity<Response<User>> getUserById(HttpServletRequest request) {
-		HttpSession session = request.getSession(false); // Get session, but not create a new one
-		if (session != null) {
-			Integer userId = (Integer) session.getAttribute("userId");
-			if (userId != null) {
-				Optional<User> userOptional = userRepository.findById(userId);
-				if (userOptional.isPresent()) {
-					Response<User> response = new Response<>(true, userOptional.get());
-					return ResponseEntity.ok(response);
-				} else {
-					Response<User> response = new Response<>(false, new ArrayList<>());
-					response.setErrors("Utente non trovato");
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-				}
+	@GetMapping(path="/users/getUser")
+	public ResponseEntity<Response<User>> getUser(HttpSession session) {
+		Object token = session.getAttribute("token");
+		
+		if (token != null) {
+			String tokenString = token.toString();
+			User user = userRepository.findByToken(tokenString);
+
+			if (user != null) {
+				Response<User> response = new Response<>(true, user);
+				return ResponseEntity.ok(response);
 			} else {
 				Response<User> response = new Response<>(false, new ArrayList<>());
-				response.setErrors("Id utente non trovato nella sessione");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+				response.setErrors("Utente non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 			}
 		} else {
 			Response<User> response = new Response<>(false, new ArrayList<>());
-			response.setErrors("Sessione non trovata");
+			response.setErrors("Token non trovato nella sessione");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
@@ -170,7 +164,8 @@ public class MainController {
 														@RequestBody(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
 														@RequestBody(required = false) MultipartFile profileImage,
 														@RequestBody(required = false) Boolean active,
-														@RequestBody(required = false) Integer points) {
+														@RequestBody(required = false) Integer actualPoints,
+														@RequestBody(required = false) Integer totalPoints) {
 		
 		User user = userRepository.findById(id).orElse(null);
 		if (user == null) {
@@ -233,7 +228,8 @@ public class MainController {
 		}
 
 		if (active != null) user.setActive(active);
-		if (points != null) user.setPoints(points);
+		if (actualPoints != null) user.setActualPoints(actualPoints);
+		if (totalPoints != null) user.setTotalPoints(totalPoints);
 
 		// Save user and create response
 		userRepository.save(user);
@@ -271,7 +267,7 @@ public class MainController {
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
 					if (user.getActive()) {
-						userService.writeSession();
+						userService.writeSession(user);
 						return ResponseEntity.ok(new Response<>(true));
 					} else {
 						List<String> errors = new ArrayList<>();
@@ -316,23 +312,35 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public ResponseEntity<Response<Boolean>> addRoute(@RequestBody Point startCoordinates, @RequestBody Integer userId) {
+	public ResponseEntity<Response<Boolean>> addRoute(HttpSession session, @RequestBody Map<String, String> userData) {
 		try {
-			User user = userRepository.findById(userId).orElse(null);
-			if (user != null) {
-				LocalDateTime startTime = LocalDateTime.now();
-				Route route = new Route(startCoordinates, startTime, user);
-				routeRepository.save(route);
+			Object token = session.getAttribute("token");
+			if (token == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Token non trovato nella sessione");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+			String tokenString = token.toString();
 
-				user.setPoints(user.getPoints() + 10);
-				userRepository.save(user);
-
-				return ResponseEntity.ok(new Response<>(true));
-			} else {
+			User user = userRepository.findByToken(tokenString);
+			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
+
+			String[] coordinatesArray = userData.get("email").split(",");
+			Point startCoordinates = new Point(Double.parseDouble(coordinatesArray[0]), Double.parseDouble(coordinatesArray[1]));
+
+			LocalDateTime startTime = LocalDateTime.now();
+			Route route = new Route(startCoordinates, startTime, user);
+			routeRepository.save(route);
+
+			user.setActualPoints(user.getActualPoints() + 10);
+			user.setTotalPoints(user.getTotalPoints() + 10);
+			userRepository.save(user);
+
+			return ResponseEntity.ok(new Response<>(true));
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nell'inserimento del percorso: " + e.getMessage());

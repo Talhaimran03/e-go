@@ -43,6 +43,9 @@ public class User implements Serializable {
 
     @Transient
     private String passwordConfirm;
+    
+    @Column(name="token", length=256)
+    private String token;
 
 	@Column(name="name", length=256, nullable=false)
     private String name;
@@ -66,8 +69,11 @@ public class User implements Serializable {
 	@Column(name = "active", nullable = false)
 	private Boolean active = false;
 	
-    @Column(name = "points", nullable = false)
-	private Integer points = 0;
+    @Column(name = "actualPoints", nullable = false)
+	private Integer actualPoints = 0;
+
+    @Column(name = "totalPoints", nullable = false)
+	private Integer totalPoints = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
@@ -127,6 +133,14 @@ public class User implements Serializable {
         return passwordConfirm;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getName() {
         return name;
     }
@@ -183,12 +197,20 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public Integer getPoints() {
-        return points;
+    public Integer getActualPoints() {
+        return actualPoints;
     }
 
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setActualPoints(Integer actualPoints) {
+        this.actualPoints = actualPoints;
+    }
+
+    public Integer getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(Integer totalPoints) {
+        this.totalPoints = totalPoints;
     }
 
     public void addRoute(Route route) {
@@ -216,7 +238,11 @@ public class User implements Serializable {
                 ", profileImage=" + profileImage +
                 ", registrationDate=" + registrationDate +
                 ", active=" + active +
-                ", points=" + points +
+                ", actualPoints=" + actualPoints +
+                ", totalPoints=" + totalPoints +
+                ", routes=" + routes +
+                ", rewards=" + rewards +
+                ", token='" + token + '\'' +
                 '}';
     }
 
