@@ -7,17 +7,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Temporal;
@@ -77,14 +71,6 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-        name = "users_rewards",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "rewardId")
-    )
-    private Set<Reward> rewards = new HashSet<>();
     
     // Constructor
 
@@ -218,14 +204,6 @@ public class User implements Serializable {
         route.setUser(this);
     }
 
-    public Set<Reward> getRewards() {
-        return rewards;
-    }
-
-    public void setRewards(Set<Reward> rewards) {
-        this.rewards = rewards;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -241,7 +219,6 @@ public class User implements Serializable {
                 ", actualPoints=" + actualPoints +
                 ", totalPoints=" + totalPoints +
                 ", routes=" + routes +
-                ", rewards=" + rewards +
                 ", token='" + token + '\'' +
                 '}';
     }
