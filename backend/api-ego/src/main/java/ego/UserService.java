@@ -34,6 +34,7 @@ public class UserService {
     private static final String SESSION_KEY = "";
 
     public void startSession() {
+        startSession();
         String sessionKey = (String) httpSession.getAttribute(SESSION_KEY);
         if (sessionKey == null) {
             sessionKey = generateSHA256Hash(UUID.randomUUID().toString());

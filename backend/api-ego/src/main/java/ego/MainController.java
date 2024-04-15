@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping(path="/ego")
@@ -59,15 +56,10 @@ public class MainController {
 		// Convert profile image to byte array
 		byte[] profileImageData = null;
 		try {
-			if (profileImage == null) {
-				String defaultImagePath = "/img/default_profile.png";
-				java.net.URL resourceUrl = getClass().getResource(defaultImagePath);
-				Path path = Paths.get(resourceUrl.toURI());
-				profileImageData = Files.readAllBytes(path);
-			} else {
+			if (profileImage != null) {
 				profileImageData = profileImage.getBytes();
 			}
-		} catch (IOException | URISyntaxException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -532,65 +524,26 @@ public class MainController {
 	}
 
 
-	//
+	
 	// Users/Rewards operations
+	// to do → if user have tot points************************************************************************************
 
-	@GetMapping("/users/getRewardsByUserId")
-	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
-		try {
-			List<Reward> rewards = rewardRepository.findByUserId(userId);
-			if (!rewards.isEmpty()) {
-				return ResponseEntity.ok(new Response<>(true, rewards));
-			} else {
-				List<String> errors = new ArrayList<>();
-				errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
-			}
-		} catch (Exception e) {
-			List<String> errors = new ArrayList<>();
-			errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-		}
-	}
-
-	@PutMapping("/users/linkReward")
-    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
-        try {
-            User user = userRepository.findById(userId)
-                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-            Reward reward = rewardRepository.findById(rewardId)
-                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
-
-            user.getRewards().add(reward);
-            userRepository.save(user);
-
-            return ResponseEntity.ok(new Response<>(true));
-        } catch (Exception e) {
-            List<String> errors = new ArrayList<>();
-            errors.add("Errore durante il collegamento dell'utente alla ricompensa: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-        }
-    }
-
-    @DeleteMapping("/users/unlinkReward")
-    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
-        try {
-            User user = userRepository.findById(userId)
-                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-            Reward reward = rewardRepository.findById(rewardId)
-                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
-
-            user.getRewards().remove(reward);
-            userRepository.save(user);
-
-            return ResponseEntity.ok(new Response<>(true));
-        } catch (Exception e) {
-            List<String> errors = new ArrayList<>();
-            errors.add("Errore durante lo scollegamento dell'utente dalla ricompensa: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-        }
-    }
+	// @GetMapping("/users/getRewardsByUserId")
+	// public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
+	// 	try {
+	// 		List<Reward> rewards = rewardRepository.findByUserId(userId);
+	// 		if (!rewards.isEmpty()) {
+	// 			return ResponseEntity.ok(new Response<>(true, rewards));
+	// 		} else {
+	// 			List<String> errors = new ArrayList<>();
+	// 			errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
+	// 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+	// 		}
+	// 	} catch (Exception e) {
+	// 		List<String> errors = new ArrayList<>();
+	// 		errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
+	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+	// 	}
+	// }
 
 }

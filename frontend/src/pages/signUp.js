@@ -37,10 +37,9 @@ function Sign() {
             birthDate
         };
 
-        console.log(userData);
-
         try {
             const response = await axios.post('http://localhost:8080/ego/users/addUser', userData);
+            console.log(response);
             if (response.data.success) {
                 navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
             } else {
