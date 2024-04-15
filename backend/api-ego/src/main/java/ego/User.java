@@ -7,17 +7,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Temporal;
@@ -41,11 +35,13 @@ public class User implements Serializable {
 	@Column(name="password", length=256, nullable=false)
     private String password;
 
+    @JsonIgnore
     @Transient
     private String passwordConfirm;
-
-    @Transient
-    private boolean authenticated;
+    
+    @JsonIgnore
+    @Column(name="token", length=256)
+    private String token;
 
 	@Column(name="name", length=256, nullable=false)
     private String name;
@@ -63,25 +59,21 @@ public class User implements Serializable {
 	@Column(name="registrationDate", nullable=false)
     private LocalDateTime registrationDate;
 	
+    @JsonIgnore
 	@Column(name = "otp")
 	private Integer otp;
 
 	@Column(name = "active", nullable = false)
 	private Boolean active = false;
 	
-    @Column(name = "points", nullable = false)
-	private Integer points = 0;
+    @Column(name = "actualPoints", nullable = false)
+	private Integer actualPoints = 0;
+
+    @Column(name = "totalPoints", nullable = false)
+	private Integer totalPoints = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-        name = "users_rewards",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "rewardId")
-    )
-    private Set<Reward> rewards = new HashSet<>();
     
     // Constructor
 
@@ -129,13 +121,13 @@ public class User implements Serializable {
     public String getPasswordConfirm() {
         return passwordConfirm;
     }
-    
-    public boolean isAuthenticated() {
-        return authenticated;
+
+    public String getToken() {
+        return token;
     }
-    
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getName() {
@@ -194,25 +186,25 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public Integer getPoints() {
-        return points;
+    public Integer getActualPoints() {
+        return actualPoints;
     }
 
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setActualPoints(Integer actualPoints) {
+        this.actualPoints = actualPoints;
+    }
+
+    public Integer getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(Integer totalPoints) {
+        this.totalPoints = totalPoints;
     }
 
     public void addRoute(Route route) {
         routes.add(route);
         route.setUser(this);
-    }
-
-    public Set<Reward> getRewards() {
-        return rewards;
-    }
-
-    public void setRewards(Set<Reward> rewards) {
-        this.rewards = rewards;
     }
 
     @Override
@@ -227,7 +219,10 @@ public class User implements Serializable {
                 ", profileImage=" + profileImage +
                 ", registrationDate=" + registrationDate +
                 ", active=" + active +
-                ", points=" + points +
+                ", actualPoints=" + actualPoints +
+                ", totalPoints=" + totalPoints +
+                ", routes=" + routes +
+                ", token='" + token + '\'' +
                 '}';
     }
 

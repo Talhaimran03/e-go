@@ -1,15 +1,20 @@
 package ego;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +27,40 @@ import javax.mail.internet.InternetAddress;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private HttpSession httpSession;
+
+    private static final String SESSION_KEY = "";
+
+    public void startSession() {
+        startSession();
+        String sessionKey = (String) httpSession.getAttribute(SESSION_KEY);
+        if (sessionKey == null) {
+            sessionKey = generateSHA256Hash(UUID.randomUUID().toString());
+            httpSession.setAttribute(SESSION_KEY, sessionKey);
+        }
+    }
+
+    public void writeSession(User user) {
+        String value = UUID.randomUUID().toString();
+        String key = "token";
+    
+        httpSession.setAttribute(key, value);
+        
+        user.setToken(value);
+        userRepository.save(user);
+    }
+
+    public String readSession() {
+        startSession();
+        String sessionKey = (String) httpSession.getAttribute(SESSION_KEY);
+        return (String) httpSession.getAttribute(sessionKey);
+    }
+
+    public void deleteSession() {
+        httpSession.invalidate();
+    }
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -165,6 +204,17 @@ public class UserService {
         } catch (MessagingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }
+    }
+
+    private String generateSHA256Hash(String data) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(data.getBytes());
+            return java.util.Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

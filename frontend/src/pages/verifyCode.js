@@ -2,17 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './components/components_css/verifyCode.css';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { redirectIfLogged } from './components/sessionService';
 
 function VerifyCode() {
     const location = useLocation();
     const email = location.state ? location.state.email : null;
+    console.log(location.state);
     const navigate = useNavigate(); 
     const [otpError, setOtpError] = useState(false); 
-
-    useEffect(() => {
-        redirectIfLogged(navigate, 'verifyCode');
-    }, [navigate]);
 
     useEffect(() => {
         if (!email) {

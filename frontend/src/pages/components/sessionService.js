@@ -6,6 +6,7 @@ export const checkSession = async () => {
             'http://localhost:8080/ego/users/checkSession', 
             { withCredentials: true }
         ); 
+        console.log(response)
         return response.data;
     } catch (error) {
         console.error('Errore durante il controllo della sessione:', error);
@@ -15,7 +16,7 @@ export const checkSession = async () => {
 
 export const redirectIfLogged = async (navigate, currentPage) => {
     const isLoggedIn = await checkSession();
-    if (isLoggedIn) {
+    if (isLoggedIn.success) {
         navigate('/');
     } else {
         if (currentPage === 'login') {

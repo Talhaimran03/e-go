@@ -8,13 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -22,17 +19,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping(path="/ego")
 public class MainController {
 
-	@Autowired
-    private HttpSession httpSession;
-	
-	//
 	// Users operations
 
     @Autowired
@@ -65,15 +56,10 @@ public class MainController {
 		// Convert profile image to byte array
 		byte[] profileImageData = null;
 		try {
-			if (profileImage == null) {
-				String defaultImagePath = "/img/default_profile.png";
-				java.net.URL resourceUrl = getClass().getResource(defaultImagePath);
-				Path path = Paths.get(resourceUrl.toURI());
-				profileImageData = Files.readAllBytes(path);
-			} else {
+			if (profileImage != null) {
 				profileImageData = profileImage.getBytes();
 			}
-		} catch (IOException | URISyntaxException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -116,9 +102,8 @@ public class MainController {
 			user.setActive(true);
 			user.setOtp(null);
 			userRepository.save(user);
-
-			user.setAuthenticated(true);
-			httpSession.setAttribute("user", user);
+			
+			userService.writeSession(user);
 			
 			Response<User> response = new Response<>(true, user);
 			return ResponseEntity.ok(response);
@@ -138,29 +123,25 @@ public class MainController {
         return ResponseEntity.ok(response);
     }
 
-	@GetMapping(path="/users/getUserById")
-	public ResponseEntity<Response<User>> getUserById(HttpServletRequest request) {
-		HttpSession session = request.getSession(false); // Get session, but not create a new one
-		if (session != null) {
-			Integer userId = (Integer) session.getAttribute("userId");
-			if (userId != null) {
-				Optional<User> userOptional = userRepository.findById(userId);
-				if (userOptional.isPresent()) {
-					Response<User> response = new Response<>(true, userOptional.get());
-					return ResponseEntity.ok(response);
-				} else {
-					Response<User> response = new Response<>(false, new ArrayList<>());
-					response.setErrors("Utente non trovato");
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-				}
+	@GetMapping(path="/users/getUser")
+	public ResponseEntity<Response<User>> getUser(HttpSession session) {
+		Object token = session.getAttribute("token");
+		
+		if (token != null) {
+			String tokenString = token.toString();
+			User user = userRepository.findByToken(tokenString);
+
+			if (user != null) {
+				Response<User> response = new Response<>(true, user);
+				return ResponseEntity.ok(response);
 			} else {
 				Response<User> response = new Response<>(false, new ArrayList<>());
-				response.setErrors("Id utente non trovato nella sessione");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+				response.setErrors("Utente non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 			}
 		} else {
 			Response<User> response = new Response<>(false, new ArrayList<>());
-			response.setErrors("Sessione non trovata");
+			response.setErrors("Token non trovato nella sessione");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
@@ -175,7 +156,8 @@ public class MainController {
 														@RequestBody(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
 														@RequestBody(required = false) MultipartFile profileImage,
 														@RequestBody(required = false) Boolean active,
-														@RequestBody(required = false) Integer points) {
+														@RequestBody(required = false) Integer actualPoints,
+														@RequestBody(required = false) Integer totalPoints) {
 		
 		User user = userRepository.findById(id).orElse(null);
 		if (user == null) {
@@ -238,7 +220,8 @@ public class MainController {
 		}
 
 		if (active != null) user.setActive(active);
-		if (points != null) user.setPoints(points);
+		if (actualPoints != null) user.setActualPoints(actualPoints);
+		if (totalPoints != null) user.setTotalPoints(totalPoints);
 
 		// Save user and create response
 		userRepository.save(user);
@@ -276,8 +259,7 @@ public class MainController {
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
 					if (user.getActive()) {
-						user.setAuthenticated(true);
-						httpSession.setAttribute("user", user);
+						userService.writeSession(user);
 						return ResponseEntity.ok(new Response<>(true));
 					} else {
 						List<String> errors = new ArrayList<>();
@@ -304,17 +286,16 @@ public class MainController {
 	// Logout
     @PostMapping(path="/users/logout")
     public ResponseEntity<Response<Boolean>> logoutUser() {
-        httpSession.invalidate();
+        userService.deleteSession();
         return ResponseEntity.ok(new Response<>(true));
     }
 
 	@GetMapping("/users/checkSession")
 	public ResponseEntity<Response<Boolean>> checkSession(HttpSession session) {
-		Object user = session.getAttribute("user");
+		Object user = session.getAttribute("token");
 		boolean isAuthenticated = user != null;
 		return ResponseEntity.ok(new Response<>(isAuthenticated));
 	}
-
 	
 	// Routes operations
 
@@ -323,23 +304,35 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public ResponseEntity<Response<Boolean>> addRoute(@RequestBody Point startCoordinates, @RequestBody Integer userId) {
+	public ResponseEntity<Response<Boolean>> addRoute(HttpSession session, @RequestBody Map<String, String> userData) {
 		try {
-			User user = userRepository.findById(userId).orElse(null);
-			if (user != null) {
-				LocalDateTime startTime = LocalDateTime.now();
-				Route route = new Route(startCoordinates, startTime, user);
-				routeRepository.save(route);
+			Object token = session.getAttribute("token");
+			if (token == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Token non trovato nella sessione");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+			String tokenString = token.toString();
 
-				user.setPoints(user.getPoints() + 10);
-				userRepository.save(user);
-
-				return ResponseEntity.ok(new Response<>(true));
-			} else {
+			User user = userRepository.findByToken(tokenString);
+			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
+
+			String[] coordinatesArray = userData.get("email").split(",");
+			Point startCoordinates = new Point(Double.parseDouble(coordinatesArray[0]), Double.parseDouble(coordinatesArray[1]));
+
+			LocalDateTime startTime = LocalDateTime.now();
+			Route route = new Route(startCoordinates, startTime, user);
+			routeRepository.save(route);
+
+			user.setActualPoints(user.getActualPoints() + 10);
+			user.setTotalPoints(user.getTotalPoints() + 10);
+			userRepository.save(user);
+
+			return ResponseEntity.ok(new Response<>(true));
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nell'inserimento del percorso: " + e.getMessage());
@@ -448,7 +441,6 @@ public class MainController {
 	}
 	
 
-	//
 	// Rewards operations
 
 	@Autowired
@@ -532,65 +524,26 @@ public class MainController {
 	}
 
 
-	//
+	
 	// Users/Rewards operations
+	// to do → if user have tot points************************************************************************************
 
-	@GetMapping("/users/getRewardsByUserId")
-	public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
-		try {
-			List<Reward> rewards = rewardRepository.findByUserId(userId);
-			if (!rewards.isEmpty()) {
-				return ResponseEntity.ok(new Response<>(true, rewards));
-			} else {
-				List<String> errors = new ArrayList<>();
-				errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
-			}
-		} catch (Exception e) {
-			List<String> errors = new ArrayList<>();
-			errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-		}
-	}
-
-	@PutMapping("/users/linkReward")
-    public ResponseEntity<Response<Boolean>> linkUserToReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
-        try {
-            User user = userRepository.findById(userId)
-                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-            Reward reward = rewardRepository.findById(rewardId)
-                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
-
-            user.getRewards().add(reward);
-            userRepository.save(user);
-
-            return ResponseEntity.ok(new Response<>(true));
-        } catch (Exception e) {
-            List<String> errors = new ArrayList<>();
-            errors.add("Errore durante il collegamento dell'utente alla ricompensa: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-        }
-    }
-
-    @DeleteMapping("/users/unlinkReward")
-    public ResponseEntity<Response<Boolean>> unlinkUserFromReward(@RequestBody Integer userId, @RequestBody Integer rewardId) {
-        try {
-            User user = userRepository.findById(userId)
-                                       .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-            Reward reward = rewardRepository.findById(rewardId)
-                                             .orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
-
-            user.getRewards().remove(reward);
-            userRepository.save(user);
-
-            return ResponseEntity.ok(new Response<>(true));
-        } catch (Exception e) {
-            List<String> errors = new ArrayList<>();
-            errors.add("Errore durante lo scollegamento dell'utente dalla ricompensa: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-        }
-    }
+	// @GetMapping("/users/getRewardsByUserId")
+	// public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
+	// 	try {
+	// 		List<Reward> rewards = rewardRepository.findByUserId(userId);
+	// 		if (!rewards.isEmpty()) {
+	// 			return ResponseEntity.ok(new Response<>(true, rewards));
+	// 		} else {
+	// 			List<String> errors = new ArrayList<>();
+	// 			errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
+	// 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+	// 		}
+	// 	} catch (Exception e) {
+	// 		List<String> errors = new ArrayList<>();
+	// 		errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
+	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+	// 	}
+	// }
 
 }
