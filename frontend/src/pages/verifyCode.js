@@ -64,7 +64,7 @@ function VerifyCode() {
             <div className='align'>
                 <div>
                     <h1 className='verifyCode center'>Codice Verifica</h1>
-                    <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo <br /> inviato tramite email</p>
+                    <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo inviato tramite email</p>
                 </div>
             </div>
             <form className='flexboxnumber' onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ function VerifyCode() {
                 <input ref={el => inputRefs.current[2] = el} type="number" className='box' placeholder='' name="otp3" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(2)}
                 />
                 <input ref={el => inputRefs.current[3] = el} type="number" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(3)} />
-                <button type="submit" className='submit'>SUBMIT</button>
+                <button type="submit" className='submit'>VERIFICA</button>
             </form>
             {otpError && <p className="error-message">OTP non valido</p>}
             {!email && <p>Non hai ancora un account? <Link to="/signUp">Registrati qui</Link></p>}

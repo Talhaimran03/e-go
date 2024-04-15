@@ -35,10 +35,25 @@
     font-size: 24px;
     font-weight: bolder;
     color:rgba(74, 161, 139, 1);
+    margin-left: 10px;
+}
+
+@media screen and (min-width:390px)
+{
+    .verifyCode{
+        font-size: 24px;
+        font-weight: bolder;
+        color:rgba(74, 161, 139, 1);
+        margin-left: 10px;
+        text-align: center;
+        font-size: 30px;
+    }
 }
 
 .paragraph{
     line-height: 219.5%;
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 .box{
@@ -50,6 +65,9 @@
     position: relative;
     top: 50px;
     border: none;
+    text-align: center;
+    outline: none;
+    font-size: 30px;
 }
 
 .box[type='number']::-webkit-inner-spin-button,
@@ -98,6 +116,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    cursor: pointer;
 }
 
 
