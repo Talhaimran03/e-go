@@ -6,6 +6,7 @@ export const checkSession = async () => {
             'http://localhost:8080/ego/users/checkSession', 
             { withCredentials: true }
         ); 
+        console.log(response)
         return response.data;
     } catch (error) {
         console.error('Errore durante il controllo della sessione:', error);

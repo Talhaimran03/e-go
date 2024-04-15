@@ -35,9 +35,11 @@ public class User implements Serializable {
 	@Column(name="password", length=256, nullable=false)
     private String password;
 
+    @JsonIgnore
     @Transient
     private String passwordConfirm;
     
+    @JsonIgnore
     @Column(name="token", length=256)
     private String token;
 
@@ -57,6 +59,7 @@ public class User implements Serializable {
 	@Column(name="registrationDate", nullable=false)
     private LocalDateTime registrationDate;
 	
+    @JsonIgnore
 	@Column(name = "otp")
 	private Integer otp;
 

@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping(path="/ego")
@@ -59,15 +56,10 @@ public class MainController {
 		// Convert profile image to byte array
 		byte[] profileImageData = null;
 		try {
-			if (profileImage == null) {
-				String defaultImagePath = "/img/default_profile.png";
-				java.net.URL resourceUrl = getClass().getResource(defaultImagePath);
-				Path path = Paths.get(resourceUrl.toURI());
-				profileImageData = Files.readAllBytes(path);
-			} else {
+			if (profileImage != null) {
 				profileImageData = profileImage.getBytes();
 			}
-		} catch (IOException | URISyntaxException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
