@@ -11,6 +11,7 @@ class QrContainer extends Component {
     this.state = {
       result: 'Se vuoi raccogliere punti ricordati di scannerizzare il QR Code che trovi sul bus',
       locationData: null, // Aggiunto stato per memorizzare i dati di localizzazione
+      isDesktop: window.innerWidth > 768
     };
     this.handleScan = this.handleScan.bind(this);
   }
@@ -57,6 +58,7 @@ class QrContainer extends Component {
   }
 
   render() {
+    const { isDesktop } = this.state;
     const camStyle = {
       width: '100%',
       height: '100%',
@@ -73,12 +75,14 @@ class QrContainer extends Component {
             <p className='p1'>{this.state.result}</p>
             <div className='scheda1'>
                 <div className='div-qr1'>
-                    <QrReader
-                        delay={300}
-                        onError={this.handleError}
-                        onScan={this.handleScan}
-                        style={camStyle}
-                    />
+                <QrReader
+                  delay = { 300 }
+                  style = { camStyle }
+                  constraints={isDesktop ? undefined : { video: { facingMode: 'environment' } }}
+                  onError={this.handleError}
+                  onScan={this.handleScan}
+              />
+
                 </div>
                 <div className='geolocalisation'>
                   <LocationComponent></LocationComponent>
