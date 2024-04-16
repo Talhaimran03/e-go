@@ -9,7 +9,6 @@ class QrContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: 'Se vuoi raccogliere punti ricordati di scannerizzare il QR Code che trovi sul bus',
       locationData: null, // Aggiunto stato per memorizzare i dati di localizzazione
       isDesktop: window.innerWidth > 768
     };
@@ -47,11 +46,19 @@ class QrContainer extends Component {
   }
 
   handleScan(result) {
-    if (result) {
+    if (result && (result.text.includes('id=ATV'))) {
       this.setState({ result: result.text });
+      const lastFourDigits = result.text.slice(-4); // Estrai le ultime 4 cifre del link
+      this.setState({ lastFourDigits }); // Aggiungi le ultime 4 cifre allo stato
       window.location.href = 'http://localhost:3000/activeHome';
+    } else {
+      // Mostra l'errore solo se non è già stato mostrato
+      if (!this.state.showError) {
+        this.setState({ showError: true });
+      }
     }
   }
+
 
   handleError(err) {
     console.error('Errore nella scansione:', err);
@@ -66,13 +73,33 @@ class QrContainer extends Component {
 
     return (
       <div className='map-page1'>
+
+<div>
+        {this.state.showError && (
+          <div className="error-page">
+            
+          </div>
+        )}
+        {this.state.lastFourDigits && (
+          <div className="last-four-digits">
+          </div>
+        )}
+      </div>
+
+
+
+
+
+
+
             <Link to="/"> 
                 <div className='back1'>
                     <img className='arrow1' src={arrow} alt="arrow"></img>
                 </div>
             </Link>
             
-            <p className='p1'>{this.state.result}</p>
+            <p className='p1'>Se vuoi raccogliere punti ricordati di scannerizzare il QR Code che trovi sul bus: {this.state.lastFourDigits}</p>
+            
             <div className='scheda1'>
                 <div className='div-qr1'>
                 <QrReader
