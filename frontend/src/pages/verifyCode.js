@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './components/components_css/verifyCode.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function VerifyCode() {
     const location = useLocation();
