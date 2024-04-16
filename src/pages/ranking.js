@@ -4,6 +4,8 @@ import Switch from './components/switch';
 import RankingSection from './components/rankingSection';
 import User from './img/user.svg';
 import QrCode from './components/qrCode';
+import { Link } from 'react-router-dom';
+
 
 export default function Ranking() {
     return (
@@ -26,9 +28,11 @@ export default function Ranking() {
                 <RankingSection number='11' icon={ User } text='Nome Utente' points='614p.'/>
                 <RankingSection number='12' icon={ User } text='Nome Utente' points='528p.'/>
             </div>
-            <div className="qrPosition-ranking">
-                <QrCode />
-            </div>
+            <Link to="/Qr">
+                <div className="qrPosition-ranking">
+                    <QrCode />
+                </div>
+            </Link>
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>

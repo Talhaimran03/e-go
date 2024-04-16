@@ -1,4 +1,4 @@
-    import './css/points.css';
+import './css/points.css';
 import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Switch from './components/switch';
@@ -46,9 +46,11 @@ export default function Points() {
                     </div>
                 </div>
             </div>
-            <div className="qrPosition-points">
-                <QrCode />
-            </div>
+            <Link to="/Qr">
+                <div className="qrPosition-points">
+                    <QrCode />
+                </div>
+            </Link>
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
