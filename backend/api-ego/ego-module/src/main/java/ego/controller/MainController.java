@@ -1,12 +1,16 @@
 package ego.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.geo.Point;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import ego.atv.BusStop;
 import ego.model.Response;
 import ego.model.Reward;
 import ego.model.Route;
@@ -18,12 +22,15 @@ import ego.util.UserService;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -325,29 +332,73 @@ public class MainController {
 	@Autowired
     private RouteRepository routeRepository;
 
+	RestTemplate restTemplate = new RestTemplate();
+
 	// Create
 	@PostMapping("/routes/addRoute")
 	public ResponseEntity<Response<Boolean>> addRoute(HttpSession session, @RequestBody Map<String, String> userData) {
 		try {
+			
 			Object token = session.getAttribute("token");
 			if (token == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Token non trovato nella sessione");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
-
+			
 			User user = userRepository.findUserByToken(token.toString());
 			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
+			
+			String[] coordinatesArray = userData.get("startCoordinates").split(",");
+			BigDecimal startLatitude = new BigDecimal(coordinatesArray[0]);
+			BigDecimal startLongitude = new BigDecimal(coordinatesArray[1]);
+			
+			Point startPoint = new Point(startLatitude.doubleValue(), startLongitude.doubleValue());
 
-			String[] coordinatesArray = userData.get("email").split(",");
-			Point startCoordinates = new Point(Double.parseDouble(coordinatesArray[0]), Double.parseDouble(coordinatesArray[1]));
+			ResponseEntity<List<BusStop>> response = restTemplate.exchange(
+				"http://localhost:8081/atv/getAllBusStops",
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<BusStop>>() {}
+			);
+			
+			// Estrarre il corpo della risposta
+			List<BusStop> allBusStops = response.getBody();
+
+			// Verifica se la risposta è vuota o null
+			if (allBusStops == null || allBusStops.isEmpty()) {
+				// Nessuna fermata del bus trovata
+				List<String> errors = new ArrayList<>();
+				errors.add("Nessuna fermata del bus trovata dall'API");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+			
+			// Trova la fermata del bus più vicina entro 100 metri
+			Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
+
+			if (nearestBusStop == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Nessuna fermata del bus trovata entro 100 metri dalle coordinate fornite");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+
+			// Calcola la distanza tra la fermata del bus più vicina e il punto di partenza
+			BigDecimal distanceToNearestBusStop = calculateDistance(startLatitude, startLongitude, nearestBusStop.getKey(), nearestBusStop.getValue());
+
+			// Verifica se la distanza è inferiore a 100 metri
+			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.2)) > 0) {
+				List<String> errors = new ArrayList<>();
+				errors.add("La fermata del bus più vicina è oltre 200 metri di distanza");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
 
 			LocalDateTime startTime = LocalDateTime.now();
-			Route route = new Route(startCoordinates, startTime, user);
+
+			Route route = new Route(startPoint, startTime, user);
 			routeRepository.save(route);
 
 			user.setActualPoints(user.getActualPoints() + 10);
@@ -362,6 +413,57 @@ public class MainController {
 		}
 	}
 
+	private Map.Entry<BigDecimal, BigDecimal> findNearestBusStop(BigDecimal startLatitude, BigDecimal startLongitude, List<BusStop> allBusStops) {
+		if (allBusStops.isEmpty()) {
+			return null;
+		}
+	
+		// Inizializza la distanza minima con un valore molto grande
+		BigDecimal minDistance = BigDecimal.valueOf(Double.MAX_VALUE);
+		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = null;
+	
+		// Itera su tutte le fermate dell'autobus per trovare quella più vicina
+		for (BusStop busStop : allBusStops) {
+			BigDecimal busStopLatitude = busStop.latitude;
+			BigDecimal busStopLongitude = busStop.longitude;
+	
+			// Calcola la distanza euclidea tra la posizione di partenza e la fermata dell'autobus corrente
+			BigDecimal distance = calculateDistance(startLatitude, startLongitude, busStopLatitude, busStopLongitude);
+	
+			// Aggiorna la distanza minima e la fermata dell'autobus più vicina se la distanza corrente è minore della distanza minima
+			if (distance.compareTo(minDistance) < 0) {
+				minDistance = distance;
+				nearestBusStop = new AbstractMap.SimpleEntry<>(busStopLatitude, busStopLongitude);
+			}
+		}
+	
+		return nearestBusStop;
+	}	
+	
+	private BigDecimal calculateDistance(BigDecimal lat1, BigDecimal lon1, BigDecimal lat2, BigDecimal lon2) {
+		double earthRadius = 6371; // Raggio della Terra in chilometri
+	
+		// Converti le coordinate in radianti
+		double lat1Rad = Math.toRadians(lat1.doubleValue());
+		double lon1Rad = Math.toRadians(lon1.doubleValue());
+		double lat2Rad = Math.toRadians(lat2.doubleValue());
+		double lon2Rad = Math.toRadians(lon2.doubleValue());
+	
+		// Calcola le differenze di latitudine e longitudine
+		double dLat = lat2Rad - lat1Rad;
+		double dLon = lon2Rad - lon1Rad;
+	
+		// Calcola la distanza utilizzando la formula della distanza euclidea
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+				+ Math.cos(lat1Rad) * Math.cos(lat2Rad)
+				* Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		double distance = earthRadius * c;
+	
+		return BigDecimal.valueOf(distance);
+	}	
+
+
 	// Read
 	@GetMapping("/routes/getAllRoutes")
 	public ResponseEntity<Response<List<Route>>> getAllRoutes() {
@@ -371,17 +473,24 @@ public class MainController {
 		return ResponseEntity.ok(new Response<>(true, routesList));
 	}
 
-	@GetMapping("/routes/getRoutesByUserId")
-	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(@RequestBody Integer userId) {
+	@GetMapping("/routes/getRoutesOfUser")
+	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpSession session, @RequestBody Map<String, String> userData) {
 		try {
-			User user = userRepository.findById(userId).orElse(null);
-			if (user != null) {
-				List<Route> routes = routeRepository.findByUserId(userId);
-				return ResponseEntity.ok(new Response<>(true, routes));
-			} else {
+			Object token = session.getAttribute("token");
+			if (token == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Token non trovato nella sessione");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+			
+			User user = userRepository.findUserByToken(token.toString());
+			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			} else {
+				List<Route> routes = routeRepository.findByUserId(user.getId());
+				return ResponseEntity.ok(new Response<>(true, routes));
 			}
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();

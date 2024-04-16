@@ -16,7 +16,10 @@ export default function Home() {
                 }
                 
                 try {
-                    const response = await axios.get('http://localhost:8080/ego/users/getAllUsers', {
+                    const startCoordinates = "45.432795,10.996007"; 
+                    const response = await axios.post('http://localhost:8080/ego/routes/addRoute', {
+                        startCoordinates: startCoordinates
+                    }, {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `${Cookies.get('SESSION')}`
@@ -26,12 +29,12 @@ export default function Home() {
 
                     console.log(response.data);
                 } catch (error) {
-                    console.error('Errore durante il recupero degli utenti:', error);
+                    console.error('Errore:', error);
                 }
         };
 
         fetchSession();
-    }, []);
+    }, [navigate]);
 
     return (
         <>
