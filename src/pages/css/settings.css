@@ -64,4 +64,10 @@
         padding-bottom: 37%;
         width: 70%;
     }
+
+
+.containerSettings{
+    height: 68rem;
+    overflow-y: hidden;
+}
 }
