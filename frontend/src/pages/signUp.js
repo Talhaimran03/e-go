@@ -10,6 +10,7 @@ import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 import { redirectIfLogged } from './components/sessionService';
 import { Link } from 'react-router-dom';
+import { Ip } from './ip.js';
 
 function Sign() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function Sign() {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/ego/users/addUser', userData);
+            const response = await axios.post(`http://${Ip}:8080/ego/users/addUser`, userData);
             console.log(response);
             if (response.data.success) {
                 navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione

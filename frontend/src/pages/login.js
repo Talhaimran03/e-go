@@ -7,6 +7,7 @@ import { ReactComponent as Iconuser } from "./img//icona_utente.svg";
 import { ReactComponent as Iconpwd } from "./img/icona_lucchetto.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import { redirectIfLogged } from './components/sessionService';
+import { Ip } from './ip.js';
 
 function Login() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Login() {
     
         try {
             const response = await axios.post(
-                'http://localhost:8080/ego/users/login', 
+                `http://${Ip}:8080/ego/users/login`, 
                 {
                     email: email,
                     password: password

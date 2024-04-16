@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './components/components_css/verifyCode.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Ip } from './ip.js';
 
 function VerifyCode() {
     const location = useLocation();
@@ -38,7 +39,7 @@ function VerifyCode() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/ego/users/validateUser', {
+            const response = await axios.post(`http://${Ip}:8080/ego/users/validateUser`, {
                 email: email, 
                 otp: otp
             });
