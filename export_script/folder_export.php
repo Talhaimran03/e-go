@@ -133,16 +133,18 @@ function processFile($filename, $conn)
 
                         if ($bus_number_id == -1) {
                             $bus_number_id = $id;
-                        }
+                        } else if ($id != 0) {
+                            $bus_number_id = $id;
+                            // Query per inserire l'associazione tra fermata e numero del bus nella tabella stops_bus_numbers
+                            $sql_insert_stop_bus_number = "INSERT INTO stops_bus_numbers (stop_id, bus_number_id) VALUES ('$stop_id', '$bus_number_id')";
 
-                        // Query per inserire l'associazione tra fermata e numero del bus nella tabella stops_bus_numbers
-                        $sql_insert_stop_bus_number = "INSERT INTO stops_bus_numbers (stop_id, bus_number_id) VALUES ('$stop_id', '$bus_number_id')";
-
-                        if (mysqli_query($conn, $sql_insert_stop_bus_number)) {
-                            // echo "Associazione fermata-bus inserita correttamente.\n";
-                        } else {
-                            echo "Errore nell'inserimento dell'associazione fermata-bus: " . mysqli_error($conn);
-                        }
+                            echo $sql_insert_stop_bus_number;
+                            if (mysqli_query($conn, $sql_insert_stop_bus_number)) {
+                                // echo "Associazione fermata-bus inserita correttamente.\n";
+                            } else {
+                                echo "Errore nell'inserimento dell'associazione fermata-bus: " . mysqli_error($conn);
+                            }
+                            }
                     }
                 }
             }
