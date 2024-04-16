@@ -5,6 +5,7 @@ import arrow from './img/arrow.svg'
 import busstart from './img/bus-start.svg'
 import timebus from './img/time-bus.svg'
 import timebus2 from './img/time-bus2.svg'
+import QrCode from './components/qrCode';
 
 export default function Map() {
     const height = {
@@ -48,6 +49,11 @@ export default function Map() {
                     <App></App>
                 </div>
             </div>
+            <Link to="/Qr">
+                <div className="qrPosition-points4">
+                    <QrCode />
+                </div>
+            </Link>
         </div>
     );
 }

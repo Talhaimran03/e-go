@@ -9,6 +9,7 @@ import Qr from './pages/components/qr';
 import ActiveHome from './pages/activeHome';
 import QrContainer2 from './pages/components/stopQr';
 import Grafico from './pages/components/graph';
+import NotFound from './pages/notFound';
 import Info from './pages/info';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
   { path: '/activeHome', element: <ActiveHome />},
   { path: '/QrContainer2', element: <QrContainer2 />},
   { path: '/app', element: <Grafico />},
+  { path: '*', element: <NotFound/> },
   { path: '/info', element: <Info />},
   { path: '/login', element: <Login /> },
   { path: '/signUp', element: <SignUp /> },

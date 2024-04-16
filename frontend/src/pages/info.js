@@ -76,11 +76,11 @@ export default function Home() {
                         <h3 id='contentQuestion-info'> Cosa aspetti? </h3>
                     </div>
                     <div className='buttons-info'>
-                        <Link to='../login'>
-                            <button id='btnAccedi-info'> Accedi </button>                        
+                        <Link to='../login' id="btnSize-info">
+                            Accedi                 
                         </Link>
-                        <Link to='../signUp'>
-                            <button id='btnRegistrati-info'> Registrati </button>                        
+                        <Link to='../signUp' id="btnSize-info">
+                            Registrati                   
                         </Link>
                     </div>
                 </div>

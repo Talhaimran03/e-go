@@ -1,5 +1,5 @@
 import './css/settings.css';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import User from "./img/user.svg";
 
@@ -29,7 +29,9 @@ export default function Settings() {
                     <SettingSection icon={ Privacy } text="Privacy"/>
                     <SettingSection icon={ Security } text="Sicurezza"/>
                     <SettingSection icon={ Help } text="Aiuto"/>
-                    <SettingSection icon={ Logout } text="Esci"/>
+                    <Link to='../login' id='esci-settings'>
+                        <SettingSection icon={ Logout } text="Esci"/>
+                    </Link>
                 </div>
             </div>
 

@@ -14,7 +14,7 @@ body{
 }
 
 .map-page1 {
-    height: 43rem;
+    height: 55rem;
     background-color: #FFFF;
 }
 
@@ -80,13 +80,14 @@ body{
 
 .geolocalisation{
     position: absolute;
-    top: 57vh;
-    left: 1vw;
+    top: 80vh;
+    left: 3.5vw;
     width: auto;
     height: 5vh;
     line-height: 1px;
     color: rgba(0, 0, 0, 0.132);
     font-weight: 700;
+    font-size: 15px;
 }
 
 
@@ -99,10 +100,18 @@ body{
     left: 20vw;
 }
 
+.p1{
+    top: 5.5vh;
+    left: 22vw;
+    font-size: 20px;
+}
+
 .scheda1{
     left: 15.8vw;
     width: 70vw;
     height: 78vh;
+    top: 15vh;
+    overflow-x: hidden;
 }
 
 .div-qr1{
@@ -110,6 +119,11 @@ body{
     left: 3vw;
     width: 64vw;
     height: 43vh;
+}
+
+.geolocalisation{
+    top: 94vh;
+    left: 16vw;
 }
 
 }
