@@ -16,7 +16,6 @@ import bg from "./img/bg.svg";
 export default function Home() {
     return (
         <>
-            <link rel="shortcut icon" href='' type="image/png" />
 
             <svg
                     version="1.1"
