@@ -171,3 +171,9 @@
     flex-direction: column;
 
 }
+
+.error{
+    display: flex;
+    justify-content: space-around;
+    color: red;
+}

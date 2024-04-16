@@ -9,6 +9,7 @@ import { ReactComponent as Calendaricon } from "./img/calendar_month.svg";
 import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 import { redirectIfLogged } from './components/sessionService';
+import { Link } from 'react-router-dom';
 
 function Sign() {
     const navigate = useNavigate();
@@ -93,7 +94,7 @@ function Sign() {
                     </div>
                 </div>
                 <div className='suReturnShape'>
-                    <button type="submit" className='suinvia'><Arrowreturn></Arrowreturn></button>
+                    <Link className='suinvia' to='/verifyCode'><Arrowreturn></Arrowreturn></Link>
                 </div>
                 <div className='sumarginfooter'>
                     {error && <div className="error">{error}</div>}

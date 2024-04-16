@@ -57,6 +57,7 @@ function Login() {
             </div>
 
             <form className='flexform' onSubmit={handleSubmit}>
+            {error && <div className="error">{error}</div>}
                 <div className='containerform'>
                     <div><Iconuser></Iconuser></div>
                     <input type="text" className='email' placeholder="Email" name="email" required />
@@ -78,7 +79,6 @@ function Login() {
                 </button>
             </div>
 
-            {error && <div className="error">{error}</div>}
         </div>
     );
 }
