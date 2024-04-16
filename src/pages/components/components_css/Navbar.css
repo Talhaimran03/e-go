@@ -17,11 +17,10 @@
 .navbar{
     background-color: #FFFFFF;
     border-radius: 50px;
-    width: 100%;
+    width: 90%;
     height: 70px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     outline: 1px solid rgba(255, 255, 255, 0.5);
-    margin-bottom: 0;
 }
 
 .menu{
@@ -30,8 +29,9 @@
     align-items: center;
     height: 70px;
     padding: 0;
-    margin: 0;
+    margin: auto 0; 
     width: 100%;
+
 }
 
 .menu li{
@@ -57,186 +57,4 @@
         stroke: #4aa18b;
         }
     }
-}
-
-.login{
-    display: none;
-}
-.registrati{
-    display: none;
-}
-
-.info{
-    display: none;
-}
-
-.Home1{
-    display: none;
-}
-
-.impostazioni1{
-    display: none;
-}
-
-.Punti1{
-    display: none;
-}
-
-
-@media only screen and (min-width: 769px) {
-    .home{
-        background-color: #ebeaeb1b;
-    }
-    .login{
-        display: block;
-    }
-    .registrati{
-        display: block;
-    }
-    .punti{
-        display: none;
-    }
-    .info{
-        display: block;
-        text-align: center;
-    }
-
-    .navbar{
-        position: fixed;
-        top: 0;
-        width: 100%;
-        border-radius: 0;
-        outline: none;
-        box-shadow: none;
-        z-index: 1000;
-    }
-
-    .icons{
-        display: none;
-    }
-
-    .pos-navbar {
-        display: flex;
-        justify-content: center;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        z-index: 1000;
-    }
-
-
-    .navbar{
-        background-color: none;
-        border: 1px solid black;
-        border-radius: 50px;
-        color: black;
-        height: 50px;
-        text-align: right;
-        margin-top: 0px;
-        /* border-bottom: 1px solid grey; */
-    }
-    a{
-        color: black;
-    }
-
-    p{
-        display: none;
-    }
-
-    .Home1{
-        display: block;
-        text-align: center;
-       /*  margin-left: 100px;
-        width: 13%;
-        text-align: center; */
-    }
-    .impostazioni1{
-        display: block;
-        text-align: center;
-
-        }
-    .login{
-        border: 1px solid black;
-        background: linear-gradient(1.2rad, #469540, white);
-        border-radius: 30px;
-        height: 40%;
-        margin-right: 50px;
-        text-align: center;
-        
-    }
-    /* .registrati{
-        margin-right: 0;
-        width: 20%;
-    } */
-   /*  .login1{
-      text-align: center;
-      padding-top: 3%;
-    }
-    .registrati1{
-        padding-left: 20px;
-    } */
-
-    .settings{
-        display: none;
-    }
-    .menu{
-       height: 50px;
-    }
-
-    #logo4{
-        height: 50px;
-        margin-left: 45%;
-    }
-
-    .logo{
-        width: 10%;
-    }
-
-    .containerLogin{
-        display: flex;
-        flex-direction: row;
-        align-items: normal;
-        justify-content:space-evenly;
-    }
-    .containerLink{
-        display: flex;
-        /* flex-direction: row;
-        align-items: normal; */
-        width: 50%;
-        justify-content: space-evenly;
-        position: relative;
-        font-size: 1em;
-    }
-    .Punti1{
-        display: block;
-
-    }
-
-    #homeid{
-        margin: 0;
-    }
-    #infoid{
-        margin: 0;
-    }
-
-    #impoid{
-        margin: 0;
-    }
-
-    #puntiid{
-        margin: 0;
-        text-align: center;
-    }
-    #registrati1{
-        border: 1px solid black;
-        border-radius: 30px;
-        text-align: center;
-        margin: 0;
-    }
-
-    #login1{
-       margin: 0;
-    }
-
 }

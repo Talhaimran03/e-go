@@ -1,17 +1,6 @@
-/* import './css/home.css' */
-import { Link } from 'react-router-dom';
-/* import Navbar from "./components/Navbar"; */
-import Logo from "./components/logo";
-import bus from "./img/bus.png";
-import cartella from "./img/cartella.svg";
-import Union from "./img/Union.svg";
 import EGOGOMMA from "./img/EGOGOMMA.png";
-import cartella1 from "./img/cartella1.svg";
-import cartellaPiccola from "./img/cartellaPiccola.svg";
-import cartellaPiccola2 from "./img/cartellaPiccola2.png";
-import "./css/totalPage.css";
+import "./css/info.css";
 import iphoneDef from "./img/iPhonedef.png";
-import bg from "./img/bg.svg";
 
 export default function Home() {
     return (
@@ -60,32 +49,11 @@ export default function Home() {
                     </defs>
                 </svg>
             </div>    
-            <div className="pos-logo">
-                <Logo></Logo>
-            </div> 
+
             <div className='logoResponsive'>
                 <img id='logoResp' src={EGOGOMMA}></img>
             </div>
-            <div className='pos-navbar'>
-                {/* <Navbar></Navbar> */}
-                <div className='check'>
-                    <input type="checkbox" id="menuToggle" />
-                    <label htmlFor="menuToggle" className="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label>        
-
-                    <nav id="menu1">
-                        <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Impostazioni</a></li>
-                        <li><a href="#">Punti</a></li>
-                        <li><a href="#">Contatti</a></li>
-                        </ul>
-                    </nav>
-                </div>  
-            </div>    
+                
 
             <nav className='navbarDef'>
                 <div className='navbarSx'>

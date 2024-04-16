@@ -12,7 +12,7 @@ a {
   align-items: center;
 }
 
-.button:hover {
+/* .button:hover {
   color: #23AB31;
 
   svg {
@@ -20,7 +20,7 @@ a {
       stroke: #23AB31;
     }
   }
-}
+} */
 
 
 #testo {

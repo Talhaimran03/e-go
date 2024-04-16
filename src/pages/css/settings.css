@@ -10,14 +10,8 @@
     /* border: 1px solid red; */
 }
 
-  body{
-    margin: 0;
-    padding: 0;
+*{
     scroll-behavior: smooth;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 .pos-navbar {
@@ -29,8 +23,50 @@
     right: 0;
 }
 
-.pos-logo{
+.containerSettings{
+    height: auto;
+    background-color: #4AA18B;
     display: flex;
-    justify-content: center;
-    top: 70%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings{
+    background-color: white;
+    width: 100%;
+    height: auto;
+    border-radius: 50px 50px 0 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 15%;
+    padding-bottom: 95px;
+}
+
+.userPosition{
+    padding-top: 20%;
+    padding-bottom: 10%;
+}
+
+
+@media only screen and (min-width: 1025px) {
+    #userSize-settings{
+        width: 100%;
+    }
+
+    .userPosition{
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+
+    .settings{
+        padding-top: 6%;
+        padding-bottom: 6%;
+        width: 60%;
+    }
+
+    .containerSettings{
+        height: auto;
+        overflow-y: hidden;
+    }
 }

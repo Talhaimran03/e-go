@@ -1,0 +1,376 @@
+.pos-navbar {
+    display: none;
+}
+
+.logoResponsive {
+    display: none;
+}
+
+#bgGrande {
+    position: absolute;
+    z-index: 0;
+    height: auto;
+}
+
+#bgPiccolo {
+    display: none;
+}
+
+.bgResp {
+    display: none;
+}
+
+.navbarDef {
+    position: relative;
+    display: flex;
+    width: 85%;
+    top: 100px;
+    left: 8%;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+
+}
+
+.navbarSx {
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    background-color: white;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarSx a {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.navbarSx a:hover{
+    color: #409576;
+}
+.navbarDx a:hover{
+    color: #409576;
+}
+
+.navbarDx {
+    display: flex;
+    border-radius: 25px;
+    background-color: white;
+    width: 8%;
+    min-width: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarDx a {
+    display: flex;
+    color: black;
+    justify-content: center;
+}
+
+.imgEgo {
+    display: flex;
+    width: 200px;
+    height: 100px;
+}
+
+.contentMain {
+    position: relative;
+    display: flex;
+    width: 100%;
+    top: 200px;
+    height: 500px;
+    justify-content: space-evenly;
+}
+
+.contentSx {
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    background-color: white;
+    width: 20%;
+    height: 100px;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    padding-bottom: 6%;
+}
+
+.buttons {
+    display: flex;
+    width: 20%;
+    justify-content: center;
+}
+
+#btnAccedi {
+    display: flex;
+    background-color: #409576;
+    color: white;
+    border-radius: 25px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    border: #409576;
+    padding: 10px 15px;
+    font-size: 18px;
+}
+
+#btnRegistrati {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    background-color: #409576;
+    color: white;
+    border-radius: 25px;
+    border: #409576;
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+#btnAccedi:hover{
+    background-color: white;
+    border: 1px solid #409576;
+    color: black;
+}
+
+#btnRegistrati:hover{
+    background-color: white;
+    border: 1px solid #409576;
+    color: black;
+}
+
+.imgContent {
+    display: flex;
+}
+
+.contentUs {
+    display: flex;
+    width: 20%;
+    align-items: flex-end;
+}
+
+#aboutUs {
+    display: flex;
+    background-color: white;
+    border-radius: 25px;
+    padding: 15px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.endContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    width: 40%;
+    top: 50px;
+}
+
+.endContentResp {
+    display: none;
+}
+
+.first {
+    margin-left: 10%;
+}
+
+.second {
+    margin-left: 40%;
+}
+
+.third {
+    width: 100%;
+    margin-left: 70%;
+}
+
+#firstp {
+    display: flex;
+    width: 80%;
+}
+
+#secondp {
+    display: flex;
+}
+
+#thirdp {
+    display: flex;
+    width: 400px;
+}
+
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 769px) {
+
+    body {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    .pos-navbar {
+        display: flex;
+        width: 100%;
+    }
+
+    .hamburger-icon {
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .navbarDef {
+        display: none;
+    }
+
+    .contentMain {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        top: 150px;
+    }
+
+    .contentSx {
+        position: relative;
+        width: 70%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .buttons {
+        padding-top: 8px;
+        width: 100%;
+    }
+
+    #btnAccedi {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 6px;
+        border-radius: 25px;
+
+    }
+
+    #btnRegistrati {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 6px;
+        border-radius: 25px;
+
+    }
+
+    .contentUs {
+        display: none;
+    }
+
+    .endContent {
+        display: none;
+        width: 100%;
+        align-items: center;
+        font-size: 10px;
+        top: 0;
+    }
+
+    .endContentResp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .firstResp {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        margin-left: 0%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .secondResp {
+        display: flex;
+        margin-left: 0%;
+        justify-content: center;
+    }
+
+    .thirdResp {
+        display: flex;
+        margin-left: 0%;
+        justify-content: center;
+    }
+
+    #firstpResp {
+        flex-direction: column;
+        align-items: center;
+        font-size: 25px;
+    }
+
+    #secondpResp {
+        font-size: 25px;
+    }
+
+    #thirdpResp {
+        font-size: 25px;
+    }
+
+    .imgContent {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    img {
+        display: flex;
+        width: 50%;
+    }
+
+    svg {
+        display: none;
+    }
+
+    #bgResponsive {
+        display: block;
+        width: 100%;
+    }
+
+    #bgGrande {
+        display: none;
+    }
+
+    .bgPiccoloDiv {
+        position: absolute;
+        display: flex;
+        height: 477px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    #bgPiccolo {
+        position: absolute;
+        display: flex;
+        width: auto;
+    }
+
+    .logoResponsive {
+        position: relative;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 4%;
+        padding-top: 4%;
+    }
+
+    #logoResp {
+        display: flex;
+        width: 40%;
+        height: auto;
+    }
+
+}
