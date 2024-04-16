@@ -99,18 +99,17 @@ body{
 
 
 .div-qr{
-    position: relative;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
     top: 29vh;
     left: 0;
-    width: 100%;
+    width: auto;
     height: auto;
-    justify-content: center;
-}
+    z-index: 99999;
 
-.qr{
-    position: relative;  
-    scale: .9;
 }
 
 .saving{

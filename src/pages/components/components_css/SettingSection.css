@@ -36,7 +36,7 @@
 
 @media only screen and (min-width: 1025px) {
     .position-settingSection{
-        width: 900px;
+        width: 80%;
         height: auto;
         border-radius: 40px;
         margin-bottom: 25px;

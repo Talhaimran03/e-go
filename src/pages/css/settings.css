@@ -10,6 +10,10 @@
     /* border: 1px solid red; */
 }
 
+*{
+    scroll-behavior: smooth;
+}
+
 .pos-navbar {
     display: flex;
     justify-content: center;
@@ -30,12 +34,13 @@
 .settings{
     background-color: white;
     width: 100%;
-    height: 600px;
+    height: auto;
     border-radius: 50px 50px 0 0;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding-top: 15%;
+    padding-bottom: 95px;
 }
 
 .userPosition{
@@ -46,7 +51,7 @@
 
 @media only screen and (min-width: 1025px) {
     #userSize-settings{
-        width: 200px;
+        width: 100%;
     }
 
     .userPosition{

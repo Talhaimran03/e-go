@@ -1,5 +1,5 @@
 import './components_css/SettingSection.css';
-import Arrow from '../img/arrow.svg';
+import Arrow from '../img/arrow-settings.svg';
 
 function SettingSection ({ icon: ImgComponent, text }) {
     return(

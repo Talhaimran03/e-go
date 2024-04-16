@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import App from './components/hero.js'
 import './components/components_css/hero.css'
-import qr from './img/qr.svg'
 import Bus from './img/bus.svg'
 import Map from './img/map.svg'
 import Grafico from './components/graph';
 import Graph from './components/slider';
+import QrCodeHome from './components/qrCodeHome.js';
 
 export default function Home() {
     const height = {
@@ -113,7 +113,7 @@ export default function Home() {
                 </div>
                 <div className='div-qr'>
                     <Link to="/Qr">
-                        <img className='qr' src={qr} alt="qr" />
+                        <QrCodeHome className='qr'/>
                     </Link>
                 </div>
                 
