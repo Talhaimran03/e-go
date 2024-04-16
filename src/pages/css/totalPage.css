@@ -1,6 +1,11 @@
 .pos-navbar{
     display: none;
 }
+body{
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
 .logoResponsive{
     display: none;
 }
@@ -39,6 +44,13 @@
     background-color: white;
     align-items: center;
     box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarSx a:hover{
+    color: #409576;
+}
+.navbarDx a:hover{
+    color: #409576;
 }
 
 .navbarDx{
@@ -97,6 +109,12 @@
     font-size: 14px;
 }
 
+#btnAccedi:hover{
+    background-color: white;
+    border: #409576 1px solid;
+    color: black;
+}
+
 #btnRegistrati{
     display: flex;
     flex-direction: column;
@@ -110,6 +128,12 @@
     font-size: 14px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+#btnRegistrati:hover{
+    background-color: white;
+    border: #409576 1px solid;
+    color: black;
 }
 
 .imgContent{
@@ -178,7 +202,6 @@
 
 body{
     height: 900px;
-    overflow: hidden;
 }
 
 .pos-navbar{

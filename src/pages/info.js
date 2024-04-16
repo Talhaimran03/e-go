@@ -78,7 +78,7 @@ export default function Home() {
 
                     <nav id="menu1">
                         <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a id='home' href="#">Home</a></li>
                         <li><a href="#">Impostazioni</a></li>
                         <li><a href="#">Punti</a></li>
                         <li><a href="#">Contatti</a></li>
