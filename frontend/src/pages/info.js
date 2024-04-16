@@ -1,6 +1,8 @@
 import EGOGOMMA from "./img/EGOGOMMA.png";
 import "./css/info.css";
 import iphoneDef from "./img/iPhonedef.png";
+import { Link } from 'react-router-dom';
+
 
 export default function Home() {
     return (
@@ -74,8 +76,12 @@ export default function Home() {
                         <h3 id='contentQuestion-info'> Cosa aspetti? </h3>
                     </div>
                     <div className='buttons-info'>
-                        <button id='btnAccedi-info'> Accedi </button>                        
-                        <button id='btnRegistrati-info'> Registrati </button>                        
+                        <Link to='../login'>
+                            <button id='btnAccedi-info'> Accedi </button>                        
+                        </Link>
+                        <Link to='../signUp'>
+                            <button id='btnRegistrati-info'> Registrati </button>                        
+                        </Link>
                     </div>
                 </div>
                 <div className='imgContent-info'>
