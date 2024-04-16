@@ -23,10 +23,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +40,7 @@ import java.util.Map;
 @RequestMapping(path="/ego")
 public class MainController {
 
+	//
 	// Users operations
 
     @Autowired
@@ -327,6 +330,8 @@ public class MainController {
 		return ResponseEntity.ok(new Response<>(isAuthenticated));
 	}
 	
+
+	//
 	// Routes operations
 
 	@Autowired
@@ -337,20 +342,26 @@ public class MainController {
 	// Create
 	@PostMapping("/routes/addRoute")
 	public ResponseEntity<Response<Boolean>> addRoute(HttpSession session, @RequestBody Map<String, String> userData) {
+		// controllare che active sia false a tutte, altrimenti ...............
+		// prima di aggiungere una route voglio controllare che non ci siano delle route con active=true e se ci sono mettile false: 
 		try {
+			List<String> errors = new ArrayList<>();
 			
 			Object token = session.getAttribute("token");
 			if (token == null) {
-				List<String> errors = new ArrayList<>();
 				errors.add("Token non trovato nella sessione");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
 			User user = userRepository.findUserByToken(token.toString());
 			if (user == null) {
-				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+
+			if (userData.get("startCoordinates") == null) {
+				errors.add("endCoordinates non presente");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
 			String[] coordinatesArray = userData.get("startCoordinates").split(",");
@@ -372,7 +383,6 @@ public class MainController {
 			// Verifica se la risposta è vuota o null
 			if (allBusStops == null || allBusStops.isEmpty()) {
 				// Nessuna fermata del bus trovata
-				List<String> errors = new ArrayList<>();
 				errors.add("Nessuna fermata del bus trovata dall'API");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
@@ -381,7 +391,6 @@ public class MainController {
 			Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
 
 			if (nearestBusStop == null) {
-				List<String> errors = new ArrayList<>();
 				errors.add("Nessuna fermata del bus trovata entro 100 metri dalle coordinate fornite");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
@@ -391,7 +400,6 @@ public class MainController {
 
 			// Verifica se la distanza è inferiore a 100 metri
 			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.2)) > 0) {
-				List<String> errors = new ArrayList<>();
 				errors.add("La fermata del bus più vicina è oltre 200 metri di distanza");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 			}
@@ -474,7 +482,7 @@ public class MainController {
 	}
 
 	@GetMapping("/routes/getRoutesOfUser")
-	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpSession session, @RequestBody Map<String, String> userData) {
+	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpSession session) {
 		try {
 			Object token = session.getAttribute("token");
 			if (token == null) {
@@ -500,61 +508,98 @@ public class MainController {
 	}
 
 	// Update
-	@PutMapping("/routes/updateRoute")
-	public ResponseEntity<Response<Boolean>> updateRoute(@RequestBody Integer id,
-														 @RequestBody(required = false) Point startCoordinates,
-														 @RequestBody(required = false) LocalDateTime startTime,
-														 @RequestBody(required = false) Point endCoordinates,
-														 @RequestBody(required = false) LocalDateTime endTime,
-														 @RequestBody(required = false) Integer userId) {
-		Route route = routeRepository.findById(id).orElse(null);
-		if (route == null) {
-			List<String> errors = new ArrayList<>();
-			errors.add("Percorso non trovato");
+	@PutMapping("/routes/endRoute")
+	public ResponseEntity<Response<Boolean>> endRoute(HttpSession session, @RequestBody Map<String, String> userData) {
+		List<String> errors = new ArrayList<>();
+
+		Object token = session.getAttribute("token");
+		if (token == null) {
+			errors.add("Token non trovato nella sessione");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+		}
+
+		User user = userRepository.findUserByToken(token.toString());
+		if (user == null) {
+			errors.add("Utente non trovato");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 		}
 
-		List<String> errors = new ArrayList<>();
+		Route route = routeRepository.findActiveRouteByUserId(user.getId()).orElse(null);
+		if (route == null) {
+			errors.add("Nessun percorso attivo trovato");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+		}
 
-		// Update only required parameters
-		if (startCoordinates != null) {
-			route.setStartCoordinates(startCoordinates);
+		if (userData.get("endCoordinates") == null) {
+			errors.add("endCoordinates non presente");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
-		if (startTime != null) {
-			route.setStartTime(startTime);
+
+		String[] coordinatesArray = userData.get("endCoordinates").split(",");
+		BigDecimal endLatitude = new BigDecimal(coordinatesArray[0]);
+		BigDecimal endLongitude = new BigDecimal(coordinatesArray[1]);
+
+		// Controlla se il tempo trascorso è maggiore di 50 minuti
+		LocalDateTime endTime = LocalDateTime.now();
+		LocalDateTime startTime = route.getStartTime();
+		long minutesElapsed = ChronoUnit.MINUTES.between(startTime, endTime);
+		if (minutesElapsed > 50) {
+			errors.add("Il tempo trascorso tra l'inizio e la fine della route è maggiore di 50 minuti");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
-		if (endCoordinates != null) {
-			route.setEndCoordinates(endCoordinates);
+
+		ResponseEntity<List<BusStop>> response = restTemplate.exchange(
+			"http://localhost:8081/atv/getAllBusStops",
+			HttpMethod.GET,
+			null,
+			new ParameterizedTypeReference<List<BusStop>>() {}
+		);
+
+		List<BusStop> allBusStops = response.getBody();
+
+		if (allBusStops == null || allBusStops.isEmpty()) {
+			errors.add("Nessuna fermata del bus trovata dall'API");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 		}
-		if (endTime != null) {
-			route.setEndTime(endTime);
-		}
-		if (userId != null) {
-			User user = userRepository.findById(userId).orElse(null);
-			if (user != null) {
-				route.setUser(user);
-			} else {
-				errors.add("Utente non trovato");
+
+		// Trova la fermata del bus più vicina
+		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
+		if (nearestBusStop != null) {
+			BigDecimal distanceToNearestBusStop = calculateDistance(endLatitude, endLongitude, nearestBusStop.getKey(), nearestBusStop.getValue());
+
+			// Controlla la distanza rispetto alla fermata del bus più vicina
+			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.05)) <= 0) { // Meno di 50 metri
+				// Aggiorna la route con la posizione finale e il tempo finale
+				route.setEndCoordinates(new Point(endLatitude.doubleValue(), endLongitude.doubleValue()));
+				route.setEndTime(LocalDateTime.now());
+				route.setActive(false);
+				routeRepository.save(route);
+
+				user.setActualPoints(user.getActualPoints() + 10);
+				user.setTotalPoints(user.getTotalPoints() + 10);
+				userRepository.save(user);
+
+				return ResponseEntity.ok(new Response<>(true));
 			}
-		}
+		} 
 
-		routeRepository.save(route);
-
-		Response<Boolean> response;
-		if (errors.isEmpty()) {
-			response = new Response<>(true);
-		} else {
-			response = new Response<>(false, errors);
-		}
-
-		HttpStatus status = errors.isEmpty() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-		return ResponseEntity.status(status).body(response);
+		// Se non è stata soddisfatta nessuna delle condizioni precedenti, restituisci un errore
+		errors.add("La route non si trova vicino a una fermata del bus entro 50 metri");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 	}
 
 	// Delete
 	@DeleteMapping("/routes/deleteRoute")
-	public ResponseEntity<Response<Boolean>> deleteRoute(@RequestBody Integer id) {
+	public ResponseEntity<Response<Boolean>> deleteRoute(@RequestBody Map<String, String> userData) {
 		try {
+			String idStr = userData.get("id");
+			if (idStr == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Id non presente");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+			Integer id = Integer.parseInt(idStr);
+
 			Route route = routeRepository.findById(id).orElse(null);
 			if (route != null) {
 				routeRepository.delete(route);
@@ -570,20 +615,34 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
 		}
 	}
-	
 
+	//
 	// Rewards operations
+
+
 
 	@Autowired
     private RewardRepository rewardRepository;
 
     // Create
 	@PostMapping("/rewards/addReward")
-	public ResponseEntity<Response<Boolean>> addReward(@RequestBody String company,
-													   @RequestBody double discountPercentage,
-													   @RequestBody Integer requiredPoints,
-													   @RequestBody String url) {
+	public ResponseEntity<Response<Boolean>> addReward(@RequestBody Map<String, String> userData) {
 		try {
+			
+			String company = userData.get("company");
+			String discountPercentageStr = userData.get("discountPercentage");
+			String requiredPointsStr = userData.get("requiredPoints");
+			String url = userData.get("url");
+
+			if (company == null || discountPercentageStr == null || requiredPointsStr == null || url == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Uno o più campi mancanti nella richiesta");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+
+			double discountPercentage = Double.parseDouble(discountPercentageStr);
+			int requiredPoints = Integer.parseInt(requiredPointsStr);
+
 			Reward reward = new Reward(company, discountPercentage, requiredPoints, url);
 			rewardRepository.save(reward);
 			return ResponseEntity.ok(new Response<>(true));
@@ -611,23 +670,33 @@ public class MainController {
 
 	// Update
 	@PutMapping("/rewards/updateReward")
-	public ResponseEntity<Response<Reward>> updateReward(@RequestBody Integer id, 
-														 @RequestBody(required = false) String company,
-														 @RequestBody(required = false) Double discountPercentage,
-														 @RequestBody(required = false) String url) {
+	public ResponseEntity<Response<Reward>> updateReward(@RequestBody Map<String, String> userData) {
 		try {
+			String idStr = userData.get("id");
+
+			if (idStr == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Id non presente");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+
+			int id = Integer.parseInt(idStr);
+
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
 
 			// Update only required parameters
-			if (company != null) {
-				reward.setCompany(company);
+			if (userData.get("company") != null) {
+				reward.setCompany(userData.get("company"));
 			}
-			if (discountPercentage != null) {
-				reward.setDiscountPercentage(discountPercentage);
+			if (userData.get("discountPercentage") != null) {
+				reward.setDiscountPercentage(Integer.parseInt(userData.get("discountPercentage")));
 			}
-			if (url != null) {
-				reward.setUrl(url);
+			if (userData.get("url") != null) {
+				reward.setUrl(userData.get("url"));
+			}
+			if (userData.get("requiredPoints") != null) {
+				reward.setRequiredPoints(Integer.parseInt(userData.get("requiredPoints")));
 			}
 
 			rewardRepository.save(reward);
@@ -641,8 +710,18 @@ public class MainController {
 
 	// Delete
 	@DeleteMapping("/rewards/deleteReward")
-	public ResponseEntity<Response<Boolean>> deleteReward(@RequestBody Integer id) {
+	public ResponseEntity<Response<Boolean>> deleteReward(@RequestBody Map<String, String> userData) {
 		try {
+			String idStr = userData.get("id");
+
+			if (idStr == null) {
+				List<String> errors = new ArrayList<>();
+				errors.add("Id non presente");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+
+			int id = Integer.parseInt(idStr);
+
 			Reward reward = rewardRepository.findById(id)
 											.orElseThrow(() -> new RuntimeException("Ricompensa non trovata"));
 			rewardRepository.delete(reward);
@@ -654,27 +733,85 @@ public class MainController {
 		}
 	}
 
+	@GetMapping("/users/getUserAverageCO2Savings")
+	public ResponseEntity<Response<Map<String, BigDecimal>>> getAverageCO2Savings(HttpSession session) {
+		try {
+			List<String> errors = new ArrayList<>();
+
+			Object token = session.getAttribute("token");
+			if (token == null) {
+				errors.add("Token non trovato nella sessione");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			}
+
+			User user = userRepository.findUserByToken(token.toString());
+			if (user == null) {
+				errors.add("Utente non trovato");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+
+			// Ottieni tutte le route dell'utente con active=false
+			List<Route> routes = routeRepository.findByUserAndActiveFalse(user);
+
+			Map<String, BigDecimal> monthlyCO2Savings = new HashMap<>();
+
+			// Suddividi le route per mese e calcola il risparmio di CO2 per ogni mese
+			for (Route route : routes) {
+				LocalDateTime startTime = route.getStartTime();
+				String month = startTime.getMonth().toString();
+
+				BigDecimal distance = calculateDistance(
+					BigDecimal.valueOf(route.getStartCoordinates().getX()),
+					BigDecimal.valueOf(route.getStartCoordinates().getY()),
+					BigDecimal.valueOf(route.getEndCoordinates().getX()),
+					BigDecimal.valueOf(route.getEndCoordinates().getY())
+				);
+
+				BigDecimal co2Saved = calculateCO2Savings(distance);
+
+				if (!monthlyCO2Savings.containsKey(month)) {
+					monthlyCO2Savings.put(month, co2Saved);
+				} else {
+					BigDecimal totalCO2Saved = monthlyCO2Savings.get(month);
+					monthlyCO2Savings.put(month, totalCO2Saved.add(co2Saved));
+				}
+			}
+
+			// Calcola la media del risparmio di CO2 per ogni mese
+			Map<String, BigDecimal> averageMonthlyCO2Savings = new HashMap<>();
+			for (Map.Entry<String, BigDecimal> entry : monthlyCO2Savings.entrySet()) {
+				BigDecimal totalCO2Saved = entry.getValue();
+				int totalRoutes = routes.size();
+				BigDecimal averageCO2Savings = BigDecimal.ZERO;
+				if (totalRoutes > 0) {
+					averageCO2Savings = totalCO2Saved.divide(BigDecimal.valueOf(totalRoutes), 2, RoundingMode.HALF_UP);
+				}
+				averageMonthlyCO2Savings.put(entry.getKey(), averageCO2Savings);
+			}
+
+			return ResponseEntity.ok(new Response<>(true, averageMonthlyCO2Savings));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nel calcolo della media del risparmio di CO2: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+		}
+	}
+	
+	private BigDecimal calculateCO2Savings(BigDecimal distance) {
+		// Assumiamo un tasso di emissione di CO2 per chilometro per l'autobus e per l'auto
+		BigDecimal busCO2Km = BigDecimal.valueOf(0.1); // 0,069 kg/km - autobus
+		BigDecimal carCO2Km = BigDecimal.valueOf(0.2); // 0,118 kg/km - auto
+	
+		// Calcola il risparmio di CO2 confrontando il viaggio in autobus con il viaggio in auto
+		BigDecimal busCO2 = busCO2Km.multiply(distance);
+		BigDecimal carCO2 = carCO2Km.multiply(distance);
+		BigDecimal CO2Savings = carCO2.subtract(busCO2);
+	
+		return CO2Savings;
+	}	
+
 
 	
 	// Users/Rewards operations
 	// to do → if user have tot points************************************************************************************
-
-	// @GetMapping("/users/getRewardsByUserId")
-	// public ResponseEntity<Response<List<Reward>>> getRewardsByUserId(@RequestBody Integer userId) {
-	// 	try {
-	// 		List<Reward> rewards = rewardRepository.findByUserId(userId);
-	// 		if (!rewards.isEmpty()) {
-	// 			return ResponseEntity.ok(new Response<>(true, rewards));
-	// 		} else {
-	// 			List<String> errors = new ArrayList<>();
-	// 			errors.add("Nessuna ricompensa trovata per l'utente con ID: " + userId);
-	// 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
-	// 		}
-	// 	} catch (Exception e) {
-	// 		List<String> errors = new ArrayList<>();
-	// 		errors.add("Errore nel recupero delle ricompense: " + e.getMessage());
-	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
-	// 	}
-	// }
-
 }

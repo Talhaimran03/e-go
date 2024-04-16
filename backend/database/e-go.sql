@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 15, 2024 alle 22:59
+-- Creato il: Apr 16, 2024 alle 22:50
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -47,7 +47,8 @@ CREATE TABLE `routes` (
   `end_time` datetime(6) DEFAULT NULL,
   `start_coordinates` varbinary(255) DEFAULT NULL,
   `start_time` datetime(6) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `active` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
