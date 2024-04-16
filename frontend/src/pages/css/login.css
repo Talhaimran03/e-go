@@ -1,0 +1,183 @@
+.margine{
+    width: 100%;
+}
+
+.flexshapelogo{
+    display: flex;
+    justify-content: space-around;
+    /* position: relative; */
+    z-index: 1;
+}
+
+.shapelogo{
+    width: 10rem;
+    height: 10rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    margin-top: 80px;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;  
+}
+
+.flexform{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    gap: 20px;
+}
+
+.containerform{
+    padding: 8px 8px;
+    height:50px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 40px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px; 
+}
+
+.email{
+    width: 15rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 25px 0px 25px 0px;
+    height: 100%;
+    /* border-radius: 0px 25px 25px 0px; */
+}
+
+.iconpwd{
+    position: relative;
+    top: 240px;
+    right: 112px;
+    z-index: 1;
+}
+
+.accedi{
+    width: 17rem;
+    height: 4rem;
+    background-color: rgba(74, 161, 139, 1);
+    border-radius: 50px;
+    /* position: absolute; */
+    z-index: 1;
+    color:white;
+    font-size: 22px;
+    top: 600px;
+    border: none;
+    text-align: center; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    margin-top: 3rem;    
+    cursor: pointer;
+}
+
+.accedi:hover{
+    width: 17rem;
+    height: 4rem;
+    background-color: rgb(68, 148, 128);
+    border-radius: 50px;
+    /* position: absolute; */
+    z-index: 1;
+    color:white;
+    font-size: 22px;
+    top: 600px;
+    border: none;
+    text-align: center; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    margin-top: 3rem;    
+}
+
+
+
+.pwddimenticata{
+    font-size: 15px;
+    text-decoration: underline;
+    color: black;
+    font-weight: lighter;
+    margin: 0rem;
+}
+
+.pwddimenticata:hover{
+    font-size: 15px;
+    text-decoration: underline;
+    color: rgba(74, 161, 139, 1);
+    font-weight: lighter;
+    margin: 0rem;
+    cursor: pointer;
+}
+
+.signUp{
+    width: 10rem;
+    height: 4vh;
+    background-color: rgba(74, 161, 139, 1);
+    border-radius: 50px;
+    z-index: 1;
+    color: white;
+    font-size: 12px;
+    top: 720px;
+    border: none;
+    text-align: center; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signUp:hover{
+    width: 10rem;
+    height: 4vh;
+    background-color: rgb(68, 148, 128);
+    border-radius: 50px;
+    /* position: absolute; */
+    z-index: 1;
+    color: white;
+    font-size: 12px;
+    top: 720px;
+    border: none;
+    text-align: center; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 4px;
+    font-weight: bold;   
+}
+
+
+.buttongooglelogin{
+    width: 3rem;
+    height: 3rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    border: none;
+    margin-top: 20px;
+}
+
+.buttongooglelogin:hover{
+    width: 3rem;
+    height: 3rem;
+    background-color: rgb(241, 241, 241);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.buttonflex{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.error{
+    display: flex;
+    justify-content: space-around;
+    color: red;
+}

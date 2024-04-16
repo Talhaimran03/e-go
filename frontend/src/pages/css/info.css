@@ -1,0 +1,365 @@
+.logoResponsive-info {
+    display: none;
+}
+
+#bgGrande-info {
+    position: absolute;
+    z-index: 0;
+    height: auto;
+}
+
+#bgPiccolo-info {
+    display: none;
+}
+
+.navbarDef-info {
+    position: relative;
+    display: flex;
+    width: 85%;
+    top: 100px;
+    left: 8%;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+
+}
+
+.navbarSx-info {
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    background-color: white;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarSx-info a {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.navbarSx-info a:hover{
+    color: #409576;
+}
+
+.navbarDx-info a:hover{
+    color: #409576;
+}
+
+.navbarDx-info {
+    display: flex;
+    border-radius: 25px;
+    background-color: white;
+    width: 8%;
+    min-width: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarDx-info a {
+    display: flex;
+    color: black;
+    justify-content: center;
+}
+
+.imgEgo-info {
+    display: flex;
+    width: 200px;
+    height: 100px;
+}
+
+.contentMain-info {
+    position: relative;
+    display: flex;
+    width: 100%;
+    top: 200px;
+    height: 500px;
+    justify-content: space-evenly;
+}
+
+.contentSx-info {
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    background-color: white;
+    width: 20%;
+    height: 100px;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    padding-bottom: 6%;
+}
+
+.buttons-info {
+    display: flex;
+    width: 20%;
+    justify-content: center;
+}
+
+#btnAccedi-info {
+    display: flex;
+    background-color: #409576;
+    color: white;
+    border-radius: 25px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    border: #409576;
+    padding: 10px 15px;
+    font-size: 18px;
+}
+
+#btnRegistrati-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    background-color: #409576;
+    color: white;
+    border-radius: 25px;
+    border: #409576;
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+#btnAccedi-info:hover{
+    background-color: white;
+    border: 1px solid #409576;
+    color: black;
+}
+
+#btnRegistrati-info:hover{
+    background-color: white;
+    border: 1px solid #409576;
+    color: black;
+}
+
+.imgContent-info {
+    display: flex;
+}
+
+.contentUs-info {
+    display: flex;
+    width: 20%;
+    align-items: flex-end;
+}
+
+#aboutUs-info {
+    display: flex;
+    background-color: white;
+    border-radius: 25px;
+    padding: 15px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.endContent-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    width: 40%;
+    top: 50px;
+}
+
+.endContentResp-info {
+    display: none;
+}
+
+.first-info {
+    margin-left: 10%;
+}
+
+.second-info {
+    margin-left: 40%;
+}
+
+.third-info {
+    width: 100%;
+    margin-left: 70%;
+}
+
+#firstp-info {
+    display: flex;
+    width: 80%;
+}
+
+#secondp-info {
+    display: flex;
+}
+
+#thirdp-info {
+    display: flex;
+    width: 400px;
+}
+
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 769px) {
+
+    body {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    .pos-navbar-info {
+        display: flex;
+        width: 100%;
+    }
+
+    .hamburger-icon-info {
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .navbarDef-info {
+        display: none;
+    }
+
+    .contentMain-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        top: 150px;
+    }
+
+    .contentSx-info {
+        position: relative;
+        width: 70%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .buttons-info {
+        padding-top: 8px;
+        width: 100%;
+    }
+
+    #btnAccedi-info {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 6px;
+        border-radius: 25px;
+
+    }
+
+    #btnRegistrati-info {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 6px;
+        border-radius: 25px;
+
+    }
+
+    .contentUs-info {
+        display: none;
+    }
+
+    .endContent-info {
+        display: none;
+        width: 100%;
+        align-items: center;
+        font-size: 10px;
+        top: 0;
+    }
+
+    .endContentResp-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .firstResp-info {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        margin-left: 0%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .secondResp-info {
+        display: flex;
+        margin-left: 0%;
+        justify-content: center;
+    }
+
+    .thirdResp-info {
+        display: flex;
+        margin-left: 0%;
+        justify-content: center;
+    }
+
+    #firstpResp-info {
+        flex-direction: column;
+        align-items: center;
+        font-size: 25px;
+    }
+
+    #secondpResp-info {
+        font-size: 25px;
+    }
+
+    #thirdpResp-info {
+        font-size: 25px;
+    }
+
+    .imgContent-info {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #iphone-info {
+        display: flex;
+        width: 50%;
+    }
+
+    #bgResponsive-info {
+        display: block;
+        width: 100%;
+    }
+
+    #bgGrande-info {
+        display: none;
+    }
+
+    .bgPiccoloDiv-info {
+        position: absolute;
+        display: flex;
+        height: 477px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    #bgPiccolo-info {
+        position: absolute;
+        display: flex;
+        width: auto;
+    }
+
+    .logoResponsive-info {
+        position: relative;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 4%;
+        padding-top: 4%;
+    }
+
+    #logoResp-info {
+        display: flex;
+        width: 40%;
+        height: auto;
+    }
+
+}
