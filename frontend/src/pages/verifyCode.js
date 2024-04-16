@@ -45,11 +45,12 @@ function VerifyCode() {
             console.log(response.data);
             if (response.data.success) {
                 navigate('/');
-            } else {
+            }
+        } catch (error) {
+            if (error.response.data.success == false) {
                 console.error('OTP non valido');
                 setOtpError(true);
             }
-        } catch (error) {
             console.error('Errore:', error.response.data);
         }
     };
@@ -77,8 +78,9 @@ function VerifyCode() {
                 <input ref={el => inputRefs.current[3] = el} type="number" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(3)} />
                 <button type="submit" className='submit'>VERIFICA</button>
             </form>
+            <div className="otpMessage-position">
             {otpError && <p className="error-message">OTP non valido</p>}
-            {!email && <p>Non hai ancora un account? <Link to="/signUp">Registrati qui</Link></p>}
+            </div>
         </div>
     );
 }

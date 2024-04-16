@@ -125,4 +125,12 @@
     justify-content: space-around;
 }
 
+.otpMessage-position{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+    color: red;
+    font-weight: bold;
+}
 
