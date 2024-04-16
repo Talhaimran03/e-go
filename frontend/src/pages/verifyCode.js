@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './components/components_css/verifyCode.css';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 function VerifyCode() {
     const location = useLocation();
@@ -47,7 +46,7 @@ function VerifyCode() {
                 navigate('/');
             }
         } catch (error) {
-            if (error.response.data.success == false) {
+            if (error.response.data.success === false) {
                 console.error('OTP non valido');
                 setOtpError(true);
             }
