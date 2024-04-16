@@ -9,6 +9,7 @@ import Qr from './pages/components/qr';
 import ActiveHome from './pages/activeHome';
 import QrContainer2 from './pages/components/stopQr';
 import Grafico from './pages/components/graph'
+import NotFound from './pages/NotFound';
 
 
 const router = createBrowserRouter([
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   { path: '/activeHome', element: <ActiveHome />},
   { path: '/QrContainer2', element: <QrContainer2 />},
   { path: '/app', element: <Grafico />},
+  { path: '*', element: <NotFound/> },
 
 ]);
 
