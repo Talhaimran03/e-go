@@ -55,8 +55,24 @@ export default function Home() {
             </div>
                 
 
+<<<<<<< HEAD
             <nav className='navbarDef-info'>
                 <div className='navbarSx-info'>
+=======
+                    <nav id="menu1">
+                        <ul>
+                        <li><a id='home' href="#">Home</a></li>
+                        <li><a href="#">Impostazioni</a></li>
+                        <li><a href="#">Punti</a></li>
+                        <li><a href="#">Contatti</a></li>
+                        </ul>
+                    </nav>
+                </div>  
+            </div>    
+
+            <nav className='navbarDef'>
+                <div className='navbarSx'>
+>>>>>>> 81fc17b68cb1183f84f58baaf7dbf304e6a6d897
                     <a href='#'><h4> Home </h4></a>
                     <a href='#'><h4> Impostazioni </h4></a>
                     <a href='#'><h4> Punti </h4></a>
