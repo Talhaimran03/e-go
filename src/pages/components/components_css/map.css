@@ -128,9 +128,11 @@ body{
 
 }
 
-
-
-
+.qrPosition-points4{
+    top: 75vh;
+    left: 70vw;
+    position: absolute;
+}
 
 
 
@@ -189,5 +191,10 @@ body{
 .lower-text img{
     top: 5.5vh;
     left: 11.5vw;
+}
+
+.qrPosition-points4{
+    left: 83.5vw;
+    top: 87vh;
 }
 }

@@ -69,15 +69,24 @@ body{
 .div-qr3{
     position: absolute;
     top: 0vh;
-    left: 10vw;
+    left: 7.5vw;
     overflow: hidden;
     height: 100%;
-    border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 
 }
 
-
+.geolocalisation{
+    position: absolute;
+    top: 80vh;
+    left: 3.5vw;
+    width: auto;
+    height: 5vh;
+    line-height: 1px;
+    color: rgba(0, 0, 0, 0.132);
+    font-weight: 700;
+    font-size: 15px;
+}
 
 
 
@@ -89,17 +98,24 @@ body{
     left: 20vw;
 }
 
+.p3{
+    top: 5.5vh;
+    left: 22vw;
+    font-size: 20px;
+}
+
 .scheda3{
     left: 15.8vw;
     width: 70vw;
     height: 78vh;
+    top: 15vh;
+    overflow: hidden;
 }
 
-.div-qr3{
-    top: 17.5vh;
-    left: 3vw;
-    width: 64vw;
-    height: 43vh;
+
+.geolocalisation{
+    top: 94vh;
+    left: 16vw;
 }
 
 }

@@ -5,6 +5,7 @@
 
 ::-webkit-scrollbar {
     height: 0px;
+    width: 0px;
   }
 
 body{
@@ -14,16 +15,17 @@ body{
 }
 
 .home2 {
-    height: 60rem;
+    height: 51rem;
     background-color: #FFFF;
     background: #1F9900;
+    overflow-y: hidden;
 }
 
 .window{
     position: absolute;
     top: -.5vh;
     left: 2.5vw;
-    height: 107%;
+    height: 125%;
     width: 95vw;
     background: #FFFFFF;
     border-radius: 25px;
@@ -113,17 +115,23 @@ body{
 }
 
 .div-qr2{
+    width: 120px;
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 15%);
+    background-color: white;
+
     position: relative;
     display: flex;
     top: 27vh;
     left: 0;
-    width: 100%;
     height: auto;
-    justify-content: center;
 }
 
 .qr2{
-    position: relative;  
+    margin-left: 4vw;
 }
 
 .saving2{
@@ -252,20 +260,26 @@ body{
 
 @media screen and (min-width: 992px) {
     body{
-        overflow-y: visible;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
+
+    .window{
+        height: 100%;
+    }
+
     .home2{
+        height: 47rem;
         display: flex;
-        width: 100%;
-        margin: 0;
+        width: 110%;
         padding: 0;
-        flex-direction: column;
-        align-items: center;
+        overflow: hidden;
+        margin: 0;
     }
 
     .background2{
         top: -8vh;
-        left: 0vw;
+        left: 24.5vw;
         width: 40vw;
         height: 54vh;
         margin: 5%;
@@ -276,6 +290,13 @@ body{
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3); 
         scale: 0.95;
     }
+.div-qr2{
+
+    height: 120px;
+}
+    .qr2{
+        margin-left: 1.1vw;
+    }
 
     .saving2{
         width: 35vw;
@@ -285,8 +306,8 @@ body{
         display: flex;
 }
 
-    .slider-maps{
-        top: 73vh;
+    .slider-maps2   {
+        top: 72vh;
     }
 
 .maps2{

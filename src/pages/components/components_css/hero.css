@@ -1,4 +1,3 @@
-
 .welcome{
     position: relative;
     height: 7vh;
@@ -17,7 +16,7 @@
     align-items: center;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 10vw;
+    margin-left: 5vw;
     width: 100%;
 }
 
@@ -33,7 +32,7 @@
     width: 35px;
     height: 35px;
     background: #FFFFFF;
-    left: 67vw;
+    left: 70vw;
     position: absolute;
     top: 1vh;
     display: flex;
@@ -54,7 +53,7 @@
 .user-icon{
     position: absolute;
     top: 0.2vh;
-    left: 79vw;
+    left: 83vw;
     scale: 1.07;
 }
 
@@ -67,8 +66,16 @@
         top: 1vh;
     }
 
+    .div-welcome{
+        margin-left: 30.5vw;
+    }
+
     .notification{
-        left: 68vw;
+        left: 62vw;
+    }
+
+    .user-icon{
+        left: 65vw;
     }
 
 }

@@ -35,7 +35,7 @@ class QrContainer2 extends Component {
 
   render() {
     const camStyle = {
-      width: '85%',
+      width: '100%',
       height: '100%',
     };
 
@@ -69,10 +69,11 @@ class QrContainer2 extends Component {
                         style={camStyle}
                     />
                 </div>
-                <div className='geolocalisation'>
+                
+            </div>
+            <div className='geolocalisation'>
                   <LocationComponent></LocationComponent>
                 </div>
-            </div>
       </div>
     );
   }

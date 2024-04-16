@@ -74,24 +74,15 @@ class QrContainer extends Component {
     return (
       <div className='map-page1'>
 
-<div>
-        {this.state.showError && (
-          <div className="error-page">
-            
-          </div>
-        )}
-        {this.state.lastFourDigits && (
-          <div className="last-four-digits">
-          </div>
-        )}
-      </div>
-
-
-
-
-
-
-
+        <div>
+            {this.state.showError && (
+              <div className="error-page">
+              </div>
+            )}
+            {this.state.lastFourDigits && (
+              <div className="last-four-digits"></div>
+            )}
+        </div>
             <Link to="/"> 
                 <div className='back1'>
                     <img className='arrow1' src={arrow} alt="arrow"></img>
@@ -108,13 +99,14 @@ class QrContainer extends Component {
                   constraints={isDesktop ? undefined : { video: { facingMode: 'environment' } }}
                   onError={this.handleError}
                   onScan={this.handleScan}
-              />
+                />
 
                 </div>
-                <div className='geolocalisation'>
+                
+            </div>
+            <div className='geolocalisation'>
                   <LocationComponent></LocationComponent>
                 </div>
-            </div>
       </div>
     );
   }

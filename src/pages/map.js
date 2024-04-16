@@ -50,7 +50,7 @@ export default function Map() {
                 </div>
             </div>
             <Link to="/Qr">
-                <div className="qrPosition-points">
+                <div className="qrPosition-points4">
                     <QrCode />
                 </div>
             </Link>

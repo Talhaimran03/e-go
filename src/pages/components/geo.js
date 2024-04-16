@@ -32,8 +32,7 @@ const LocationComponent = () => {
   if (coords) {
     return (
       <div>
-        <p>Latitudine: {coords.latitude}</p>
-        <p>Longitudine: {coords.longitude}</p>
+        <p>Latitudine: {coords.latitude}, Longitudine: {coords.longitude}</p>
       </div>
     );
   }
