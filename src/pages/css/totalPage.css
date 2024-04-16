@@ -1,0 +1,141 @@
+.pos-navbar{
+    display: none;
+}
+svg{
+    position: absolute;
+    z-index: 0;
+    height: auto;
+}
+
+.navbarDef{
+    position: relative;
+    display: flex;
+    width: 85%;
+    top: 100px;
+    left: 8%;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+    
+}
+
+.navbarSx{
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    background-color: white;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.navbarDx{
+    display: flex;
+    border-radius: 25px;
+    background-color: white;
+    width: 8%;
+    min-width: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.imgEgo{
+    display: flex;
+    width: 200px;
+    height: 100px; 
+}
+
+.contentMain{
+    position: relative;
+    display: flex;
+    width: 100%;
+    top: 200px;
+    height: 500px;
+    justify-content: space-evenly;
+}
+
+.contentSx{
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    background-color: white;
+    width: 20%;
+    height: 100px;
+    align-items: center;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.buttons{
+    display: flex;
+    width: 20%;
+    justify-content: center;
+}
+
+#btnAccedi{
+    display: flex;
+    margin-right: 10px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+#btnRegistrati{
+    display: flex;
+    margin-left: 20px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.imgContent{
+    display: flex;
+}
+
+.contentUs{
+    display: flex;
+    width: 20%;
+    align-items: flex-end;
+}
+#aboutUs{
+    display: flex;
+    background-color: white;
+    border-radius: 25px;
+    padding: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 80, 80% 80%, 80% 100%, 0 100%);
+    WebkitClipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 80% 100%, 80% 80%, 0% 80%)';
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1); 
+
+}
+
+.endContent{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    width: 40%;
+    top: 20px;
+}
+
+.first{
+    margin-left: 10%;
+}
+.second{
+    margin-left: 40%;
+}
+.third{
+    margin-left: 70%;
+}
+
+#firstp{
+    display: flex;
+    width: 80%;
+}
+
+#secondp{
+    display: flex;
+}
+
+#thirdp{
+    display: flex;
+    width: 400px;
+}
+@media screen and (max-width: 769px) {
+
+}
