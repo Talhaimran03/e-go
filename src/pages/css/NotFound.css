@@ -1,0 +1,267 @@
+
+.banner__container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+    margin: 0;
+    top: 0vh;
+    padding: 0;
+}
+
+.banner__text404{
+    font-size: 28vw;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    padding-right: 5vw;
+    font-weight: 800;
+    opacity: .2;
+}
+.banner__track{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: left;
+}
+.track1{
+    animation: banner1 15s linear infinite;
+}
+.track2{
+    animation: banner2 20s linear infinite;
+    transform: translateX(-77.6vw);
+    color: #4AA18B;
+    
+}
+.track3{
+    animation: banner3 15s linear infinite;
+
+}
+@keyframes banner1 {
+    from {
+      transform: translateX(0vw);
+    }
+  
+    to {
+      transform: translateX(-38.9vw);
+    }
+  }
+@keyframes banner2 {
+    to {
+      transform: translateX(0vw);
+    }
+  }
+@keyframes banner3 {
+    from {
+        transform: translateX(0vw);
+      }
+    
+      to {
+        transform: translateX(-38.9vw);
+      }
+  }
+
+
+.banner__trackUno{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: left;
+}
+
+
+.track4{
+    animation: banner1 15s linear infinite;
+}
+.track5{
+    animation: banner2 20s linear infinite;
+    transform: translateX(-77.6vw);
+    color: #4AA18B;
+    
+}
+.track6{
+    animation: banner2 20s linear infinite;
+    transform: translateX(-77.6vw);
+    color: #4AA18B;
+
+}
+
+.overlayer{
+    position: absolute;
+    display: flex;
+    width: 90vw;
+    top: 15vh;
+    left: 5vw;
+    height: 60vh;
+    background: #4aa18b5a;
+    border: 1px solid white;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.overlayer p{
+    margin: 0;
+    padding: 0;
+}
+
+.egoLogo{
+    position: absolute;
+    top: -9vh;
+    left: 25vw;
+    width: 19vh;
+    height: 19vh;
+    border-radius: 50%;
+    background: rgba(246, 246, 246, 0.948);
+    display: flex;
+    scale: .8;
+    box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+
+}
+
+.egoLogo img{
+    scale: 0.9;
+}
+
+.funny{
+    color: black;
+    font-size: 10vh;
+    opacity: 1;
+    font-weight: 800;
+}
+
+.informative{
+    position: absolute;
+    margin-top: -20vh;
+}
+
+.turnBack{
+    margin-left: 25vw;
+    width: 35vw;
+    display: flex;
+    height: 5vh;
+    background: white;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+
+
+
+@media screen and (min-width: 992px) {
+.banner__container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    overflow-y: hidden;
+    margin: 0;
+    top: -5vh;
+    padding: 0;
+}
+.banner__text404{
+    font-size: 19vw;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    padding-right: 5vw;
+    font-weight: 800;
+}
+.banner__track{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: left;
+}
+.track1{
+    animation: banner1 15s linear infinite;
+}
+.track2{
+    animation: banner2 20s linear infinite;
+    transform: translateX(-77.6vw);
+    color: #4AA18B;
+    
+}
+.track3{
+    animation: banner3 15s linear infinite;
+
+}
+@keyframes banner1 {
+    from {
+      transform: translateX(0vw);
+    }
+  
+    to {
+      transform: translateX(-38.9vw);
+    }
+  }
+@keyframes banner2 {
+    to {
+      transform: translateX(0vw);
+    }
+  }
+@keyframes banner3 {
+    from {
+        transform: translateX(0vw);
+      }
+    
+      to {
+        transform: translateX(-38.9vw);
+      }
+  }
+
+.banner__trackUno{
+    display: none;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: left;
+}
+
+
+.egoLogo{
+    position: absolute;
+    top: -10vh;
+    left: 37vw;
+    width: 25vh;
+    height: 25vh;
+    border-radius: 50%;
+    background: rgba(246, 246, 246, 0.948);
+    display: flex;
+    scale: .8;
+    justify-content: center;
+
+}
+
+.egoLogo img{
+    scale: 0.3;
+}
+
+.turnBack{
+    margin-left: 27vw;
+    width: 35vw;
+    display: flex;
+    height: 5vh;
+    background: white;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+}
+
+
+
+
+
+
