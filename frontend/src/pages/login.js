@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './components/components_css/login.css';
+import './css/login.css';
 import Logo from "./components/logo.js";
 import { ReactComponent as Icongoogle } from "./img/Google__G__logo.svg";
 import { ReactComponent as Iconuser } from "./img//icona_utente.svg";
