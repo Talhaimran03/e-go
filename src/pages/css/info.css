@@ -1,26 +1,18 @@
-.pos-navbar {
+.logoResponsive-info {
     display: none;
 }
 
-.logoResponsive {
-    display: none;
-}
-
-#bgGrande {
+#bgGrande-info {
     position: absolute;
     z-index: 0;
     height: auto;
 }
 
-#bgPiccolo {
+#bgPiccolo-info {
     display: none;
 }
 
-.bgResp {
-    display: none;
-}
-
-.navbarDef {
+.navbarDef-info {
     position: relative;
     display: flex;
     width: 85%;
@@ -32,7 +24,7 @@
 
 }
 
-.navbarSx {
+.navbarSx-info {
     display: flex;
     width: 25%;
     justify-content: space-evenly;
@@ -42,20 +34,21 @@
     box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
 }
 
-.navbarSx a {
+.navbarSx-info a {
     color: black;
     display: flex;
     justify-content: center;
 }
 
-.navbarSx a:hover{
-    color: #409576;
-}
-.navbarDx a:hover{
+.navbarSx-info a:hover{
     color: #409576;
 }
 
-.navbarDx {
+.navbarDx-info a:hover{
+    color: #409576;
+}
+
+.navbarDx-info {
     display: flex;
     border-radius: 25px;
     background-color: white;
@@ -66,19 +59,19 @@
     box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
 }
 
-.navbarDx a {
+.navbarDx-info a {
     display: flex;
     color: black;
     justify-content: center;
 }
 
-.imgEgo {
+.imgEgo-info {
     display: flex;
     width: 200px;
     height: 100px;
 }
 
-.contentMain {
+.contentMain-info {
     position: relative;
     display: flex;
     width: 100%;
@@ -87,7 +80,7 @@
     justify-content: space-evenly;
 }
 
-.contentSx {
+.contentSx-info {
     display: flex;
     flex-direction: column;
     border-radius: 25px;
@@ -99,13 +92,13 @@
     padding-bottom: 6%;
 }
 
-.buttons {
+.buttons-info {
     display: flex;
     width: 20%;
     justify-content: center;
 }
 
-#btnAccedi {
+#btnAccedi-info {
     display: flex;
     background-color: #409576;
     color: white;
@@ -116,7 +109,7 @@
     font-size: 18px;
 }
 
-#btnRegistrati {
+#btnRegistrati-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,29 +123,29 @@
     padding: 10px 15px;
 }
 
-#btnAccedi:hover{
+#btnAccedi-info:hover{
     background-color: white;
     border: 1px solid #409576;
     color: black;
 }
 
-#btnRegistrati:hover{
+#btnRegistrati-info:hover{
     background-color: white;
     border: 1px solid #409576;
     color: black;
 }
 
-.imgContent {
+.imgContent-info {
     display: flex;
 }
 
-.contentUs {
+.contentUs-info {
     display: flex;
     width: 20%;
     align-items: flex-end;
 }
 
-#aboutUs {
+#aboutUs-info {
     display: flex;
     background-color: white;
     border-radius: 25px;
@@ -161,7 +154,7 @@
     font-weight: 500;
 }
 
-.endContent {
+.endContent-info {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -170,33 +163,33 @@
     top: 50px;
 }
 
-.endContentResp {
+.endContentResp-info {
     display: none;
 }
 
-.first {
+.first-info {
     margin-left: 10%;
 }
 
-.second {
+.second-info {
     margin-left: 40%;
 }
 
-.third {
+.third-info {
     width: 100%;
     margin-left: 70%;
 }
 
-#firstp {
+#firstp-info {
     display: flex;
     width: 80%;
 }
 
-#secondp {
+#secondp-info {
     display: flex;
 }
 
-#thirdp {
+#thirdp-info {
     display: flex;
     width: 400px;
 }
@@ -212,21 +205,21 @@
         overflow-x: hidden;
     }
 
-    .pos-navbar {
+    .pos-navbar-info {
         display: flex;
         width: 100%;
     }
 
-    .hamburger-icon {
+    .hamburger-icon-info {
         background-color: white;
         border-radius: 5px;
     }
 
-    .navbarDef {
+    .navbarDef-info {
         display: none;
     }
 
-    .contentMain {
+    .contentMain-info {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -234,19 +227,19 @@
         top: 150px;
     }
 
-    .contentSx {
+    .contentSx-info {
         position: relative;
         width: 70%;
         height: auto;
         margin-bottom: 20px;
     }
 
-    .buttons {
+    .buttons-info {
         padding-top: 8px;
         width: 100%;
     }
 
-    #btnAccedi {
+    #btnAccedi-info {
         width: 40%;
         display: flex;
         justify-content: center;
@@ -256,7 +249,7 @@
 
     }
 
-    #btnRegistrati {
+    #btnRegistrati-info {
         width: 40%;
         display: flex;
         justify-content: center;
@@ -266,11 +259,11 @@
 
     }
 
-    .contentUs {
+    .contentUs-info {
         display: none;
     }
 
-    .endContent {
+    .endContent-info {
         display: none;
         width: 100%;
         align-items: center;
@@ -278,13 +271,13 @@
         top: 0;
     }
 
-    .endContentResp {
+    .endContentResp-info {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    .firstResp {
+    .firstResp-info {
         display: flex;
         flex-direction: column;
         width: 250px;
@@ -293,58 +286,54 @@
         text-align: center;
     }
 
-    .secondResp {
+    .secondResp-info {
         display: flex;
         margin-left: 0%;
         justify-content: center;
     }
 
-    .thirdResp {
+    .thirdResp-info {
         display: flex;
         margin-left: 0%;
         justify-content: center;
     }
 
-    #firstpResp {
+    #firstpResp-info {
         flex-direction: column;
         align-items: center;
         font-size: 25px;
     }
 
-    #secondpResp {
+    #secondpResp-info {
         font-size: 25px;
     }
 
-    #thirdpResp {
+    #thirdpResp-info {
         font-size: 25px;
     }
 
-    .imgContent {
+    .imgContent-info {
         display: flex;
         width: 100%;
         flex-direction: column;
         align-items: center;
     }
 
-    img {
+    #iphone-info {
         display: flex;
         width: 50%;
     }
 
-    svg {
-        display: none;
-    }
-
-    #bgResponsive {
+    #bgResponsive-info {
         display: block;
         width: 100%;
     }
 
-    #bgGrande {
+    #bgGrande-info {
         display: none;
     }
 
-    .bgPiccoloDiv {
+    .bgPiccoloDiv-info {
         position: absolute;
         display: flex;
         height: 477px;
@@ -352,13 +341,13 @@
         width: 100%;
     }
 
-    #bgPiccolo {
+    #bgPiccolo-info {
         position: absolute;
         display: flex;
         width: auto;
     }
 
-    .logoResponsive {
+    .logoResponsive-info {
         position: relative;
         display: flex;
         width: 100%;
@@ -367,7 +356,7 @@
         padding-top: 4%;
     }
 
-    #logoResp {
+    #logoResp-info {
         display: flex;
         width: 40%;
         height: auto;
