@@ -180,7 +180,7 @@
 
 /* RESPONSIVE */
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 768px) {
 
     body {
         scroll-behavior: smooth;
@@ -206,7 +206,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        top: 150px;
+        top: 30px;
     }
 
     .contentSx-info {
@@ -298,6 +298,7 @@
     #iphone-info {
         display: flex;
         width: 50%;
+        padding-bottom: 10%;
     }
 
     #bgResponsive-info {
@@ -311,8 +312,8 @@
 
     .bgPiccoloDiv-info {
         position: absolute;
-        display: flex;
-        height: 477px;
+        /* display: flex; */
+        height: auto;
         justify-content: center;
         width: 100%;
     }
@@ -321,6 +322,7 @@
         position: absolute;
         display: flex;
         width: 100%;
+        top: -5%;
     }
 
     .logoResponsive-info {
@@ -328,7 +330,7 @@
         display: flex;
         width: 100%;
         justify-content: center;
-        margin-top: 4%;
+        /* margin-top: 4%; */
         padding-top: 4%;
     }
 

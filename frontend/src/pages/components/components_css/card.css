@@ -53,4 +53,9 @@ a {
         width: 35%;
         margin: 20px auto;
     }
+
+    #imgPosition-card{
+        padding: 0;
+        margin: 0;
+    }
 }

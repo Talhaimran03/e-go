@@ -43,6 +43,7 @@
 
 .text-switch.active{
     color: white;
+    font-weight: bold;
 }
 
 .text-switch{
