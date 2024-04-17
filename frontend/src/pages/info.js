@@ -103,7 +103,7 @@ export default function Home() {
                         <h1 id='secondpResp-info'> consapevolmente</h1>
                     </div>
                     <div className='thirdResp-info'>
-                        <h1 id='thirdpResp-info'>parte del cambiamento. </h1>
+                        <h1 id='thirdpResp-info'>parte al cambiamento. </h1>
                     </div>
                 </div>
             </div>

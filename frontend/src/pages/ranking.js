@@ -36,7 +36,7 @@ export default function Ranking() {
                 <RankingSection number='3' icon={ User } text='Anna Benettoni' points='510p.'/>
                 <RankingSection number='4' icon={ User } text='Achille Bamfi' points='450p.'/>
                 <RankingSection number='5' icon={ User } text='Tu' points='410p.' />
-                <RankingSection number='6' icon={ User } text='Lorenzo Russo' points='390p.'/>
+                <RankingSection number='6' icon={ User } text='Gian Marco Cavallaro' points='390p.'/>
                 <RankingSection number='7' icon={ User } text='Sofia Spiniella' points='320p.'/>
                 <RankingSection number='8' icon={ User } text='Claudia Garofolin' points='210p.'/>
                 <RankingSection number='9' icon={ User } text='Tommaso Cocco' points='200p.'/>

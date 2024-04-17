@@ -23,6 +23,9 @@ function Navbar() {
         if (location.pathname.includes('/ranking')) {
             setActiveLink('points');
         }
+        if (location.pathname.includes('/activeHome')) {
+            setActiveLink('home');
+        }
     }, [location.pathname]);
 
     return(

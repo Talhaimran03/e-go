@@ -115,13 +115,13 @@ body{
 }
 
 .div-qr2{
-    width: 120px;
+    /* width: 120px;
     height: 120px;
     align-items: center;
     justify-content: center;
     border-radius: 100%;
     box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 15%);
-    background-color: white;
+    background-color: white; */
 
     position: relative;
     display: flex;

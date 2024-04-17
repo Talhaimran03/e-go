@@ -51,7 +51,7 @@ export default function Home() {
                         },
                         withCredentials: true
                     });
-                    if (response && response.data && response.data.data && response.data.data.actualPoints) {
+                    if (response && response.data && response.data.data) {
                         setPoints(response.data.data.actualPoints);
                         setUserName(response.data.data.name);
                     }
@@ -90,7 +90,7 @@ export default function Home() {
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
-            <App name={userName}></App>
+            <App name={userName} points={points}></App>
             <div className='background'>
                 <div className='points'>
                     <b><p className='p'> {points} </p></b>

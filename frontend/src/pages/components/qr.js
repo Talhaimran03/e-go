@@ -50,7 +50,7 @@ class QrContainer extends Component {
       this.setState({ result: result.text });
       const lastFourDigits = result.text.slice(-4); // Estrai le ultime 4 cifre del link
       this.setState({ lastFourDigits }); // Aggiungi le ultime 4 cifre allo stato
-      window.location.href = 'http://localhost:3000/activeHome';
+      window.location.href = 'https://localhost:3000/activeHome';
     } else {
       // Mostra l'errore solo se non è già stato mostrato
       if (!this.state.showError) {

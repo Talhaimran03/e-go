@@ -27,13 +27,11 @@ const router = createBrowserRouter([
   { path: '/activeHome', element: <ActiveHome />},
   { path: '/QrContainer2', element: <QrContainer2 />},
   { path: '/app', element: <Grafico />},
-  { path: '*', element: <NotFound/> },
   { path: '/info', element: <Info />},
   { path: '/login', element: <Login /> },
   { path: '/signUp', element: <SignUp /> },
   { path: '/verifyCode', element: <VerifyCode /> },
-
-
+  { path: '*', element: <NotFound/> }
 
 ]);
 
