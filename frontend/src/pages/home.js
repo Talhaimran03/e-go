@@ -8,8 +8,16 @@ import Map from './img/map.svg'
 import Grafico from './components/graph';
 import Graph from './components/slider';
 import QrCodeHome from './components/qrCodeHome.js';
+import { Ip } from './ip.js';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect} from 'react';
+import { checkSession } from './components/sessionService';
+
 
 export default function Home() {
+    const navigate = useNavigate();
+
     const height = {
         fontSize: '12px',
     };
@@ -20,6 +28,37 @@ export default function Home() {
         width: '28vw',
         zIndex: '9999',
     };
+
+    useEffect(() => {
+        const fetchSession = async () => {
+                const isLoggedIn = await checkSession(navigate);
+                if (!isLoggedIn.success) {
+                    navigate('/login');
+                }
+
+                const token = localStorage.getItem('token');
+
+                // getAllUsers
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get( `http://${Ip}:8080/ego/users/getAllUsers`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        withCredentials: true
+                    });
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Errore:', error);
+                }
+
+        };
+
+        fetchSession();
+    }, [navigate]);
+
+
     return (
         
         <div className='home'>

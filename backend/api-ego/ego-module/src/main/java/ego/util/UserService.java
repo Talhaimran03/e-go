@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 
 import ego.model.User;
 import ego.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,41 +28,23 @@ import javax.mail.internet.InternetAddress;
 public class UserService {
 
     @Autowired
-    private HttpSession httpSession;
-
-    @Autowired
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    private static final String SESSION_KEY = "";
-
-    public void startSession() {
-        startSession();
-        String sessionKey = (String) httpSession.getAttribute(SESSION_KEY);
-        if (sessionKey == null) {
-            sessionKey = generateSHA256Hash(UUID.randomUUID().toString());
-            httpSession.setAttribute(SESSION_KEY, sessionKey);
-        }
-    }
-
-    public void writeSession(User user) {
-        String value = UUID.randomUUID().toString();
-        String key = "token";
-    
-        httpSession.setAttribute(key, value);
-        
-        user.setToken(value);
+    public String createToken(User user) {
+        String token = UUID.randomUUID().toString();
+        user.setToken(token);
         userRepository.save(user);
+        return token;
     }
 
-    public String readSession() {
-        startSession();
-        String sessionKey = (String) httpSession.getAttribute(SESSION_KEY);
-        return (String) httpSession.getAttribute(sessionKey);
+    public User getUserByToken(String token) {
+        return userRepository.findUserByToken(token);
     }
 
-    public void deleteSession() {
-        httpSession.invalidate();
+    public void logout(User user) {
+        user.setToken(null);
+        userRepository.save(user);
     }
     
     public UserService(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
@@ -207,17 +186,6 @@ public class UserService {
         } catch (MessagingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-        }
-    }
-
-    private String generateSHA256Hash(String data) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(data.getBytes());
-            return java.util.Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

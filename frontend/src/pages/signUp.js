@@ -51,8 +51,10 @@ function Sign() {
         } catch (error) {
             if (error.response.data.errors && error.response.data.errors.includes("Email già registrata, conferma otp")) {
                 navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
-            } else {
+            } else if (error.response.data.errors) {
                 setError(error.response.data.errors);
+            } else {
+                setError("Errore durante la connessione al server");
             }
             console.error('Errore:', error.response.data);
         }

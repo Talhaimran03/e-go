@@ -32,6 +32,9 @@ public class Route {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    @Column(name = "active", nullable = false)
+    private Boolean active = true;
+
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
@@ -74,7 +77,7 @@ public class Route {
         this.startTime = startTime;
     }
 
-    public Point getEndoordinates() {
+    public Point getEndCoordinates() {
         return endCoordinates;
     }
 
@@ -88,6 +91,14 @@ public class Route {
 
     public void setEndTime(LocalDateTime endTime){
         this.endTime = endTime;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public User getUser() {

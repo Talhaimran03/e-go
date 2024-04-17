@@ -35,11 +35,15 @@ function Login() {
             
             // Verifica se la risposta è definita e se contiene 'data'
             if (response && response.data && response.data.success) {
+                const token = response.data.data; 
+                localStorage.setItem('token', token);
                 navigate('/');
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setError(error.response.data.errors[0]);
+            } else {
+                setError(`Si è verificato un errore durante la richiesta: ${error}`);
             }
         }
         
