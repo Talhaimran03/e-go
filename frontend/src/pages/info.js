@@ -45,8 +45,8 @@ export default function Home() {
                     <path d="M0 25.5C0 11.6929 11.1929 0.5 25 0.5H372C385.807 0.5 397 11.6929 397 25.5V451.5C397 465.307 385.807 476.5 372 476.5H232.551C218.744 476.5 207.551 465.307 207.551 451.5V398.5C207.551 384.693 196.358 373.5 182.551 373.5H158.114C144.306 373.5 133.114 362.307 133.114 348.5V318.308C133.114 309.301 125.812 302 116.806 302V302C107.8 302 100.498 294.699 100.498 285.692V264C100.498 250.193 89.3055 239 75.4984 239H25C11.1929 239 0 227.807 0 214V25.5Z" fill="url(#paint0_linear_55_343)"/>
                     <defs>
                     <linearGradient id="paint0_linear_55_343" x1="198.5" y1="-3" x2="198.5" y2="473" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#4AA18B"/>
-                    <stop offset="1" stop-color="#1B3B33"/>
+                    <stop stoColor="#4AA18B"/>
+                    <stop offset="1" stoColor="#1B3B33"/>
                     </linearGradient>
                     </defs>
                 </svg>
@@ -59,9 +59,9 @@ export default function Home() {
 
             <nav className='navbarDef-info'>
                 <div className='navbarSx-info'>
-                    <a href='#'><h4> Home </h4></a>
-                    <a href='#'><h4> Impostazioni </h4></a>
-                    <a href='#'><h4> Punti </h4></a>
+                    <Link to='../'><h4> Home </h4></Link>
+                    <Link to='../settings'><h4> Impostazioni </h4></Link>
+                    <Link to='../points'><h4> Punti </h4></Link>
                 </div>
                 <div className='imgEgo-info'>
                  <img className='imgEgo-info' src={EGOGOMMA}></img>
