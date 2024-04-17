@@ -1,5 +1,5 @@
 import './css/settings.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import User from "./img/user.svg";
 
@@ -11,11 +11,28 @@ import Privacy from "./img/privacy.svg";
 import Security from "./img/security.svg";
 import Help from "./img/help.svg";
 import Logout from "./img/logout.svg";
-
-
-
+import { checkSession } from './components/sessionService';
+import React, { useEffect} from 'react';
 
 export default function Settings() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchSession = async () => {
+                const isLoggedIn = await checkSession(navigate);
+                if (!isLoggedIn.success) {
+                    navigate('/login');
+                }
+        };
+
+        fetchSession();
+    }, [navigate]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
     return (
         <>
             <div className='containerSettings'>
@@ -29,9 +46,9 @@ export default function Settings() {
                     <SettingSection icon={ Privacy } text="Privacy"/>
                     <SettingSection icon={ Security } text="Sicurezza"/>
                     <SettingSection icon={ Help } text="Aiuto"/>
-                    <Link to='../login' id='esci-settings'>
+                    <button onClick={handleLogout} id='esci-settings'>
                         <SettingSection icon={ Logout } text="Esci"/>
-                    </Link>
+                    </button>
                 </div>
             </div>
 

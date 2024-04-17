@@ -1,5 +1,5 @@
 import './css/home.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import App from './components/hero.js'
 import './components/components_css/hero.css'
@@ -9,14 +9,15 @@ import Grafico from './components/graph';
 import Graph from './components/slider';
 import QrCodeHome from './components/qrCodeHome.js';
 import { Ip } from './ip.js';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, { useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { checkSession } from './components/sessionService';
 
 
 export default function Home() {
     const navigate = useNavigate();
+    const [points, setPoints] = useState(0);
+    const [userName, setUserName] = useState("User");
 
     const height = {
         fontSize: '12px',
@@ -38,16 +39,20 @@ export default function Home() {
 
                 const token = localStorage.getItem('token');
 
-                // getAllUsers
+                // get current user data
                 try {
                     const token = localStorage.getItem('token');
-                    const response = await axios.get( `http://${Ip}:8080/ego/users/getAllUsers`, {
+                    const response = await axios.get( `http://${Ip}:8080/ego/users/getUser`, {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
                         withCredentials: true
                     });
+                    if (response && response.data && response.data.data && response.data.data.actualPoints) {
+                        setPoints(response.data.data.actualPoints);
+                        setUserName(response.data.data.name);
+                    }
                     console.log(response.data);
                 } catch (error) {
                     console.error('Errore:', error);
@@ -66,15 +71,14 @@ export default function Home() {
             <div className='pos-navbar'>
                 <Navbar></Navbar>
             </div>
-            <App></App>
+            <App name={userName}></App>
             <div className='background'>
                 <div className='points'>
-                    <b><p className='p'> 145 </p></b>
+                    <b><p className='p'> {points} </p></b>
                     <b><p className='p secondo'> punti </p></b>
                 </div>
                 <div className='div-graphic'>
-
-                    <Graph></Graph>
+                    <Graph points={points} />
                 </div>
                 <div className='div-qr'>
                     <Link to="/Qr">

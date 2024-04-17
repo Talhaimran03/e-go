@@ -145,7 +145,7 @@ public class MainController {
 		
 		if (token != null) {
 			String tokenString = token.toString();
-			User user = userRepository.findUserByToken(tokenString);
+			User user = userRepository.findUserByToken(tokenString.substring(7));
 
 			if (user != null) {
 				Response<User> response = new Response<>(true, user);
@@ -176,7 +176,7 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
 
-		User user = userRepository.findUserByToken(token.toString());
+		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
@@ -263,7 +263,7 @@ public class MainController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 
-			User user = userRepository.findUserByToken(token.toString());
+			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
@@ -325,7 +325,7 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
 
-		User user = userRepository.findUserByToken(token.toString());
+		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
@@ -382,7 +382,7 @@ public class MainController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
-			User user = userRepository.findUserByToken(token.toString());
+			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
@@ -528,7 +528,7 @@ public class MainController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
-			User user = userRepository.findUserByToken(token.toString());
+			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
@@ -555,7 +555,7 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
 
-		User user = userRepository.findUserByToken(token.toString());
+		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			errors.add("Utente non trovato");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
@@ -808,7 +808,7 @@ public class MainController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 
-			User user = userRepository.findUserByToken(token.toString());
+			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));

@@ -1,17 +1,17 @@
 import { select, arc } from 'd3';
 import { useEffect, useRef } from 'react';
 
-function Graph() {
+function Graph({ points }) {
   const contenitore = useRef(null);
 
   useEffect(() => {
-    drawChart(45);
-  }, []);
+    drawChart(points);
+  }, [points]);
 
   function drawChart(value) {
     const height = 1450, width = 1860;
     const tau = Math.PI; // Cambiato da 2 * Math.PI a Math.PI per rendere visibile solo metà del grafico
-    const maxValue = 100;
+    const maxValue = 1000;
     const slice = value / maxValue;
     const innerRadius = 620, outerRadius = 700, startAngle = -Math.PI / 2, cornerRadius = 40; // Cambiato l'angolo di inizio
   
