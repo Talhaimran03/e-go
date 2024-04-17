@@ -33,6 +33,8 @@ export default function Home() {
     useEffect(() => {
         const fetchSession = async () => {
                 const isLoggedIn = await checkSession(navigate);
+                // const [routes, setRoutes] = useState([]);
+
                 if (!isLoggedIn.success) {
                     navigate('/login');
                 }
@@ -57,6 +59,23 @@ export default function Home() {
                 } catch (error) {
                     console.error('Errore:', error);
                 }
+                
+                // getRoutesOfUser
+                // try {
+                //     const response = await axios.get(
+                //       'http://localhost:8080/ego/routes/getRoutesOfUser',
+                //       {
+                //           headers: {
+                //               'Content-Type': 'application/json',
+                //               'Authorization': `Bearer ${token}`
+                //           },
+                //           withCredentials: true
+                //       });
+                //     setRoutes(response.data);
+                //     console.log(response.data);
+                // } catch (error) {
+                //     console.error('Errore:', error);
+                // }
 
         };
 
@@ -99,15 +118,15 @@ export default function Home() {
                      
                         <img className='map' src={Map} alt="Map"></img>
                    
-                </div>
+                    </div>
                 </Link>                    
                     <div className='maps-p'>
-                        <p className='short-via'> Stazione FS/Via XX...</p>
-                        <p className='large-via'>Stazione FS/Via XXV Aprile, 8, 37138 Verona VR</p>
+                        <p className='short-via'> Percorso 1</p>
+                        <p className='large-via'>Percorso 1</p>
                         <p style={height}> Orario percorrenza </p>
                         <div className='bus-icon'>
                             <img className='busIcon' src={Bus} alt="Bus"></img>
-                            <p> 20min </p>
+                            <p> 10min </p>
                         </div>
                     </div>
                 </div>
