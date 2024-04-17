@@ -1,5 +1,5 @@
 import './css/points.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Switch from './components/switch';
 import Card from './components/card';
@@ -14,8 +14,25 @@ import lime from "./img/lime.svg";
 import dott from "./img/dott.svg";
 import zalando from "./img/zalando.svg";
 
+import { checkSession } from './components/sessionService';
+import React, { useEffect} from 'react';
+
 
 export default function Points() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchSession = async () => {
+                const isLoggedIn = await checkSession(navigate);
+                if (!isLoggedIn.success) {
+                    navigate('/login');
+                }
+        };
+
+        fetchSession();
+    }, [navigate]);
+
     return (
         <div className='body-points'>
             <div className='positionSwitch-points'>

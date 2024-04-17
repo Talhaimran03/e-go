@@ -4,10 +4,26 @@ import Switch from './components/switch';
 import RankingSection from './components/rankingSection';
 import User from './img/user.svg';
 import QrCode from './components/qrCode';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { checkSession } from './components/sessionService';
+import React, { useEffect} from 'react';
 
 
 export default function Ranking() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchSession = async () => {
+                const isLoggedIn = await checkSession(navigate);
+                if (!isLoggedIn.success) {
+                    navigate('/login');
+                }
+        };
+
+        fetchSession();
+    }, [navigate]);
+    
     return (
         <>
             <div className='positionSwitch-ranking'>
