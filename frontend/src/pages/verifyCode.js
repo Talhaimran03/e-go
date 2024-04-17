@@ -45,6 +45,8 @@ function VerifyCode() {
             });
             console.log(response.data);
             if (response.data.success) {
+                const token = response.data.data; 
+                localStorage.setItem('token', token);
                 navigate('/');
             }
         } catch (error) {

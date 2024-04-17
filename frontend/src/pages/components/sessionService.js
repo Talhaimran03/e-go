@@ -1,15 +1,20 @@
 import axios from 'axios';
+import { Ip } from '../ip.js';
 
 export const checkSession = async () => {
     try {
-        const response = await axios.get(
-            'http://localhost:8080/ego/users/checkSession', 
-            { withCredentials: true }
-        ); 
+        const token = localStorage.getItem('token');
+        const response = await axios.get( `http://${Ip}:8080/ego/users/checkSession`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            withCredentials: true
+        });
         console.log(response)
         return response.data;
     } catch (error) {
-        console.error('Errore durante il controllo della sessione:', error);
+        console.error('Errore durante il controllo del token:', error);
         return false;
     }
 };

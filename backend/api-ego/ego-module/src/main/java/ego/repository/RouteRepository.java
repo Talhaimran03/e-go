@@ -16,4 +16,5 @@ public interface RouteRepository extends CrudRepository<Route, Integer> {
     List<Route> findByUserId(Integer userId);
     Optional<Route> findActiveRouteByUserId(Integer userId);
     List<Route> findByUserAndActiveFalse(User user);
+    List<Route> findByUserAndActiveTrue(User user);
 }

@@ -19,8 +19,7 @@ import ego.repository.RewardRepository;
 import ego.repository.RouteRepository;
 import ego.repository.UserRepository;
 import ego.util.UserService;
-import jakarta.servlet.http.HttpSession;
-
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -120,7 +119,7 @@ public class MainController {
 			user.setOtp(null);
 			userRepository.save(user);
 			
-			userService.writeSession(user);
+			userService.createToken(user);
 			
 			Response<User> response = new Response<>(true, user);
 			return ResponseEntity.ok(response);
@@ -141,8 +140,8 @@ public class MainController {
     }
 
 	@GetMapping(path="/users/getUser")
-	public ResponseEntity<Response<User>> getUser(HttpSession session) {
-		Object token = session.getAttribute("token");
+	public ResponseEntity<Response<User>> getUser(HttpServletRequest request) {
+		Object token = request.getHeader("Authorization");
 		
 		if (token != null) {
 			String tokenString = token.toString();
@@ -158,7 +157,7 @@ public class MainController {
 			}
 		} else {
 			Response<User> response = new Response<>(false, new ArrayList<>());
-			response.setErrors("Token non trovato nella sessione");
+			response.setErrors("Token non trovato");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
@@ -166,14 +165,14 @@ public class MainController {
     // Update
 	@PutMapping(path="/users/updateUser")
 	public ResponseEntity<Response<Boolean>> updateUser(@RequestBody Map<String, String> requestData,
-														HttpSession session,
+														HttpServletRequest request,
 														@RequestParam(value = "file", required = false) MultipartFile profileImage) throws ParseException {
 
 
-		Object token = session.getAttribute("token");
+		Object token = request.getHeader("Authorization");
 		if (token == null) {
 			List<String> errors = new ArrayList<>();
-			errors.add("Token non trovato nella sessione");
+			errors.add("Token non trovato");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
 
@@ -255,12 +254,12 @@ public class MainController {
 
     // Delete
 	@DeleteMapping(path="/users/deleteUser")
-	public ResponseEntity<Response<Boolean>> deleteUser(HttpSession session) {
+	public ResponseEntity<Response<Boolean>> deleteUser(HttpServletRequest request) {
 		try {
-			Object token = session.getAttribute("token");
+			Object token = request.getHeader("Authorization");
 			if (token == null) {
 				List<String> errors = new ArrayList<>();
-				errors.add("Token non trovato nella sessione");
+				errors.add("Token non trovato");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 
@@ -283,7 +282,7 @@ public class MainController {
 
 	// Login
 	@PostMapping(path="/users/login")
-	public ResponseEntity<Response<Boolean>> loginUser(@RequestBody Map<String, String> requestData) {
+	public ResponseEntity<Response<String>> loginUser(@RequestBody Map<String, String> requestData) {
 		try {
 			String email = requestData.get("email");
 			String password = requestData.get("password");
@@ -292,8 +291,8 @@ public class MainController {
 			if (user != null) {
 				if (userService.verifyPassword(password, user.getPassword())) {
 					if (user.getActive()) {
-						userService.writeSession(user);
-						return ResponseEntity.ok(new Response<>(true));
+						String token = userService.createToken(user);
+						return ResponseEntity.ok(new Response<>(true, token));
 					} else {
 						List<String> errors = new ArrayList<>();
 						errors.add("Account non confermato");
@@ -318,16 +317,46 @@ public class MainController {
 
 	// Logout
     @PostMapping(path="/users/logout")
-    public ResponseEntity<Response<Boolean>> logoutUser() {
-        userService.deleteSession();
+    public ResponseEntity<Response<Boolean>> logoutUser(HttpServletRequest request) {
+		Object token = request.getHeader("Authorization");
+		if (token == null) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Token non trovato");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+		}
+
+		User user = userRepository.findUserByToken(token.toString());
+		if (user == null) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Utente non trovato");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+		}
+        userService.logout(user);
         return ResponseEntity.ok(new Response<>(true));
     }
 
 	@GetMapping("/users/checkSession")
-	public ResponseEntity<Response<Boolean>> checkSession(HttpSession session) {
-		Object user = session.getAttribute("token");
-		boolean isAuthenticated = user != null;
-		return ResponseEntity.ok(new Response<>(isAuthenticated));
+	public ResponseEntity<Response<Boolean>> checkSession(HttpServletRequest request) {
+		// System.out.println("check call");
+		try {
+			// Recupera il token dall'header Authorization
+			String authorizationHeader = request.getHeader("Authorization");
+			if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+				String token = authorizationHeader.substring(7); // Rimuovi il prefisso "Bearer "
+				
+				// Ottieni l'utente associato al token
+				User user = userService.getUserByToken(token);
+				
+				// Verifica se l'utente è autenticato
+				boolean isAuthenticated = (user != null);
+				
+				return ResponseEntity.ok(new Response<>(isAuthenticated));
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<>(false));
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false));
+		}
 	}
 	
 
@@ -341,15 +370,15 @@ public class MainController {
 
 	// Create
 	@PostMapping("/routes/addRoute")
-	public ResponseEntity<Response<Boolean>> addRoute(HttpSession session, @RequestBody Map<String, String> userData) {
+	public ResponseEntity<Response<Boolean>> addRoute(HttpServletRequest request, @RequestBody Map<String, String> userData) {
 		// controllare che active sia false a tutte, altrimenti ...............
 		// prima di aggiungere una route voglio controllare che non ci siano delle route con active=true e se ci sono mettile false: 
 		try {
 			List<String> errors = new ArrayList<>();
 			
-			Object token = session.getAttribute("token");
+			Object token = request.getHeader("Authorization");
 			if (token == null) {
-				errors.add("Token non trovato nella sessione");
+				errors.add("Token non trovato");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
@@ -357,6 +386,14 @@ public class MainController {
 			if (user == null) {
 				errors.add("Utente non trovato");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			}
+
+			List<Route> activeRoutes = routeRepository.findByUserAndActiveTrue(user);
+			if (!activeRoutes.isEmpty()) {
+				for (Route activeRoute : activeRoutes) {
+					activeRoute.setActive(false);
+					routeRepository.save(activeRoute);
+				}
 			}
 
 			if (userData.get("startCoordinates") == null) {
@@ -482,12 +519,12 @@ public class MainController {
 	}
 
 	@GetMapping("/routes/getRoutesOfUser")
-	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpSession session) {
+	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpServletRequest request) {
 		try {
-			Object token = session.getAttribute("token");
+			Object token = request.getHeader("Authorization");
 			if (token == null) {
 				List<String> errors = new ArrayList<>();
-				errors.add("Token non trovato nella sessione");
+				errors.add("Token non trovato");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 			
@@ -509,12 +546,12 @@ public class MainController {
 
 	// Update
 	@PutMapping("/routes/endRoute")
-	public ResponseEntity<Response<Boolean>> endRoute(HttpSession session, @RequestBody Map<String, String> userData) {
+	public ResponseEntity<Response<Boolean>> endRoute(HttpServletRequest request, @RequestBody Map<String, String> userData) {
 		List<String> errors = new ArrayList<>();
 
-		Object token = session.getAttribute("token");
+		Object token = request.getHeader("Authorization");
 		if (token == null) {
-			errors.add("Token non trovato nella sessione");
+			errors.add("Token non trovato");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 		}
 
@@ -562,6 +599,24 @@ public class MainController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
 		}
 
+		// Controlla se almeno una delle fermate del bus contiene lo stopQR
+		String stopQRStr = userData.get("stopQR");
+		if (stopQRStr == null) {
+			errors.add("stopQR non presente");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+		}
+		Integer stopQR = Integer.parseInt(stopQRStr);
+
+		boolean stopQRPresent = allBusStops.stream().anyMatch(busStop -> {
+			Integer busStopQR = busStop.qrCodeNumber;
+			return busStopQR != null && busStopQR.equals(stopQR);
+		});
+
+		if (!stopQRPresent) {
+			errors.add("Lo stopQR fornito non corrisponde a nessuna delle fermate del bus");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+		}
+
 		// Trova la fermata del bus più vicina
 		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
 		if (nearestBusStop != null) {
@@ -569,6 +624,16 @@ public class MainController {
 
 			// Controlla la distanza rispetto alla fermata del bus più vicina
 			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.05)) <= 0) { // Meno di 50 metri
+				BigDecimal startLatitude = BigDecimal.valueOf(route.getStartCoordinates().getY());
+				BigDecimal startLongitude = BigDecimal.valueOf(route.getStartCoordinates().getX());
+				BigDecimal distanceToStartPoint = calculateDistance(endLatitude, endLongitude, startLatitude, startLongitude);
+
+				// Controllo che la distanza tra il punto finale e il punto di partenza sia almeno 300 metri
+				if (distanceToStartPoint.compareTo(BigDecimal.valueOf(0.3)) < 0) { // Meno di 300 metri
+					errors.add("La distanza tra il punto finale e il punto di partenza è inferiore a 300 metri");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				}
+				
 				// Aggiorna la route con la posizione finale e il tempo finale
 				route.setEndCoordinates(new Point(endLatitude.doubleValue(), endLongitude.doubleValue()));
 				route.setEndTime(LocalDateTime.now());
@@ -618,7 +683,6 @@ public class MainController {
 
 	//
 	// Rewards operations
-
 
 
 	@Autowired
@@ -734,13 +798,13 @@ public class MainController {
 	}
 
 	@GetMapping("/users/getUserAverageCO2Savings")
-	public ResponseEntity<Response<Map<String, BigDecimal>>> getAverageCO2Savings(HttpSession session) {
+	public ResponseEntity<Response<Map<String, BigDecimal>>> getAverageCO2Savings(HttpServletRequest request) {
 		try {
 			List<String> errors = new ArrayList<>();
 
-			Object token = session.getAttribute("token");
+			Object token = request.getHeader("Authorization");
 			if (token == null) {
-				errors.add("Token non trovato nella sessione");
+				errors.add("Token non trovato");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
 			}
 

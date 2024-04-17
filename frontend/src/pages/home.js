@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import { checkSession } from './components/sessionService';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import { Ip } from './ip.js';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -15,20 +15,22 @@ export default function Home() {
                     navigate('/login');
                 }
 
+                const token = localStorage.getItem('token');
+
                 // getAllUsers
-                // try {
-                //     const response = await axios.get('http://localhost:8080/ego/users/getAllUsers',
-                //     {
-                //         headers: {
-                //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
-                //         },
-                //         withCredentials: true
-                //     });
-                //     console.log(response.data);
-                // } catch (error) {
-                //     console.error('Errore:', error);
-                // }
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get( `http://${Ip}:8080/ego/users/getAllUsers`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        withCredentials: true
+        });
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Errore:', error);
+                }
 
                 // getUser
                 // try {
@@ -36,7 +38,7 @@ export default function Home() {
                 //     {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -51,7 +53,7 @@ export default function Home() {
                 //     {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -66,7 +68,7 @@ export default function Home() {
                 //     {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -83,7 +85,7 @@ export default function Home() {
                 //     }, {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -98,7 +100,7 @@ export default function Home() {
                 //     {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -113,7 +115,7 @@ export default function Home() {
                 //     {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -130,7 +132,7 @@ export default function Home() {
                 //     }, {
                 //         headers: {
                 //             'Content-Type': 'application/json',
-                //             'Authorization': `${Cookies.get('SESSION')}`
+                //             'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //     });
@@ -153,7 +155,7 @@ export default function Home() {
                 //       {
                 //         headers: {
                 //           'Content-Type': 'application/json',
-                //           'Authorization': `${Cookies.get('SESSION')}`
+                //           'Authorization': `Bearer ${token}`
                 //         },
                 //         withCredentials: true
                 //       }
@@ -167,27 +169,32 @@ export default function Home() {
                 // getAllRewards
                 // try {
                 //     const response = await axios.get(
-                //       'http://localhost:8080/ego/rewards/getAllRewards'
-                //     );
+                //       'http://localhost:8080/ego/rewards/getAllRewards',
+                //       {
+                //           headers: {
+                //               'Content-Type': 'application/json',
+                //               'Authorization': `Bearer ${token}`
+                //           },
+                //           withCredentials: true
+                //       });
                 //     console.log(response.data);
                 // } catch (error) {
                 //     console.error('Errore:', error);
                 // }
 
                 // getUser
-                try {
-                    const response = await axios.get('http://localhost:8080/ego/users/getUserAverageCO2Savings',
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `${Cookies.get('SESSION')}`
-                        },
-                        withCredentials: true
-                    });
-                    console.log(response.data);
-                } catch (error) {
-                    console.error('Errore:', error);
-                }
+                // try {
+                //     const response = await axios.get('http://localhost:8080/ego/users/getUserAverageCO2Savings',{
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             'Authorization': `Bearer ${token}`
+                //         },
+                //         withCredentials: true
+                //     });
+                //     console.log(response.data);
+                // } catch (error) {
+                //     console.error('Errore:', error);
+                // }
 
         };
 
