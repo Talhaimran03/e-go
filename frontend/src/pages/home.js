@@ -18,6 +18,8 @@ export default function Home() {
     const navigate = useNavigate();
     const [points, setPoints] = useState(0);
     const [userName, setUserName] = useState("User");
+    const [routes, setRoutes] = useState({});
+    const [CO2Savings, setCO2Savings] = useState({});
 
     const height = {
         fontSize: '12px',
@@ -33,7 +35,6 @@ export default function Home() {
     useEffect(() => {
         const fetchSession = async () => {
                 const isLoggedIn = await checkSession(navigate);
-                // const [routes, setRoutes] = useState([]);
 
                 if (!isLoggedIn.success) {
                     navigate('/login');
@@ -55,28 +56,54 @@ export default function Home() {
                         setPoints(response.data.data.actualPoints);
                         setUserName(response.data.data.name);
                     }
-                    console.log(response.data);
+                    // console.log(response.data);
                 } catch (error) {
-                    console.error('Errore:', error);
+                    console.log(error.response.data);
                 }
                 
                 // getRoutesOfUser
-                // try {
-                //     const response = await axios.get(
-                //       'http://localhost:8080/ego/routes/getRoutesOfUser',
-                //       {
-                //           headers: {
-                //               'Content-Type': 'application/json',
-                //               'Authorization': `Bearer ${token}`
-                //           },
-                //           withCredentials: true
-                //       });
-                //     setRoutes(response.data);
-                //     console.log(response.data);
-                // } catch (error) {
-                //     console.error('Errore:', error);
-                // }
+                try {
+                    const response = await axios.get(
+                      'http://localhost:8080/ego/routes/getRoutesOfUser',
+                      {
+                          headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': `Bearer ${token}`
+                          },
+                          withCredentials: true
+                      });
+                    setRoutes(response.data);
+                    // console.log(response.data);
+                    
+                    const activeRoute = response.data.data.find(route => route.active === true);
+                    if (activeRoute) {
+                        const startTime = new Date(activeRoute.startTime);
+                        const currentTime = new Date();
+                        const elapsedTime = (currentTime - startTime) / (1000 * 60);
+                        if (elapsedTime < 50) {
+                            navigate('/activeHome');
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.response.data);
+                }
 
+                // getUserAverageCO2Savings
+                try {
+                    const response = await axios.get(
+                      'http://localhost:8080/ego/users/getUserAverageCO2Savings',
+                      {
+                          headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': `Bearer ${token}`
+                          },
+                          withCredentials: true
+                      });
+                    setCO2Savings(response.data.data);
+                    // console.log(response.data);
+                } catch (error) {
+                    console.log(error.response.data);
+                }
         };
 
         fetchSession();
@@ -106,8 +133,7 @@ export default function Home() {
                 </div>
                 
                 <div className='saving'>
-                    
-                    <Grafico></Grafico>
+                    <Grafico CO2Savings={CO2Savings}></Grafico>
                 </div>
                 
             </div>
@@ -119,16 +145,16 @@ export default function Home() {
                         <img className='map' src={Map} alt="Map"></img>
                    
                     </div>
-                </Link>                    
                     <div className='maps-p'>
-                        <p className='short-via'> Percorso 1</p>
-                        <p className='large-via'>Percorso 1</p>
+                        <p className='short-via'>Stazione FS/Via XX...</p>
+                        <p className='large-via'>Stazione FS/Via XXV Aprile, 8, 37138 Verona VR</p>
                         <p style={height}> Orario percorrenza </p>
                         <div className='bus-icon'>
                             <img className='busIcon' src={Bus} alt="Bus"></img>
                             <p> 10min </p>
                         </div>
                     </div>
+                </Link>                   
                 </div>
                 <div className='maps uno'>
                 </div>

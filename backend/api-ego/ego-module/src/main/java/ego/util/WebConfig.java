@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/ego/**")
-            .allowedOrigins("http://localhost:3000", "https://localhost:3000", "http://172.16.23.102:3000", "https://172.16.23.102:3000", "http://172.16.22.171:3000", "https://172.16.22.171:3000")
+            .allowedOrigins("http://localhost:3000", "https://localhost:3000", "http://172.16.23.102:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true);

@@ -22,7 +22,6 @@ import ego.util.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,7 +64,7 @@ public class MainController {
 		List<String> valid = userService.validateUserData(email, password, passwordConfirm, name, surname, birthDate);
 		if (!valid.isEmpty()) {
             Response<Boolean> response = new Response<>(false, valid);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.ok(response);
         }
 		password = userService.encodePassword(password);
 		
@@ -104,14 +103,14 @@ public class MainController {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
 			Response<User> response = new Response<>(false, errors);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+			return ResponseEntity.ok(response);
 		}
 		
 		if (user.getActive()) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente già attivo");
 			Response<User> response = new Response<>(false, errors);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			return ResponseEntity.ok(response);
 		}
 		
 		if (user.getOtp().equals(otp)) {
@@ -146,19 +145,18 @@ public class MainController {
 		if (token != null) {
 			String tokenString = token.toString();
 			User user = userRepository.findUserByToken(tokenString.substring(7));
-
+			
 			if (user != null) {
-				Response<User> response = new Response<>(true, user);
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(new Response<>(true, user));
 			} else {
-				Response<User> response = new Response<>(false, new ArrayList<>());
+				Response<User> response = new Response<>(false);
 				response.setErrors("Utente non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+				return ResponseEntity.ok(response);
 			}
 		} else {
-			Response<User> response = new Response<>(false, new ArrayList<>());
+			Response<User> response = new Response<>(false);
 			response.setErrors("Token non trovato");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			return ResponseEntity.ok(response);
 		}
 	}
 
@@ -173,14 +171,14 @@ public class MainController {
 		if (token == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Token non trovato");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		String email = requestData.get("email");
@@ -260,14 +258,14 @@ public class MainController {
 			if (token == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Token non trovato");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			
 			userRepository.delete(user);
@@ -276,7 +274,7 @@ public class MainController {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
 			errors.add("Errore nell'eliminazione dell'utente: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -311,7 +309,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore durante il login: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -322,14 +320,14 @@ public class MainController {
 		if (token == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Token non trovato");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Utente non trovato");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
         userService.logout(user);
         return ResponseEntity.ok(new Response<>(true));
@@ -355,7 +353,7 @@ public class MainController {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<>(false));
 			}
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false));
+			return ResponseEntity.ok(new Response<>(false));
 		}
 	}
 	
@@ -371,21 +369,19 @@ public class MainController {
 	// Create
 	@PostMapping("/routes/addRoute")
 	public ResponseEntity<Response<Boolean>> addRoute(HttpServletRequest request, @RequestBody Map<String, String> userData) {
-		// controllare che active sia false a tutte, altrimenti ...............
-		// prima di aggiungere una route voglio controllare che non ci siano delle route con active=true e se ci sono mettile false: 
 		try {
 			List<String> errors = new ArrayList<>();
 			
 			Object token = request.getHeader("Authorization");
 			if (token == null) {
 				errors.add("Token non trovato");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			
 			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				errors.add("Utente non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			List<Route> activeRoutes = routeRepository.findByUserAndActiveTrue(user);
@@ -396,9 +392,12 @@ public class MainController {
 				}
 			}
 
+			// In futuro ................
+			// Integer busQR = Integer.parseInt(userData.get("startCoordinates")); 
+
 			if (userData.get("startCoordinates") == null) {
 				errors.add("endCoordinates non presente");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			
 			String[] coordinatesArray = userData.get("startCoordinates").split(",");
@@ -421,7 +420,7 @@ public class MainController {
 			if (allBusStops == null || allBusStops.isEmpty()) {
 				// Nessuna fermata del bus trovata
 				errors.add("Nessuna fermata del bus trovata dall'API");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			
 			// Trova la fermata del bus più vicina entro 100 metri
@@ -429,7 +428,7 @@ public class MainController {
 
 			if (nearestBusStop == null) {
 				errors.add("Nessuna fermata del bus trovata entro 100 metri dalle coordinate fornite");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			// Calcola la distanza tra la fermata del bus più vicina e il punto di partenza
@@ -438,7 +437,7 @@ public class MainController {
 			// Verifica se la distanza è inferiore a 100 metri
 			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.2)) > 0) {
 				errors.add("La fermata del bus più vicina è oltre 200 metri di distanza");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			LocalDateTime startTime = LocalDateTime.now();
@@ -446,15 +445,11 @@ public class MainController {
 			Route route = new Route(startPoint, startTime, user);
 			routeRepository.save(route);
 
-			user.setActualPoints(user.getActualPoints() + 10);
-			user.setTotalPoints(user.getTotalPoints() + 10);
-			userRepository.save(user);
-
 			return ResponseEntity.ok(new Response<>(true));
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nell'inserimento del percorso: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -519,20 +514,20 @@ public class MainController {
 	}
 
 	@GetMapping("/routes/getRoutesOfUser")
-	public ResponseEntity<Response<List<Route>>> getRoutesByUserId(HttpServletRequest request) {
+	public ResponseEntity<Response<List<Route>>> getRoutesByUser(HttpServletRequest request) {
 		try {
 			Object token = request.getHeader("Authorization");
 			if (token == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Token non trovato");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			
 			User user = userRepository.findUserByToken(token.toString().substring(7));
 			if (user == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Utente non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			} else {
 				List<Route> routes = routeRepository.findByUserId(user.getId());
 				return ResponseEntity.ok(new Response<>(true, routes));
@@ -540,7 +535,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nella ricerca dei percorsi: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -552,24 +547,24 @@ public class MainController {
 		Object token = request.getHeader("Authorization");
 		if (token == null) {
 			errors.add("Token non trovato");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		User user = userRepository.findUserByToken(token.toString().substring(7));
 		if (user == null) {
 			errors.add("Utente non trovato");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
-		Route route = routeRepository.findActiveRouteByUserId(user.getId()).orElse(null);
+		Route route = routeRepository.findARouteByUserIdAndActiveTrue(user.getId()).orElse(null);
 		if (route == null) {
 			errors.add("Nessun percorso attivo trovato");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		if (userData.get("endCoordinates") == null) {
 			errors.add("endCoordinates non presente");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		String[] coordinatesArray = userData.get("endCoordinates").split(",");
@@ -582,7 +577,7 @@ public class MainController {
 		long minutesElapsed = ChronoUnit.MINUTES.between(startTime, endTime);
 		if (minutesElapsed > 50) {
 			errors.add("Il tempo trascorso tra l'inizio e la fine della route è maggiore di 50 minuti");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		ResponseEntity<List<BusStop>> response = restTemplate.exchange(
@@ -596,34 +591,31 @@ public class MainController {
 
 		if (allBusStops == null || allBusStops.isEmpty()) {
 			errors.add("Nessuna fermata del bus trovata dall'API");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 
 		// Controlla se almeno una delle fermate del bus contiene lo stopQR
 		String stopQRStr = userData.get("stopQR");
 		if (stopQRStr == null) {
 			errors.add("stopQR non presente");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 		Integer stopQR = Integer.parseInt(stopQRStr);
-
-		boolean stopQRPresent = allBusStops.stream().anyMatch(busStop -> {
-			Integer busStopQR = busStop.qrCodeNumber;
-			return busStopQR != null && busStopQR.equals(stopQR);
-		});
-
-		if (!stopQRPresent) {
-			errors.add("Lo stopQR fornito non corrisponde a nessuna delle fermate del bus");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
-		}
 
 		// Trova la fermata del bus più vicina
 		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
 		if (nearestBusStop != null) {
+			// Aggiunta di controllo per confrontare lo stop QR fornito con lo stop QR della fermata del bus più vicina
+			Integer nearestBusStopQR = getNearestBusStopQR(nearestBusStop, allBusStops);
+			if (nearestBusStopQR != null && !nearestBusStopQR.equals(stopQR)) {
+				errors.add("Lo stopQR fornito non corrisponde alla fermata del bus più vicina");
+				return ResponseEntity.ok(new Response<>(false, errors));
+			}
+
 			BigDecimal distanceToNearestBusStop = calculateDistance(endLatitude, endLongitude, nearestBusStop.getKey(), nearestBusStop.getValue());
 
 			// Controlla la distanza rispetto alla fermata del bus più vicina
-			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.05)) <= 0) { // Meno di 50 metri
+			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.1)) <= 0) { // Meno di 100 metri
 				BigDecimal startLatitude = BigDecimal.valueOf(route.getStartCoordinates().getY());
 				BigDecimal startLongitude = BigDecimal.valueOf(route.getStartCoordinates().getX());
 				BigDecimal distanceToStartPoint = calculateDistance(endLatitude, endLongitude, startLatitude, startLongitude);
@@ -631,7 +623,7 @@ public class MainController {
 				// Controllo che la distanza tra il punto finale e il punto di partenza sia almeno 300 metri
 				if (distanceToStartPoint.compareTo(BigDecimal.valueOf(0.3)) < 0) { // Meno di 300 metri
 					errors.add("La distanza tra il punto finale e il punto di partenza è inferiore a 300 metri");
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+					return ResponseEntity.ok(new Response<>(false, errors));
 				}
 				
 				// Aggiorna la route con la posizione finale e il tempo finale
@@ -649,8 +641,17 @@ public class MainController {
 		} 
 
 		// Se non è stata soddisfatta nessuna delle condizioni precedenti, restituisci un errore
-		errors.add("La route non si trova vicino a una fermata del bus entro 50 metri");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+		errors.add("La route non si trova vicino a una fermata del bus entro 100 metri");
+		return ResponseEntity.ok(new Response<>(false, errors));
+	}
+
+	private Integer getNearestBusStopQR(Map.Entry<BigDecimal, BigDecimal> nearestBusStop, List<BusStop> allBusStops) {
+		for (BusStop busStop : allBusStops) {
+			if (busStop.latitude.compareTo(nearestBusStop.getKey()) == 0 && busStop.longitude.compareTo(nearestBusStop.getValue()) == 0) {
+				return busStop.qrCodeNumber;
+			}
+		}
+		return null;
 	}
 
 	// Delete
@@ -661,7 +662,7 @@ public class MainController {
 			if (idStr == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Id non presente");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 			Integer id = Integer.parseInt(idStr);
 
@@ -672,12 +673,12 @@ public class MainController {
 			} else {
 				List<String> errors = new ArrayList<>();
 				errors.add("Percorso non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nell'eliminazione del percorso: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -701,7 +702,7 @@ public class MainController {
 			if (company == null || discountPercentageStr == null || requiredPointsStr == null || url == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Uno o più campi mancanti nella richiesta");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			double discountPercentage = Double.parseDouble(discountPercentageStr);
@@ -713,7 +714,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nell'aggiunte della ricompensa: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -728,7 +729,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nella riceerca delle ricompense: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -741,7 +742,7 @@ public class MainController {
 			if (idStr == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Id non presente");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			int id = Integer.parseInt(idStr);
@@ -768,7 +769,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore durante l'aggiornamento della ricompensa: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -781,7 +782,7 @@ public class MainController {
 			if (idStr == null) {
 				List<String> errors = new ArrayList<>();
 				errors.add("Id non presente");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			int id = Integer.parseInt(idStr);
@@ -793,7 +794,7 @@ public class MainController {
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore durante l'eliminazione della ricompensa: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
 
@@ -803,63 +804,61 @@ public class MainController {
 			List<String> errors = new ArrayList<>();
 
 			Object token = request.getHeader("Authorization");
+			// System.out.println("Token: " + token);
+			
 			if (token == null) {
 				errors.add("Token non trovato");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			User user = userRepository.findUserByToken(token.toString().substring(7));
+			// System.out.println("Utente: " + user.getEmail());
+
 			if (user == null) {
 				errors.add("Utente non trovato");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(false, errors));
+				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
 			// Ottieni tutte le route dell'utente con active=false
 			List<Route> routes = routeRepository.findByUserAndActiveFalse(user);
+			
+			// Stampa il numero di route ottenute
+			// System.out.println("Numero di route ottenute: " + routes);
 
 			Map<String, BigDecimal> monthlyCO2Savings = new HashMap<>();
+			Map<String, Integer> monthCounts = new HashMap<>();
 
 			// Suddividi le route per mese e calcola il risparmio di CO2 per ogni mese
 			for (Route route : routes) {
 				LocalDateTime startTime = route.getStartTime();
 				String month = startTime.getMonth().toString();
 
-				BigDecimal distance = calculateDistance(
-					BigDecimal.valueOf(route.getStartCoordinates().getX()),
-					BigDecimal.valueOf(route.getStartCoordinates().getY()),
-					BigDecimal.valueOf(route.getEndCoordinates().getX()),
-					BigDecimal.valueOf(route.getEndCoordinates().getY())
-				);
-
-				BigDecimal co2Saved = calculateCO2Savings(distance);
-
-				if (!monthlyCO2Savings.containsKey(month)) {
-					monthlyCO2Savings.put(month, co2Saved);
-				} else {
-					BigDecimal totalCO2Saved = monthlyCO2Savings.get(month);
-					monthlyCO2Savings.put(month, totalCO2Saved.add(co2Saved));
+				// Stampa i dettagli della route
+				
+				if (route.getEndCoordinates() != null) {
+					BigDecimal distance = calculateDistance(
+						BigDecimal.valueOf(route.getStartCoordinates().getX()),
+						BigDecimal.valueOf(route.getStartCoordinates().getY()),
+						BigDecimal.valueOf(route.getEndCoordinates().getX()),
+						BigDecimal.valueOf(route.getEndCoordinates().getY())
+					);
+						
+					BigDecimal co2Saved = calculateCO2Savings(distance);
+					monthlyCO2Savings.put(month, monthlyCO2Savings.getOrDefault(month, BigDecimal.ZERO).add(co2Saved));
+					
+					// Aggiorna il conteggio dei mesi per questo mese
+					monthCounts.put(month, monthCounts.getOrDefault(month, 0) + 1);
 				}
 			}
 
-			// Calcola la media del risparmio di CO2 per ogni mese
-			Map<String, BigDecimal> averageMonthlyCO2Savings = new HashMap<>();
-			for (Map.Entry<String, BigDecimal> entry : monthlyCO2Savings.entrySet()) {
-				BigDecimal totalCO2Saved = entry.getValue();
-				int totalRoutes = routes.size();
-				BigDecimal averageCO2Savings = BigDecimal.ZERO;
-				if (totalRoutes > 0) {
-					averageCO2Savings = totalCO2Saved.divide(BigDecimal.valueOf(totalRoutes), 2, RoundingMode.HALF_UP);
-				}
-				averageMonthlyCO2Savings.put(entry.getKey(), averageCO2Savings);
-			}
-
-			return ResponseEntity.ok(new Response<>(true, averageMonthlyCO2Savings));
+			return ResponseEntity.ok(new Response<>(true, monthlyCO2Savings));
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nel calcolo della media del risparmio di CO2: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response<>(false, errors));
+			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
+
 	
 	private BigDecimal calculateCO2Savings(BigDecimal distance) {
 		// Assumiamo un tasso di emissione di CO2 per chilometro per l'autobus e per l'auto

@@ -11,7 +11,7 @@ export const checkSession = async () => {
             },
             withCredentials: true
         });
-        console.log(response)
+        // console.log(response)
         return response.data;
     } catch (error) {
         console.error('Errore durante il controllo del token:', error);

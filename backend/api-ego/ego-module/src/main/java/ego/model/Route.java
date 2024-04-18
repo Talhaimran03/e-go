@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.geo.Point;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +25,14 @@ public class Route {
     @Column(name = "start_coordinates")
     private Point startCoordinates;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Rome")
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
     @Column(name = "end_coordinates")
     private Point endCoordinates;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Rome")
     @Column(name = "end_time")
     private LocalDateTime endTime;
 

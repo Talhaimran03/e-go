@@ -14,7 +14,7 @@ import ego.model.User;
 @Repository
 public interface RouteRepository extends CrudRepository<Route, Integer> {
     List<Route> findByUserId(Integer userId);
-    Optional<Route> findActiveRouteByUserId(Integer userId);
+    Optional<Route> findARouteByUserIdAndActiveTrue(Integer userId);
     List<Route> findByUserAndActiveFalse(User user);
     List<Route> findByUserAndActiveTrue(User user);
 }

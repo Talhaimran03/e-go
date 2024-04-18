@@ -8,7 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { checkSession } from './components/sessionService';
 import React, { useEffect} from 'react';
 
-
 export default function Ranking() {
 
     const navigate = useNavigate();
