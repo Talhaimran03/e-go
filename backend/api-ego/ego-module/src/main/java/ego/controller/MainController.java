@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Duration;
+
 import ego.atv.BusStop;
 import ego.model.Response;
 import ego.model.Reward;
@@ -27,7 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -424,7 +425,7 @@ public class MainController {
 			}
 			
 			// Trova la fermata del bus più vicina entro 100 metri
-			Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
+			BusStop nearestBusStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
 
 			if (nearestBusStop == null) {
 				errors.add("Nessuna fermata del bus trovata entro 100 metri dalle coordinate fornite");
@@ -432,7 +433,7 @@ public class MainController {
 			}
 
 			// Calcola la distanza tra la fermata del bus più vicina e il punto di partenza
-			BigDecimal distanceToNearestBusStop = calculateDistance(startLatitude, startLongitude, nearestBusStop.getKey(), nearestBusStop.getValue());
+			BigDecimal distanceToNearestBusStop = calculateDistance(startLatitude, startLongitude, nearestBusStop.latitude, nearestBusStop.longitude);
 
 			// Verifica se la distanza è inferiore a 100 metri
 			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.2)) > 0) {
@@ -453,14 +454,14 @@ public class MainController {
 		}
 	}
 
-	private Map.Entry<BigDecimal, BigDecimal> findNearestBusStop(BigDecimal startLatitude, BigDecimal startLongitude, List<BusStop> allBusStops) {
+	private BusStop findNearestBusStop(BigDecimal startLatitude, BigDecimal startLongitude, List<BusStop> allBusStops) {
 		if (allBusStops.isEmpty()) {
 			return null;
 		}
 	
 		// Inizializza la distanza minima con un valore molto grande
 		BigDecimal minDistance = BigDecimal.valueOf(Double.MAX_VALUE);
-		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = null;
+		BusStop nearestBusStop = null;
 	
 		// Itera su tutte le fermate dell'autobus per trovare quella più vicina
 		for (BusStop busStop : allBusStops) {
@@ -473,7 +474,7 @@ public class MainController {
 			// Aggiorna la distanza minima e la fermata dell'autobus più vicina se la distanza corrente è minore della distanza minima
 			if (distance.compareTo(minDistance) < 0) {
 				minDistance = distance;
-				nearestBusStop = new AbstractMap.SimpleEntry<>(busStopLatitude, busStopLongitude);
+				nearestBusStop = busStop;
 			}
 		}
 	
@@ -529,12 +530,88 @@ public class MainController {
 				errors.add("Utente non trovato");
 				return ResponseEntity.ok(new Response<>(false, errors));
 			} else {
-				List<Route> routes = routeRepository.findByUserId(user.getId());
+				List<Route> routes = routeRepository.findByUserIdAndEndCoordinatesIsNotNull(user.getId());
 				return ResponseEntity.ok(new Response<>(true, routes));
 			}
 		} catch (Exception e) {
 			List<String> errors = new ArrayList<>();
 			errors.add("Errore nella ricerca dei percorsi: " + e.getMessage());
+			return ResponseEntity.ok(new Response<>(false, errors));
+		}
+	}
+
+	@GetMapping("/routes/getUserRouteStops")
+	public ResponseEntity<Response<Map<String, List<String>>>> getUserRouteStops(HttpServletRequest request) {
+		try {
+			List<String> errors = new ArrayList<>();
+
+			Object token = request.getHeader("Authorization");
+			if (token == null) {
+				errors.add("Token non trovato");
+				return ResponseEntity.ok(new Response<>(false, errors));
+			}
+
+			User user = userRepository.findUserByToken(token.toString().substring(7));
+			if (user == null) {
+				errors.add("Utente non trovato");
+				return ResponseEntity.ok(new Response<>(false, errors));
+			}
+
+			List<Route> routes = routeRepository.findByUserIdAndEndCoordinatesIsNotNull(user.getId());
+
+			// Mappa per memorizzare le informazioni sulle route dell'utente
+			Map<String, List<String>> routeInfoMap = new HashMap<>();
+
+			for (Route route : routes) {
+				String routeId = String.valueOf(route.getId());
+
+				// Converti le coordinate in BigDecimal
+				BigDecimal startLatitude = BigDecimal.valueOf(route.getStartCoordinates().getX());
+				BigDecimal startLongitude = BigDecimal.valueOf(route.getStartCoordinates().getY());
+				BigDecimal endLatitude = BigDecimal.valueOf(route.getEndCoordinates().getX());
+				BigDecimal endLongitude = BigDecimal.valueOf(route.getEndCoordinates().getY());
+
+				// Ottieni tutte le fermate dell'autobus
+				ResponseEntity<List<BusStop>> response = restTemplate.exchange(
+					"http://localhost:8081/atv/getAllBusStops",
+					HttpMethod.GET,
+					null,
+					new ParameterizedTypeReference<List<BusStop>>() {}
+				);
+
+				List<BusStop> allBusStops = response.getBody();
+
+				if (allBusStops == null || allBusStops.isEmpty()) {
+					errors.add("Nessuna fermata del bus trovata dall'API");
+					return ResponseEntity.ok(new Response<>(false, errors));
+				}
+
+				// Trova la fermata più vicina al punto di inizio
+				BusStop startStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
+				String startStopName = startStop != null ? startStop.name : "";
+
+				// Trova la fermata più vicina al punto di fine
+				BusStop endStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
+				String endStopName = endStop != null ? endStop.name : "";
+
+				// Calcola la durata della route
+				long durationMinutes = Duration.between(route.getStartTime(), route.getEndTime()).toMinutes();
+
+				// Costruisci la lista delle informazioni sulla route
+				List<String> routeInfo = new ArrayList<>();
+				routeInfo.add(startStopName);
+				routeInfo.add(endStopName);
+				routeInfo.add(String.valueOf(durationMinutes));
+
+				// Aggiungi le informazioni sulla route alla mappa
+				routeInfoMap.put(routeId, routeInfo);
+			}
+
+			// Ritorna la mappa con le informazioni sulle route dell'utente
+			return ResponseEntity.ok(new Response<>(true, routeInfoMap));
+		} catch (Exception e) {
+			List<String> errors = new ArrayList<>();
+			errors.add("Errore nell'ottenere le fermate delle route dell'utente: " + e.getMessage());
 			return ResponseEntity.ok(new Response<>(false, errors));
 		}
 	}
@@ -603,7 +680,7 @@ public class MainController {
 		Integer stopQR = Integer.parseInt(stopQRStr);
 
 		// Trova la fermata del bus più vicina
-		Map.Entry<BigDecimal, BigDecimal> nearestBusStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
+		BusStop nearestBusStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
 		if (nearestBusStop != null) {
 			// Aggiunta di controllo per confrontare lo stop QR fornito con lo stop QR della fermata del bus più vicina
 			Integer nearestBusStopQR = getNearestBusStopQR(nearestBusStop, allBusStops);
@@ -612,7 +689,7 @@ public class MainController {
 				return ResponseEntity.ok(new Response<>(false, errors));
 			}
 
-			BigDecimal distanceToNearestBusStop = calculateDistance(endLatitude, endLongitude, nearestBusStop.getKey(), nearestBusStop.getValue());
+			BigDecimal distanceToNearestBusStop = calculateDistance(endLatitude, endLongitude, nearestBusStop.latitude, nearestBusStop.longitude);
 
 			// Controlla la distanza rispetto alla fermata del bus più vicina
 			if (distanceToNearestBusStop.compareTo(BigDecimal.valueOf(0.1)) <= 0) { // Meno di 100 metri
@@ -645,9 +722,9 @@ public class MainController {
 		return ResponseEntity.ok(new Response<>(false, errors));
 	}
 
-	private Integer getNearestBusStopQR(Map.Entry<BigDecimal, BigDecimal> nearestBusStop, List<BusStop> allBusStops) {
+	private Integer getNearestBusStopQR(BusStop nearestBusStop, List<BusStop> allBusStops) {
 		for (BusStop busStop : allBusStops) {
-			if (busStop.latitude.compareTo(nearestBusStop.getKey()) == 0 && busStop.longitude.compareTo(nearestBusStop.getValue()) == 0) {
+			if (busStop.latitude.compareTo(nearestBusStop.latitude) == 0 && busStop.longitude.compareTo(nearestBusStop.longitude) == 0) {
 				return busStop.qrCodeNumber;
 			}
 		}
@@ -820,7 +897,7 @@ public class MainController {
 			}
 
 			// Ottieni tutte le route dell'utente con active=false
-			List<Route> routes = routeRepository.findByUserAndActiveFalse(user);
+			List<Route> routes = routeRepository.findByUserIdAndEndCoordinatesIsNotNull(user.getId());
 			
 			// Stampa il numero di route ottenute
 			// System.out.println("Numero di route ottenute: " + routes);
@@ -835,20 +912,18 @@ public class MainController {
 
 				// Stampa i dettagli della route
 				
-				if (route.getEndCoordinates() != null) {
-					BigDecimal distance = calculateDistance(
-						BigDecimal.valueOf(route.getStartCoordinates().getX()),
-						BigDecimal.valueOf(route.getStartCoordinates().getY()),
-						BigDecimal.valueOf(route.getEndCoordinates().getX()),
-						BigDecimal.valueOf(route.getEndCoordinates().getY())
-					);
-						
-					BigDecimal co2Saved = calculateCO2Savings(distance);
-					monthlyCO2Savings.put(month, monthlyCO2Savings.getOrDefault(month, BigDecimal.ZERO).add(co2Saved));
+				BigDecimal distance = calculateDistance(
+					BigDecimal.valueOf(route.getStartCoordinates().getX()),
+					BigDecimal.valueOf(route.getStartCoordinates().getY()),
+					BigDecimal.valueOf(route.getEndCoordinates().getX()),
+					BigDecimal.valueOf(route.getEndCoordinates().getY())
+				);
 					
-					// Aggiorna il conteggio dei mesi per questo mese
-					monthCounts.put(month, monthCounts.getOrDefault(month, 0) + 1);
-				}
+				BigDecimal co2Saved = calculateCO2Savings(distance);
+				monthlyCO2Savings.put(month, monthlyCO2Savings.getOrDefault(month, BigDecimal.ZERO).add(co2Saved));
+				
+				// Aggiorna il conteggio dei mesi per questo mese
+				monthCounts.put(month, monthCounts.getOrDefault(month, 0) + 1);
 			}
 
 			return ResponseEntity.ok(new Response<>(true, monthlyCO2Savings));

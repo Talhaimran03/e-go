@@ -7,6 +7,12 @@ export default class Grafico extends React.Component {
   render() {
     const { CO2Savings } = this.props; // Ottenere il prop CO2Savings
 
+    // Array dei nomi dei mesi in italiano
+    const italianMonthNames = [
+      'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+      'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+    ];
+
     // Estrai le etichette (mesi) e i risparmi di CO2 dal prop
     let labels = Object.keys(CO2Savings);
     let data = Object.values(CO2Savings);
@@ -14,6 +20,9 @@ export default class Grafico extends React.Component {
     // Ordina le etichette e i dati in base al mese
     labels = labels.sort((a, b) => new Date(a + '-01') - new Date(b + '-01'));
     data = data.sort((a, b) => new Date(labels[data.indexOf(a)] + '-01') - new Date(labels[data.indexOf(b)] + '-01'));
+
+    // Sostituisci le etichette con i nomi dei mesi in italiano
+    labels = labels.map(month => italianMonthNames[new Date(month + '-01').getMonth()]);
 
     const state = {
       labels: labels,

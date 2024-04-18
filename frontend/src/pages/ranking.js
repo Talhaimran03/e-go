@@ -6,17 +6,38 @@ import User from './img/user.svg';
 import QrCode from './components/qrCode';
 import { Link, useNavigate } from 'react-router-dom';
 import { checkSession } from './components/sessionService';
-import React, { useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
+import { Ip } from './ip.js';
+import axios from 'axios';
 
 export default function Ranking() {
 
     const navigate = useNavigate();
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         const fetchSession = async () => {
                 const isLoggedIn = await checkSession(navigate);
                 if (!isLoggedIn.success) {
                     navigate('/login');
+                }
+
+                // getAllUsers
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get(`http://${Ip}:8080/ego/users/getAllUsers`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        withCredentials: true
+                    });
+                    if (response && response.data && Array.isArray(response.data.data)) {
+                        setUsers(response.data.data);
+                    }                    
+                    console.log(response.data);
+                } catch (error) {
+                    console.log(error.response.data);
                 }
         };
 
@@ -30,18 +51,15 @@ export default function Ranking() {
             </div>
 
             <div className="container-ranking">
-                <RankingSection number='1' icon={ User } text='Talha Imran' points='710p.'/>
-                <RankingSection number='2' icon={ User } text='Marco Bosco' points='590p.'/>
-                <RankingSection number='3' icon={ User } text='Anna Benettoni' points='510p.'/>
-                <RankingSection number='4' icon={ User } text='Achille Bamfi' points='450p.'/>
-                <RankingSection number='5' icon={ User } text='Tu' points='410p.' />
-                <RankingSection number='6' icon={ User } text='Gian Marco Cavallaro' points='390p.'/>
-                <RankingSection number='7' icon={ User } text='Sofia Spiniella' points='320p.'/>
-                <RankingSection number='8' icon={ User } text='Claudia Garofolin' points='210p.'/>
-                <RankingSection number='9' icon={ User } text='Tommaso Cocco' points='200p.'/>
-                <RankingSection number='10' icon={ User } text='Angelica Ballarotto' points='180p.'/>
-                <RankingSection number='11' icon={ User } text='Yasmine Giuliani' points='120p.'/>
-                <RankingSection number='12' icon={ User } text='Diego Milli' points='50p.'/>
+                {users.map((user, index) => (
+                    <RankingSection
+                        key={index + 1}
+                        number={index + 1}
+                        icon={User}
+                        text={user.name}
+                        points={`${user.totalPoints}p.`}
+                    />
+                ))}
             </div>
             <Link to="/Qr">
                 <div className="qrPosition-ranking">
