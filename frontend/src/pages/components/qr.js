@@ -90,7 +90,11 @@ class QrContainer extends Component {
           withCredentials: true
         });
 
-        this.props.navigate('/activeHome');
+        if (response.data && response.data.errors) {
+          this.setState({ error: response.data.errors.join(', ') });
+        } else {
+            this.props.navigate('/activeHome');
+        }
 
         console.log(response.data);
       } else {
