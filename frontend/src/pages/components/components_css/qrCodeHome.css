@@ -1,0 +1,20 @@
+.position-qrCodeHome{
+    height: 120px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 25%);
+    background-color: white;
+}
+
+#text-qrCodeHome{
+    color: #B2B2B2;
+    margin: 0;
+}
+
+#style-qrCodeHome{
+    width: 60%;
+}

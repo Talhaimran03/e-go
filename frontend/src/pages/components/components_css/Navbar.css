@@ -30,6 +30,7 @@
     height: 70px;
     padding: 0;
     margin: auto 0; 
+    width: 100%;
 
 }
 
@@ -38,7 +39,22 @@
     margin: 0 20%;
 }
 
+.link{
+    color: #cccccc;
+
+    svg {
+        path {
+        stroke: #cccccc;
+        }
+    }
+}
+
 .active{
-    color: #23AB31;
-    background-color: #23AB31;
+    color: #4aa18b;
+
+    svg {
+        path {
+        stroke: #4aa18b;
+        }
+    }
 }

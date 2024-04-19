@@ -9,6 +9,8 @@ import { ReactComponent as Calendaricon } from "./img/calendar_month.svg";
 import { ReactComponent as Pswicon } from "./img/icona_lucchetto.svg";
 import { ReactComponent as Arrowreturn } from "./img/Indietro.svg";
 import { redirectIfLogged } from './components/sessionService';
+import { Link } from 'react-router-dom';
+import { Ip } from './ip.js';
 
 function Sign() {
     const navigate = useNavigate();
@@ -38,18 +40,21 @@ function Sign() {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/ego/users/addUser', userData);
+            const response = await axios.post(`http://${Ip}:8080/ego/users/addUser`, userData);
             console.log(response);
             if (response.data.success) {
                 navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
             } else {
+                console.log (response.data.errors);
                 setError(response.data.errors);
             }
         } catch (error) {
             if (error.response.data.errors && error.response.data.errors.includes("Email già registrata, conferma otp")) {
                 navigate(`/verifyCode`, { state: { email: userData.email } }); // Passa l'email come stato nella navigazione
-            } else {
+            } else if (error.response.data.errors) {
                 setError(error.response.data.errors);
+            } else {
+                setError("Errore durante la connessione al server");
             }
             console.error('Errore:', error.response.data);
         }
@@ -59,9 +64,11 @@ function Sign() {
 
     return (
         <div>
-            <div className='arrowreturn'>
+            <Link to='../login' className='arrowreturn'>
+            {/* <div className='arrowreturn'> */}
                 <Arrowreturn></Arrowreturn>
-            </div>
+            {/* </div> */}
+            </Link>
             <form onSubmit={handleSubmit}>
                 <div className='flexcount'>
                     <div className='count1'>1</div>
@@ -70,6 +77,18 @@ function Sign() {
                 <div>
                     <h1 className='sign'>REGISTRATI</h1>
                 </div>
+                {error && (
+                    <div className="error">
+                        {Array.isArray(error) ? (
+                            error.map((errMsg, index) => (
+                                <div key={index}>{errMsg}</div>
+                            ))
+                        ) : (
+                            <div>{error}</div>
+                        )}
+                    </div>
+                )}
+
                 <div className='sualign'>
                     <div className='sushaperegister'>
                         <div>
@@ -93,10 +112,9 @@ function Sign() {
                     </div>
                 </div>
                 <div className='suReturnShape'>
-                    <button type="submit" className='suinvia'><Arrowreturn></Arrowreturn></button>
+                    <button className='suinvia'><Arrowreturn></Arrowreturn></button>
                 </div>
                 <div className='sumarginfooter'>
-                    {error && <div className="error">{error}</div>}
                 </div>
             </form>
         </div>

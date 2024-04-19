@@ -1,14 +1,12 @@
 import './components_css/Buttons.css';
 
-function Buttons({ img: ImgComponent, testo }) {
+function Button({ img: ImgComponent, testo }) {
     return(
-        <div>
-            <a href="#">
-                <ImgComponent className='icons' />
-                <p id='testo'> { testo } </p>
-            </a>
+        <div className='button'>
+            <ImgComponent className='icons' />
+            <p id='testo'> { testo } </p>
         </div>
     );
 }
 
-export default Buttons;
+export default Button;

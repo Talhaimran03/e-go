@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './components/components_css/verifyCode.css';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import './css/verifyCode.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Ip } from './ip.js';
 
 function VerifyCode() {
     const location = useLocation();
@@ -38,18 +39,21 @@ function VerifyCode() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/ego/users/validateUser', {
+            const response = await axios.post(`http://${Ip}:8080/ego/users/validateUser`, {
                 email: email, 
                 otp: otp
             });
             console.log(response.data);
             if (response.data.success) {
+                const token = response.data.data; 
+                localStorage.setItem('token', token);
                 navigate('/');
-            } else {
+            }
+        } catch (error) {
+            if (error.response.data.success === false) {
                 console.error('OTP non valido');
                 setOtpError(true);
             }
-        } catch (error) {
             console.error('Errore:', error.response.data);
         }
     };
@@ -64,7 +68,7 @@ function VerifyCode() {
             <div className='align'>
                 <div>
                     <h1 className='verifyCode center'>Codice Verifica</h1>
-                    <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo <br /> inviato tramite email</p>
+                    <p className='paragraph center'>Inserisci il codice di verifica che ti abbiamo inviato tramite email</p>
                 </div>
             </div>
             <form className='flexboxnumber' onSubmit={handleSubmit}>
@@ -75,10 +79,11 @@ function VerifyCode() {
                 <input ref={el => inputRefs.current[2] = el} type="number" className='box' placeholder='' name="otp3" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(2)}
                 />
                 <input ref={el => inputRefs.current[3] = el} type="number" className='box' placeholder='' name="otp4" pattern="[0-9]{1}" maxLength="1" required onChange={() => focusNextInput(3)} />
-                <button type="submit" className='submit'>SUBMIT</button>
+                <button type="submit" className='submit'>VERIFICA</button>
             </form>
+            <div className="otpMessage-position">
             {otpError && <p className="error-message">OTP non valido</p>}
-            {!email && <p>Non hai ancora un account? <Link to="/signUp">Registrati qui</Link></p>}
+            </div>
         </div>
     );
 }

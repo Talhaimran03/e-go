@@ -1,23 +1,28 @@
-.row::after {
-    content: "";
-    clear: both;
-    display: block;
-}
-
 [class*="col-"] {
     float: left;
     padding: 0px;
     /* border: 1px solid red; */
 }
 
-  body{
+.body-points{
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    background-color: white;
 }
 
-* {
-    box-sizing: border-box;
+.bodyContainer-points{
+    padding-top: 15%;
+    padding-bottom: 25%;
+}
+
+.qrPosition-points{
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    left: 0;
+    bottom: 170px;
+    right: 5%;
 }
 
 .pos-navbar {
@@ -29,8 +34,32 @@
     right: 0;
 }
 
-.pos-logo{
+.row-points{
     display: flex;
-    justify-content: center;
-    top: 2%;
+    flex-direction: row;
+}
+
+@media only screen and (min-width: 1025px) {
+    .row-points{
+        width: 30%;
+    }
+
+    .container-points{
+        width: 100%;
+        padding-top: 2%;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .positionSwitch-points{
+        display: flex;
+        justify-content: center;
+    }
+
+    .bodyContainer-points{
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
 }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './components/components_css/login.css';
+import './css/login.css';
 import Logo from "./components/logo.js";
 import { ReactComponent as Icongoogle } from "./img/Google__G__logo.svg";
 import { ReactComponent as Iconuser } from "./img//icona_utente.svg";
 import { ReactComponent as Iconpwd } from "./img/icona_lucchetto.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import { redirectIfLogged } from './components/sessionService';
+import { Ip } from './ip.js';
 
 function Login() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Login() {
     
         try {
             const response = await axios.post(
-                'http://localhost:8080/ego/users/login', 
+                `http://${Ip}:8080/ego/users/login`, 
                 {
                     email: email,
                     password: password
@@ -34,22 +35,22 @@ function Login() {
             
             // Verifica se la risposta è definita e se contiene 'data'
             if (response && response.data && response.data.success) {
+                const token = response.data.data; 
+                localStorage.setItem('token', token);
                 navigate('/');
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setError(error.response.data.errors[0]);
+            } else {
+                setError(`Si è verificato un errore durante la richiesta: ${error}`);
             }
         }
-        
         
     };    
 
     return (
         <div>
-            <div className='margine'>
-                <div className='background'></div>
-            </div>
             <div className='flexshapelogo'>
                 <div className='shapelogo'>
                     <Logo></Logo>
@@ -57,6 +58,7 @@ function Login() {
             </div>
 
             <form className='flexform' onSubmit={handleSubmit}>
+            {error && <div className="error">{error}</div>}
                 <div className='containerform'>
                     <div><Iconuser></Iconuser></div>
                     <input type="text" className='email' placeholder="Email" name="email" required />
@@ -78,7 +80,6 @@ function Login() {
                 </button>
             </div>
 
-            {error && <div className="error">{error}</div>}
         </div>
     );
 }

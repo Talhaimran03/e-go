@@ -1,0 +1,200 @@
+*{
+    box-sizing: border-box;
+}
+
+
+::-webkit-scrollbar {
+    height: 0px;
+  }
+
+body{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.map-page {
+    height: 43rem;
+    background-color: #FFFF;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+[class*="col-"] {
+    float: left;
+    padding: 0px;
+}
+
+.back{
+    position: absolute;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    top: 5vh;
+    left: 5vw;
+}
+
+.back img{
+    scale: 0.8;
+}
+
+.last-ride{
+    position: absolute;
+    left: 25vw;
+    top: 3vh;
+    font-size: 24px;
+}
+
+.scheda{
+    position: absolute;
+    display: flex;
+    top: 15vh;
+    left: 4.8vw;
+    width: 90vw;
+    height: 73vh;
+    background: #F5F5F5;
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-size: 22px;
+}
+
+.upper-text{
+    position: absolute;
+    display: flex;
+    top: 3.5vh;
+    left: 0vw;
+    flex-direction: column;
+}
+
+.upper-text p{
+    margin:0 0 0 6vw;
+    padding: 0;
+    line-height: 25px;
+}
+
+.bus{
+    position: absolute;
+    top: 5.5vh;
+    left: 23vw;
+    scale: .8;
+}
+
+
+.time-bus{
+    position: absolute;
+    top: -1.5vh;
+    left: 56vw;
+    scale: .85;
+}
+
+.time-bus p{
+    position: absolute;
+    top: 1vh;
+    left: 6vw;
+    font-size: 18px;
+}
+
+.lower-text{
+    position: absolute;
+    display: flex;
+    top: 53.5vh;
+    left: 0vw;
+    width: 70vw;
+    flex-direction: column;
+}
+
+.lower-text img{
+    position: absolute;
+    top: 5.5vh;
+    left: 24.5vw;
+    scale: .85;
+}
+
+.div-mappa{
+    position: absolute;
+    top: 15.5vh;
+    left: 6vw;
+    width: 77vw;
+    height: 40vh;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+
+}
+
+.qrPosition-points4{
+    top: 75vh;
+    left: 70vw;
+    position: absolute;
+}
+
+
+
+@media screen and (min-width: 992px) {
+    
+.back{
+    left: 20vw;
+}
+
+.last-ride{
+    left: 26vw;
+    top: 2.8vh;
+    font-size: 26px;
+}
+
+.scheda{
+    left: 15.8vw;
+    width: 70vw;
+    height: 78vh;
+}
+
+.upper-text{
+    top: 5.5vh;
+    left: -3vw;
+}
+
+.bus{
+    top: 5.5vh;
+    left: 11vw;
+    scale: .8;
+}
+
+.time-bus{
+    top: -1vh;
+    left: 62vw;
+    scale: .85;
+}
+
+.time-bus p{
+    top: 1vh;
+    left: -2.8vw;
+    font-size: 18px;
+}
+
+.div-mappa{
+    top: 17.5vh;
+    left: 3vw;
+    width: 64vw;
+    height: 43vh;
+}
+
+.lower-text{
+    top: 57.5vh;
+}
+
+.lower-text img{
+    top: 5.5vh;
+    left: 11.5vw;
+}
+
+.qrPosition-points4{
+    left: 83.5vw;
+    top: 87vh;
+}
+}
