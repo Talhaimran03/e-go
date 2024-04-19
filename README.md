@@ -1,6 +1,7 @@
 # e-go
 
-Breve descrizione del progetto.
+<img src="https://github.com/Talhaimran03/e-go/assets/101459540/1c60ee2a-0133-4800-ad24-015715f30bda" width="60%"> 
+
 
 ## Dipendenze
 
