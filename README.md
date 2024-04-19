@@ -1,4 +1,4 @@
-# Nome del Tuo Progetto
+# e-go
 
 Breve descrizione del progetto.
 
@@ -30,3 +30,11 @@ Assicurati di avere le seguenti dipendenze installate prima di eseguire il proge
 ## Contribuire
 
 Fornisci istruzioni su come contribuire al progetto o segnala problemi aprendo una nuova issue.
+
+## Team
+
+- Talha Imran
+- Lorenzo Russo
+- Anna Benettoni
+- Claudia Garofolin
+- Achille Bamfi
