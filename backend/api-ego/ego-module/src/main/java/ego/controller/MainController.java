@@ -541,7 +541,7 @@ public class MainController {
 	}
 
 	@GetMapping("/routes/getUserRouteStops")
-	public ResponseEntity<Response<Map<String, List<String>>>> getUserRouteStops(HttpServletRequest request) {
+	public ResponseEntity<Response<Map<String, Map<String, Object>>>> getUserRouteStops(HttpServletRequest request) {
 		try {
 			List<String> errors = new ArrayList<>();
 
@@ -560,17 +560,17 @@ public class MainController {
 			List<Route> routes = routeRepository.findByUserIdAndEndCoordinatesIsNotNull(user.getId());
 
 			// Mappa per memorizzare le informazioni sulle route dell'utente
-			Map<String, List<String>> routeInfoMap = new HashMap<>();
+			Map<String, Map<String, Object>> routeInfoMap = new HashMap<>();
 
 			for (Route route : routes) {
 				String routeId = String.valueOf(route.getId());
-
+	
 				// Converti le coordinate in BigDecimal
 				BigDecimal startLatitude = BigDecimal.valueOf(route.getStartCoordinates().getX());
 				BigDecimal startLongitude = BigDecimal.valueOf(route.getStartCoordinates().getY());
 				BigDecimal endLatitude = BigDecimal.valueOf(route.getEndCoordinates().getX());
 				BigDecimal endLongitude = BigDecimal.valueOf(route.getEndCoordinates().getY());
-
+	
 				// Ottieni tutte le fermate dell'autobus
 				ResponseEntity<List<BusStop>> response = restTemplate.exchange(
 					"http://localhost:8081/atv/getAllBusStops",
@@ -578,35 +578,41 @@ public class MainController {
 					null,
 					new ParameterizedTypeReference<List<BusStop>>() {}
 				);
-
+	
 				List<BusStop> allBusStops = response.getBody();
-
+	
 				if (allBusStops == null || allBusStops.isEmpty()) {
 					errors.add("Nessuna fermata del bus trovata dall'API");
 					return ResponseEntity.ok(new Response<>(false, errors));
 				}
-
+	
 				// Trova la fermata più vicina al punto di inizio
 				BusStop startStop = findNearestBusStop(startLatitude, startLongitude, allBusStops);
 				String startStopName = startStop != null ? startStop.name : "";
-
+	
 				// Trova la fermata più vicina al punto di fine
 				BusStop endStop = findNearestBusStop(endLatitude, endLongitude, allBusStops);
 				String endStopName = endStop != null ? endStop.name : "";
-
+	
 				// Calcola la durata della route
 				long durationMinutes = Duration.between(route.getStartTime(), route.getEndTime()).toMinutes();
-
-				// Costruisci la lista delle informazioni sulla route
-				List<String> routeInfo = new ArrayList<>();
-				routeInfo.add(startStopName);
-				routeInfo.add(endStopName);
-				routeInfo.add(String.valueOf(durationMinutes));
+	
+				// Costruisci le informazioni sulla route
+				Map<String, Object> routeInfo = new HashMap<>();
+				routeInfo.put("startStopName", startStopName);
+				routeInfo.put("startLatitude", startLatitude);
+				routeInfo.put("startLongitude", startLongitude);
+				routeInfo.put("endStopName", endStopName);
+				routeInfo.put("endLatitude", endLatitude);
+				routeInfo.put("endLongitude", endLongitude);
+				routeInfo.put("durationMinutes", durationMinutes);
+				routeInfo.put("startTime", route.getStartTime()); // Aggiungi l'orario di partenza
+				routeInfo.put("endTime", route.getEndTime());     // Aggiungi l'orario di arrivo
 
 				// Aggiungi le informazioni sulla route alla mappa
 				routeInfoMap.put(routeId, routeInfo);
 			}
-
+	
 			// Ritorna la mappa con le informazioni sulle route dell'utente
 			return ResponseEntity.ok(new Response<>(true, routeInfoMap));
 		} catch (Exception e) {

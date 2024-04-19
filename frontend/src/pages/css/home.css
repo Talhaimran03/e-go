@@ -41,87 +41,71 @@ body {
     overflow-y: visible;
 }
 
-.pos-logo {
+.appPosition-home{
+    height: auto;
+    padding-top: 5%;
+    width: 100%;
     display: flex;
     justify-content: center;
-    height: auto;
-    margin-top: 2%;
 }
 
 .background {
-    position: relative;
     display: flex;
-    top: 3vh;
-    left: 0vw;
-    width: 90vw;
-    height: 59vh;
-    margin: 5%;
-    background: #FFFF;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 20%;
+    width: 90%;
+    height: auto;
+    margin: 5% 5% 30% 5%;
+    background: #FFFF;
     border-radius: 11px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 .points {
-    position: absolute;
-    color: #000;
+    color: black;
     font-size: 30px;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
-    top: -3vh;
     justify-content: center;
     align-items: center;
 }
 
 .p {
-    margin-top: 15vh;
-    margin-bottom: -5px;
-    padding-top: 0;
-}
-
-.secondo {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 0;
+    height: auto;
+    margin: 0;
 }
 
 .div-graphic {
     position: absolute;
+    top: 14vh;
     display: flex;
-    top: 6vh;
-    width: 100%;
+    flex-direction: column;
+    width: 90%;
     height: auto;
     justify-content: center;
 }
 
 
 .div-qr {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    position: relative;
-    top: 29vh;
-    left: 0;
-    width: auto;
-    height: auto;
+    position: absolute;
     z-index: 99999;
-
+    padding-top: 95%;
 }
 
 .saving {
-    position: absolute;
     background: #F7F7F7;
-    top: 23vh;
-    width: 83vw;
+    width: 90%;
     height: 24vh;
+    margin-top: 10%;
+    margin-bottom: 30%;
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    
     display: flex;
-
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -133,36 +117,49 @@ body {
 
 .slider-maps {
     background: none;
-    position: absolute;
     top: 82vh;
-    width: 100%;
+    width: auto;
     height: auto;
-    left: 0;
     overflow-y: hidden;
     padding-bottom: 100px;
+    display: flex;
+    flex-direction: row;
 }
 
 .maps {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     background: #F5F5F5;
-    width: 64vw;
+    width: 70vh;
     height: 14vh;
     border-radius: 12px;
     box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
     margin-left: 3%;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
+    padding: 0 30px;
 }
 
 .uno {
-    margin-left: 73vw;
+    background: #F5F5F5;
+    /* width: 64vw; */
+    height: 14vh;
+    border-radius: 12px;
+    box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+    /* margin-left: 70%; */
+    /* overflow-y: hidden; */
     margin-top: -14vh;
-    background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
 .due {
-    margin-left: 144vw;
+    background: #F5F5F5;
+    /* width: 64vw; */
+    height: 14vh;
+    border-radius: 12px;
+    box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+    /* margin-left: 70%; */
+    /* overflow-y: hidden; */
     margin-top: -14vh;
-    background: linear-gradient(#C0E39F, #A6CCB1);
 }
 
 .tre {
@@ -170,38 +167,33 @@ body {
 }
 
 .interactive-map {
-    position: absolute;
-    top: 1.5vh;
-    left: 5vw;
+    margin-left: 0%;
+}
+
+.secondMaps-home{
+    display: flex;
+    flex-direction: column;
 }
 
 .maps-p {
-    position: absolute;
-    display: flex;
-    top: 1.5vh;
-    left: 7vw;
-    flex-direction: column;
     font-size: 14px;
 }
 
 .maps-p p {
-    margin: 0 0 0 21vw;
     padding: 0;
+    margin: 0;
     line-height: 20px;
 }
 
 .bus-icon {
-    position: absolute;
     display: flex;
-    left: 20vw;
-    top: 6vh;
     height: auto;
     width: 20vw;
     background: #FFFF;
     flex-direction: row;
-    margin: 0;
     padding: 0;
     border-radius: 5px;
+    margin-top: 2%;
 }
 
 .bus-icon img {
@@ -222,7 +214,7 @@ body {
 
 
 .grafico-co2 {
-    position: absolute;
+    /* position: absolute; */
     top: 5vh;
     left: 4vw;
     width: 100vw;
@@ -251,34 +243,52 @@ body {
     .home {
         display: flex;
         width: 100%;
+        height: auto;
         margin: 0;
-        padding: 0;
+        /* padding-bottom: 5%; */
         flex-direction: column;
         align-items: center;
     }
 
     .background {
-        top: -8vh;
-        left: 0vw;
-        width: 40vw;
-        height: 54vh;
+        display: flex;
+        width: 90%;
+        height: auto;
         margin: 5%;
         background: #FFFF;
         justify-content: center;
         align-items: center;
         border-radius: 11px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-        scale: 0.95;
+        padding-top: 10%;
+    }
+
+    .div-graphic{
+        width: 30%;
+        position: absolute;
+        margin-top: 10%;
+    }
+
+    .points{
+        width: auto;
+        height: 50px;
+    }
+
+    .div-qr{
+        position: absolute;
+        padding-top: 32%;
     }
 
     .saving {
-        width: 35vw;
-        height: 20vh;
         border-radius: 12px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-        display: flex;
+        margin-bottom: 10%;
     }
 
+    .slider-maps{
+        margin: 5% auto;
+    }
+/* 
     .slider-maps {
         top: 73vh;
     }
@@ -288,25 +298,6 @@ body {
         height: 14vh;
         margin-left: 3%;
     }
-
-    .uno {
-        margin-left: 40vw;
-        margin-top: -14vh;
-        background: linear-gradient(#C0E39F, #A6CCB1);
-    }
-
-    .due {
-        margin-left: 78vw;
-        margin-top: -14vh;
-        background: linear-gradient(#C0E39F, #A6CCB1);
-    }
-
-    .tre {
-        margin-left: 115vw;
-        margin-top: -14vh;
-        background: linear-gradient(#C0E39F, #A6CCB1);
-    }
-
 
     .maps-p {
         top: 1.9vh;
@@ -351,5 +342,5 @@ body {
     .interactive-map {
         top: 2vh;
         left: 4vw;
-    }
+    } */
 }

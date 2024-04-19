@@ -16,14 +16,18 @@ function App({ name, points }) {
                 <p> <b>Ciao, {name} </b> </p>
                 {points > 0 ? <p style={height}>Stai facendo un buon lavoro!</p> : <p style={height}>Inizia a risparmiare CO2</p>}
             </div>
-            <div className='notification'>
-                <img src={bell} alt="Bell icon" id='bell-hero' />
+            <div className="div2-welcome">
+
+                <div className='notification'>
+                    <img src={bell} alt="Bell icon" id='bell-hero' />
+                </div>
+                <Link to='../settings'>
+                    <img className='user-icon' src={user} alt="user icon" />
+                </Link>
             </div>
-            <Link to='../settings'>
-                <img className='user-icon' src={user} alt="user icon" />
-            </Link>
         </div>
     );
+
 }
 
 

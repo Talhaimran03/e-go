@@ -127,6 +127,61 @@ export default function Home() {
         fetchSession();
     }, [navigate]);
 
+    // return (
+
+    //     <div className='home'>
+
+    //         <div className='pos-navbar'>
+    //             <Navbar></Navbar>
+    //         </div>
+    //         <div className="appPosition-home">
+    //             <App name={userName} points={points}></App>
+    //         </div>
+    //         <div className='background'>
+    //             <div className='div-graphic'>
+    //                 <Graph points={points} />
+    //             </div>
+    //             <div className='points'>
+    //                 <b><p className='p'> {points} </p></b>
+    //                 <b><p className='p secondo'> punti </p></b>
+    //             </div>
+    //             <div className='saving'>
+    //                 <Grafico></Grafico>
+    //             </div>
+    //             <div className='div-qr'>
+    //                 <Link to="/Qr">
+    //                     <QrCodeHome className='qr' />
+    //                 </Link>
+    //             </div>
+    //         </div>
+
+    //         <div className='slider-maps'>
+
+    //             <div className='maps'>
+    //                 <Link style={heightLink} to="/map">
+    //                 <div className="firstMaps-home">
+    //                         <div className='interactive-map'>
+    //                             <img className='map' src={Map} alt="Map"></img>
+    //                         </div>
+    //                 </div>
+    //                 <div className="secondMaps-home">
+    //                     <div className='maps-p'>
+    //                         <p className='short-via'> Percorso 1</p>
+    //                         <p className='large-via'>Percorso 1</p>
+    //                         <p style={height}> Orario percorrenza </p>
+    //                         <div className='bus-icon'>
+    //                             <img className='busIcon' src={Bus} alt="Bus"></img>
+    //                             <p> 10min </p>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //                 </Link>
+    //             </div>
+
+    //         </div>
+    //     </div>
+    // );
+
 
     return (
 
@@ -157,30 +212,33 @@ export default function Home() {
             </div>
             <div className='slider-maps'>
                 {Object.entries(userRouteStops).map(([routeId, stops]) => (
-                    <Link key={routeId} style={heightLink} to="/map">
-                        <div className='maps'>
-                            <div className='interactive-map'>
-                                <img className='map' src={Map} alt="Map"></img>
+                    <div className='maps'>
+                    <Link
+                        key={routeId}
+                        style={heightLink}
+                        to={{
+                            pathname: '/map',
+                            search: `?stops=${encodeURIComponent(JSON.stringify(stops))}`
+                        }}
+                    >
+                            <div className="firstMaps-home">
+                                <div className='interactive-map'>
+                                    <img className='map' src={Map} alt="Map"></img>
+                                </div>
                             </div>
+                    </Link>
                             <div className='maps-p'>
-                                <p className='short-via'>{stops[0]}</p>
-                                <p className='large-via'>{stops[1]}</p>
+                                <p className='short-via'>{stops.startStopName}</p>
+                                <p className='large-via'>{stops.endStopName}</p>
                                 <p style={height}> Orario percorrenza </p>
                                 <div className='bus-icon'>
                                     <img className='busIcon' src={Bus} alt="Bus"></img>
-                                    <p> {stops[2]}min </p>
+                                    <p> {stops.durationMinutes}min </p>
                                 </div>
                             </div>
                         </div>
-                    </Link>
                 ))}
                 
-                <div className='maps uno'>
-                </div>
-                <div className='maps due'>
-                </div>
-                <div className='maps tre'>
-                </div>
             </div>
         </div>
     );
