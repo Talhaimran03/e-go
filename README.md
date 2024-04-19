@@ -28,7 +28,7 @@ Assicurati di avere le seguenti dipendenze installate prima di eseguire il proge
 2. Avvia il frontend eseguendo il comando `npm start`.
 3. Accedi all'applicazione nel browser all'indirizzo `http://localhost:3000`.
 
-## Contribuire
+## Contribuisci
 
 Fornisci istruzioni su come contribuire al progetto o segnala problemi aprendo una nuova issue.
 
