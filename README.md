@@ -21,7 +21,7 @@ Segui i passaggi seguenti per scaricare e installare le dipendenze necessarie:
 4. Avvia il server Redis con il comando `redis-server`.
 5. Esegui i due moduli Java presenti nella directory `/backend/api-ego`. Per farlo, apri il la directory `/backend/api-ego` con un IDE come VSCode, apri uno qualsiasi dei file Java presenti nella cartella src e esegui i due moduli separatamente.
 6.  Esegui npm install nella directory `/frontend`. Se stai utilizzando un Mac, è consigliabile modificare la configurazione nel file package.json, rimuovendo il proxy dalla sezione di configurazione e impostando il comando `start` come `react-scripts start`.
-7. Accedi alla web app nel tuo browser tramite l'indirizzo `https://localhost:3000`. Potresti ricevere una notifica riguardante la validità del certificato SSL, poiché il certificato è autofirmato. Per procedere, fai clic su 'Avanzate' e poi su 'Continua' per confermare l'accesso."
+7. Accedi alla web app nel tuo browser tramite l'indirizzo `https://localhost:3000` se stai usando Windows e `http://localhost:3000` se stai usando macOS. Potresti ricevere una notifica riguardante la validità del certificato SSL, poiché il certificato è autofirmato. Per procedere, fai clic su 'Avanzate' e poi su 'Continua' per confermare l'accesso."
 8. Registrati e inizia ad accumulare punti.
 
 ## Contribuisci
