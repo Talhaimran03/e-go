@@ -5,28 +5,24 @@
 
 ## Dipendenze
 
-Assicurati di avere le seguenti dipendenze installate prima di eseguire il progetto:
+Segui i passaggi seguenti per scaricare e installare le dipendenze necessarie:
 
-- React
-- Java
-- Maven
-- Redis
-- MySQL (su porta 3000)
-
-## Installazione
-
-1. Clona il repository sul tuo computer.
-2. Esegui `npm install` nella directory del frontend per installare le dipendenze di React.
-3. Assicurati che Java sia installato e configurato correttamente.
-4. Configura e avvia il server MySQL sulla porta 3000.
-5. Assicurati che Redis sia installato e in esecuzione sul tuo sistema.
-6. Esegui `mvn install` nella directory del backend per installare le dipendenze di Maven.
+- **Node.js**: Puoi scaricare Node.js dal [sito ufficiale](https://nodejs.org/).
+- **Java**: Puoi scaricare Java dal [sito ufficiale di Oracle](https://www.oracle.com/java/technologies/javase-downloads.html).
+- **Maven**: Puoi scaricare Maven dal [sito ufficiale di Apache Maven](https://maven.apache.org/download.cgi).
+- **Redis**: Le istruzioni di installazione specifiche per il tuo sistema operativo sono disponibili sul [sito ufficiale di Redis](https://redis.io/download).
+- **MySQL**: Puoi scaricare MySQL dal [sito ufficiale di MySQL](https://dev.mysql.com/downloads/).
 
 ## Utilizzo
 
-1. Avvia i 2 moduli ego e atv aul server backend.
-2. Avvia il frontend eseguendo il comando `npm start`.
-3. Accedi all'applicazione nel browser all'indirizzo `http://localhost:3000`.
+1. Clona il repository sul tuo computer.
+2. Avvia MySQL su porta 3306.
+3. Configura e avvia il server MySQL sulla porta 3000.
+4. Avvia il server Redis con il comando `redis-server`.
+5. Esegui i due moduli Java presenti nella directory `/backend/api-ego`. Per farlo, apri il la directory `/backend/api-ego` con un IDE come VSCode, apri uno qualsiasi dei file Java presenti nella cartella src e esegui i due moduli separatamente.
+6.  Esegui npm install nella directory `/frontend`. Se stai utilizzando un Mac, è consigliabile modificare la configurazione nel file package.json, rimuovendo il proxy dalla sezione di configurazione e impostando il comando `start` come `react-scripts start`.
+7. Accedi alla web app nel tuo browser tramite l'indirizzo `http://localhost:3000`. Potresti ricevere una notifica riguardante la validità del certificato SSL, poiché il certificato è autofirmato. Per procedere, fai clic su 'Avanzate' e poi su 'Continua' per confermare l'accesso."
+8. Registrati e inizia ad accumulare punti.
 
 ## Contribuisci
 
