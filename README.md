@@ -17,7 +17,7 @@ Segui i passaggi seguenti per scaricare e installare le dipendenze necessarie:
 
 1. Clona il repository sul tuo computer.
 2. Avvia MySQL su porta 3306.
-3. Configura e avvia il server MySQL sulla porta 3000.
+3. Su MySQL, crea un database chiamato `atv` e importa i dati utilizzando il file `atv.sql` presente nella directory `/backend/database`. Successivamente, crea un altro database chiamato `e-go`. Per quest'ultimo, è sufficiente crearlo senza importare dati
 4. Avvia il server Redis con il comando `redis-server`.
 5. Esegui i due moduli Java presenti nella directory `/backend/api-ego`. Per farlo, apri il la directory `/backend/api-ego` con un IDE come VSCode, apri uno qualsiasi dei file Java presenti nella cartella src e esegui i due moduli separatamente.
 6.  Esegui npm install nella directory `/frontend`. Se stai utilizzando un Mac, è consigliabile modificare la configurazione nel file package.json, rimuovendo il proxy dalla sezione di configurazione e impostando il comando `start` come `react-scripts start`.
