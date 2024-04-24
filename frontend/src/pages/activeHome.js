@@ -19,6 +19,7 @@ export default function ActiveHome() {
     const [userName, setUserName] = useState("User");
     const [routes, setRoutes] = useState({});
     const [CO2Savings, setCO2Savings] = useState({});
+    const [userRouteStops, setUserRouteStops] = useState({});
 
     const height = {
         fontSize: '12px',
@@ -105,6 +106,23 @@ export default function ActiveHome() {
             } catch (error) {
                 console.error('Errore:', error);
             }
+            
+            // getUserRouteStops
+            try {
+                const response = await axios.get(
+                    'http://localhost:8080/ego/routes/getUserRouteStops',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        withCredentials: true
+                    });
+                setUserRouteStops(response.data.data);
+                console.log(response.data);
+            } catch (error) {
+                console.log(error.response.data);
+            }
         };
 
         fetchSession();
@@ -135,30 +153,34 @@ export default function ActiveHome() {
                     </div>
                 </div>
                 <div className='slider-maps2'>
-                    <div className='maps2'>
-                        <Link style={heightLink} to="/map">
-                            <div className='interactive-map2'>
-
-                                <img className='map2' src={Map} alt="Map"></img>
-
-                            </div>
+                    {Object.entries(userRouteStops).map(([routeId, stops]) => (
+                        <div className='maps'>
+                        <Link
+                            key={routeId}
+                            style={heightLink}
+                            to={{
+                                pathname: '/map',
+                                search: `?stops=${encodeURIComponent(JSON.stringify(stops))}`
+                            }}
+                        >
+                                <div className="firstMaps-home">
+                                    <div className='interactive-map'>
+                                        <img className='map' src={Map} alt="Map"></img>
+                                    </div>
+                                </div>
                         </Link>
-                        <div className='maps-p2'>
-                            <p className='short-via2'> Stazione FS/Via XX...</p>
-                            <p className='large-via2'>Stazione FS/Via XXV Aprile, 8, 37138 Verona VR</p>
-                            <p style={height}> Orario percorrenza </p>
-                            <div className='bus-icon2'>
-                                <img className='busIcon2' src={Bus} alt="Bus"></img>
-                                <p> 10min </p>
+                                <div className='maps-p'>
+                                    <p className='short-via'>{stops.startStopName}</p>
+                                    <p className='large-via'>{stops.endStopName}</p>
+                                    <p style={height}> Orario percorrenza </p>
+                                    <div className='bus-icon'>
+                                        <img className='busIcon' src={Bus} alt="Bus"></img>
+                                        <p> {stops.durationMinutes}min </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className='maps uno2'>
-                    </div>
-                    <div className='maps due2'>
-                    </div>
-                    <div className='maps tre2'>
-                    </div>
+                    ))}
+                    
                 </div>
             </div>
         </div>
