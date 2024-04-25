@@ -2,6 +2,16 @@
 
 <img src="https://github.com/Talhaimran03/e-go/assets/101459540/1c60ee2a-0133-4800-ad24-015715f30bda" width="60%"> 
 
+## Progetto
+
+Benvenuti nel repository di E-go, un progetto sviluppato presso l'ITS come parte del nostro project work. E-go è una piattaforma web app progettata per incentivare l'utilizzo dei mezzi pubblici a Verona attraverso un approccio basato sulla consapevolezza ambientale. Il nostro obiettivo con E-go è quello di promuovere un cambiamento positivo nel sistema di trasporto pubblico di Verona, incoraggiando i residenti a utilizzare mezzi più sostenibili e ridurre l'impatto ambientale.
+
+## Funzionalità Principali
+
+- Monitoraggio del risparmio di CO2 con grafici
+- Accumulo di punti per gli utenti in base all'utilizzo del bus
+- Riscatto di premi e sconti
+- Classifica degli utenti con punteggio migliore
 
 ## Dipendenze
 
