@@ -4,7 +4,7 @@
 
 ## Progetto
 
-Benvenuti nel repository di e-go, un progetto sviluppato presso l'ITS LAST come parte del nostro project work. e-go è una piattaforma web app progettata per incentivare l'utilizzo dei mezzi pubblici a Verona attraverso un approccio basato sulla consapevolezza ambientale. Il nostro obiettivo con e-go è quello di promuovere un cambiamento positivo nel sistema di trasporto pubblico di Verona, incoraggiando i residenti a utilizzare mezzi più sostenibili e ridurre l'impatto ambientale.
+Benvenuti nel repository di e-go, un progetto sviluppato presso l'ITS LAST come parte del nostro project work. e-go è una web app progettata per incentivare l'utilizzo dei mezzi pubblici a Verona attraverso un approccio basato sulla consapevolezza. Il nostro obiettivo con e-go è quello di promuovere un cambiamento positivo nel sistema di trasporto pubblico di Verona, incoraggiando i residenti a utilizzare mezzi più sostenibili e ridurre l'impatto ambientale.
 
 ## Funzionalità Principali
 
