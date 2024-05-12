@@ -1,6 +1,6 @@
 # e-go
 
-<img src="https://github.com/Talhaimran03/e-go/assets/101459540/1c60ee2a-0133-4800-ad24-015715f30bda" width="60%"> 
+<img src="https://github.com/Talhaimran03/e-go/assets/101459540/a299921e-48cd-44f2-82a8-3720f209509e" width="60%"> 
 
 ## Progetto
 
