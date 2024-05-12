@@ -41,7 +41,7 @@ body {
     overflow-y: visible;
 }
 
-.appPosition-home{
+.appPosition-home {
     height: auto;
     padding-top: 5%;
     width: 100%;
@@ -104,7 +104,7 @@ body {
     margin-bottom: 30%;
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-    
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -170,7 +170,7 @@ body {
     margin-left: 0%;
 }
 
-.secondMaps-home{
+.secondMaps-home {
     display: flex;
     flex-direction: column;
 }
@@ -222,19 +222,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media screen and (min-width: 992px) {
     body {
         overflow-y: scroll;
@@ -263,18 +250,19 @@ body {
         padding-top: 10%;
     }
 
-    .div-graphic{
+    .div-graphic {
         width: 30%;
         position: absolute;
         margin-top: 10%;
     }
 
-    .points{
+    .points {
         width: auto;
-        height: 50px;
+        position: relative;
+        top: 50px;
     }
 
-    .div-qr{
+    .div-qr {
         position: absolute;
         padding-top: 32%;
     }
@@ -285,62 +273,7 @@ body {
         margin-bottom: 10%;
     }
 
-    .slider-maps{
+    .slider-maps {
         margin: 5% auto;
     }
-/* 
-    .slider-maps {
-        top: 73vh;
-    }
-
-    .maps {
-        width: 30vw;
-        height: 14vh;
-        margin-left: 3%;
-    }
-
-    .maps-p {
-        top: 1.9vh;
-        left: -10vw;
-    }
-
-    .maps-p p {
-        margin: 0 0 0 20vw;
-        padding: 0;
-        line-height: 20px;
-    }
-
-    .bus-icon {
-        width: 5vw;
-    }
-
-
-    .bus-icon p {
-        margin: 3px;
-        padding: 0;
-        font-size: 12px;
-    }
-
-    .large-via {
-        display: block;
-    }
-
-    .short-via {
-        display: none;
-    }
-
-    .saving p {
-        margin-left: 1.5vw;
-    }
-
-    .tre {
-        display: block;
-        margin-left: -14vh 0 0 115vw;
-        background: linear-gradient(#C0E39F, #A6CCB1);
-    }
-
-    .interactive-map {
-        top: 2vh;
-        left: 4vw;
-    } */
 }
