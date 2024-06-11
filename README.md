@@ -4,7 +4,7 @@
 
 ## Progetto
 
-Benvenuti nel repository di e-go, un progetto sviluppato presso l'ITS LAST come parte del nostro project work. e-go è una web app progettata per incentivare l'utilizzo dei mezzi pubblici a Verona attraverso un approccio basato sulla consapevolezza. Il nostro obiettivo con e-go è quello di promuovere un cambiamento positivo nel sistema di trasporto pubblico di Verona, incoraggiando i residenti a utilizzare mezzi più sostenibili e ridurre l'impatto ambientale.
+Benvenuti nella repository di e-go, un progetto sviluppato presso l'ITS LAST come parte del nostro project work. e-go è una web app progettata per incentivare l'utilizzo dei mezzi pubblici a Verona attraverso un approccio basato sulla consapevolezza. Il nostro obiettivo con e-go è quello di promuovere un cambiamento positivo nel sistema di trasporto pubblico di Verona, incoraggiando i residenti a utilizzare mezzi più sostenibili e ridurre l'impatto ambientale.
 
 ## Funzionalità Principali
 
@@ -29,7 +29,7 @@ Segui i passaggi seguenti per scaricare e installare le dipendenze necessarie:
 2. Avvia MySQL su porta 3306.
 3. Su MySQL, crea un database chiamato `atv` e importa i dati utilizzando il file `atv.sql` presente nella directory `/backend/database`. Successivamente, crea un altro database chiamato `e-go`. Per quest'ultimo, è sufficiente crearlo senza importare dati
 4. Avvia il server Redis con il comando `redis-server`.
-5. Esegui i due moduli Java presenti nella directory `/backend/api-ego`. Per farlo, apri il la directory `/backend/api-ego` con un IDE come VSCode, apri uno qualsiasi dei file Java presenti nella cartella src e esegui i due moduli separatamente.
+5. Esegui i due moduli Java presenti nella directory `/backend/api-ego`. Per farlo, apri la directory `/backend/api-ego` con un IDE come VSCode, apri uno qualsiasi dei file Java presenti nella cartella src e esegui i due moduli separatamente.
 6.  Esegui npm install nella directory `/frontend`. Se stai utilizzando un Mac, è consigliabile modificare la configurazione nel file package.json, rimuovendo il proxy dalla sezione di configurazione e impostando il comando `start` come `react-scripts start`.
 7. Accedi alla web app nel tuo browser tramite l'indirizzo `https://localhost:3000` se stai usando Windows e `http://localhost:3000` se stai usando macOS. Potresti ricevere una notifica riguardante la validità del certificato SSL, poiché il certificato è autofirmato. Per procedere, fai clic su 'Avanzate' e poi su 'Continua' per confermare l'accesso."
 8. Registrati e inizia ad accumulare punti.
